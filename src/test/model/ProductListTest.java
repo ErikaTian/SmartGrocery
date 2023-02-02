@@ -3,6 +3,7 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -16,15 +17,11 @@ public class ProductListTest {
 
     @BeforeEach
     void runBefore() {
-        test1product = new Product("Apple",5.2, 100,
-                new Date(20230328));
-        test2product = new Product("Purdy's Chocolate Box",35.98, 35,
-                new Date(20240615));
-        test3product = new Product("Elephant Instant Noodles",3.82, 17,
-                new Date(20240126));
+        test1product = new Product("Apple",5.2, new Date(20230328));
+        test2product = new Product("Purdy's Chocolate Box",35.98, new Date(20240615));
+        test3product = new Product("Elephant Instant Noodles",3.82, new Date(20240126));
 
         test1List = new ProductList();
-
     }
 
     @Test
@@ -42,7 +39,9 @@ public class ProductListTest {
         test1List.removeProduct(test1product);
         test1List.removeProduct(test2product);
         assertEquals(1,test1List.sizeProductList());
-//        assertEquals(...,test1List.getFullList()); ?? how to write a list of strings
+        ArrayList test1ListName = new ArrayList<String>();
+        test1ListName.add("Elephant Instant Noodles");
+        assertEquals(test1ListName,test1List.getFullList());
     }
     @Test
     void testSizeProductList() {
@@ -58,6 +57,10 @@ public class ProductListTest {
         test1List.addProduct(test1product);
         test1List.addProduct(test2product);
         test1List.addProduct(test3product);
-//      assertEquals(...,test1List.getFullList()); ?? how to write a list of strings
+        ArrayList test1ListName = new ArrayList<String>();
+        test1ListName.add("Apple");
+        test1ListName.add("Purdy's Chocolate Box");
+        test1ListName.add("Elephant Instant Noodles");
+        assertEquals(test1ListName,test1List.getFullList());
     }
 }

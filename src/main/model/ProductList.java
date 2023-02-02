@@ -13,30 +13,30 @@ public class ProductList {
 
     // Creates an empty list of new products
     public ProductList() {
-        this.productList = new ArrayList<>();
+        productList = new ArrayList<>();
     }
 
     // MODIFIES: this
     // REQUIRES: add a product to the list
     public void addProduct(Product product) {
-        this.productList.add(product);
+        productList.add(product);
     }
 
     // MODIFIES: this
     // REQUIRES: delete a product from the list
     public void removeProduct(Product product) {
-        this.productList.remove(product);
+        productList.remove(product);
     }
 
     // EFFECTS: returns the number of products on the list
     public int sizeProductList() {
-        return this.productList.size();
+        return productList.size();
     }
 
     // EFFECTS: prints a list of all products' names
     public ArrayList<String> getFullList() {
         ArrayList<String> fullList = new ArrayList<>();
-        for (Product p : this.productList) {
+        for (Product p : productList) {
             fullList.add(p.getName());
         }
         return fullList;

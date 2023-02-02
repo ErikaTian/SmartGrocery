@@ -12,7 +12,7 @@ public class ReviewListTest {
     private Review test2review;
     private Review test3review;
 
-    private ReviewList test1List;
+    private ReviewList test1ReviewList;
 
     @BeforeEach
     void runBefore() {
@@ -21,33 +21,34 @@ public class ReviewListTest {
         test2review = new Review(new Date(20190803),"This tool is not as good as I thought...", 3);
         test3review = new Review(new Date(20180519),"Nice and clean but the delivery was a bit slow :(",
                 4);
+        test1ReviewList = new ReviewList();
     }
 
     @Test
     void testAddReview() {
-        test1List.addReview(test1review);
-        test1List.addReview(test2review);
-        test1List.addReview(test3review);
-        assertEquals(3,test1List.sizeReviewList());
+        test1ReviewList.addReview(test1review);
+        test1ReviewList.addReview(test2review);
+        test1ReviewList.addReview(test3review);
+        assertEquals(3, test1ReviewList.sizeReviewList());
     }
 
     @Test
-    void testRemoveProduct() {
-        test1List.addReview(test1review);
-        test1List.addReview(test2review);
-        test1List.addReview(test3review);
-        test1List.removeReview(test1review);
-        test1List.removeReview(test3review);
-        assertEquals(1,test1List.sizeReviewList());
+    void testRemoveReview() {
+        test1ReviewList.addReview(test1review);
+        test1ReviewList.addReview(test2review);
+        test1ReviewList.addReview(test3review);
+        test1ReviewList.removeReview(test1review);
+        test1ReviewList.removeReview(test3review);
+        assertEquals(1, test1ReviewList.sizeReviewList());
     }
 
     @Test
-    void testSizeProductList() {
-        test1List.addReview(test1review);
-        test1List.addReview(test2review);
-        assertEquals(2,test1List.sizeReviewList());
-        test1List.addReview(test3review);
-        assertEquals(3,test1List.sizeReviewList());
+    void testSizeReviewList() {
+        test1ReviewList.addReview(test1review);
+        test1ReviewList.addReview(test2review);
+        assertEquals(2, test1ReviewList.sizeReviewList());
+        test1ReviewList.addReview(test3review);
+        assertEquals(3, test1ReviewList.sizeReviewList());
     }
 
     // @Test
