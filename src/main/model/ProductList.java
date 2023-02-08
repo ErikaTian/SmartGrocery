@@ -15,6 +15,12 @@ public class ProductList {
     public ProductList() {
         productList = new ArrayList<>();
     }
+    //example: if you allow clients to pass in more types, then change field:
+    // private List<Product> productList;
+    // and change the constructor:
+    // public ProductList(List<Product> products){
+    //            productList = products;
+    //        }
 
     // MODIFIES: this
     // REQUIRES: add a product to the list
