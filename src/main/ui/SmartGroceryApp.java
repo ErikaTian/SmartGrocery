@@ -97,7 +97,7 @@ public class SmartGroceryApp {
     private void processCommand(String command) {
         if (command.equals("1")) {
             viewList();
-            addProductToCart();
+            addProduct();
         } else if (command.equals("2")) {
             viewBalance();
         } else if (command.equals("3")) {
@@ -116,7 +116,7 @@ public class SmartGroceryApp {
     // REQUIRES:
     // MODIFIES:
     // EFFECTS: search a product by name and add it to cart if founded
-    private void addProductToCart() {
+    private void addProduct() {
         ProductList pl = initList();
         String name = "";
         System.out.println("Search by product name:");
@@ -125,7 +125,10 @@ public class SmartGroceryApp {
 //        selection = selection.toLowerCase();  // no need
 
         if (!(pl.findProduct(name) == null)) {
-            account.getCartList().addProduct(pl.findProduct(name));
+            account.addProductToCart(pl.findProduct(name));
+//          account.getCartList().addProduct(pl.findProduct(name));
+            //the above line doesn't work, as getCartList() only returns but
+            //not change the cart-list object
         }
 //        System.out.print(......);
         // cannot put "System.out.print(result)" after "return statement" !!!

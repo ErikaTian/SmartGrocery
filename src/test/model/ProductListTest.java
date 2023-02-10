@@ -63,4 +63,6 @@ public class ProductListTest {
         test1ListName.add("[Elephant Instant Noodles, $3.82, 20240126]");
         assertEquals(test1ListName,test1List.getFullList());
     }
+
+    // write tests for findProduct methods !!!
 }

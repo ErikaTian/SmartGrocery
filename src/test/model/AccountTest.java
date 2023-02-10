@@ -50,4 +50,20 @@ public class AccountTest {
         assertEquals(0, test2account.makePurchase(9.77));
     }
 
+    //revise tests for addProductToCart method
+    @Test
+    public void testAddProductToCart(){
+        test1account.addProductToCart(test1product);
+        assertEquals(1, test1account.getCartList().sizeProductList());
+    }
+
+
+    //revise tests for addProductToCartMultipleTimes method
+    @Test
+    public void testAddProductToCartMultipleTimes(){
+        test2account.addProductToCart(test1product);
+        test2account.addProductToCart(test2product);
+        assertEquals(4, test2account.getCartList().sizeProductList());
+    }
+
 }

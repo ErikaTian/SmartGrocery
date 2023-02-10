@@ -44,4 +44,10 @@ public class Account {
     public double makePurchase(double amount) {
         return balance = balance - amount;
     }
+
+    // MODIFIES: this
+    // EFFECTS: add the product to the shopping list in the cart
+    public void addProductToCart(Product p) {
+        cartList.addProduct(p);
+    }
 }
