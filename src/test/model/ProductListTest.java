@@ -40,7 +40,7 @@ public class ProductListTest {
         test1List.removeProduct(test2product);
         assertEquals(1,test1List.sizeProductList());
         ArrayList test1ListName = new ArrayList<String>();
-        test1ListName.add("Elephant Instant Noodles");
+        test1ListName.add("[Elephant Instant Noodles, $3.82, 20240126]");
         assertEquals(test1ListName,test1List.getFullList());
     }
     @Test
@@ -58,9 +58,9 @@ public class ProductListTest {
         test1List.addProduct(test2product);
         test1List.addProduct(test3product);
         ArrayList test1ListName = new ArrayList<String>();
-        test1ListName.add("Apple");
-        test1ListName.add("Purdy's Chocolate Box");
-        test1ListName.add("Elephant Instant Noodles");
+        test1ListName.add("[Apple, $5.20, 20230328]");
+        test1ListName.add("[Purdy's Chocolate Box, $35.98, 20240615]");
+        test1ListName.add("[Elephant Instant Noodles, $3.82, 20240126]");
         assertEquals(test1ListName,test1List.getFullList());
     }
 }

@@ -15,7 +15,7 @@ public class ProductList {
     public ProductList() {
         productList = new ArrayList<>();
     }
-    //example: if you allow clients to pass in more types, then change field:
+    //example: if you allow clients to pass in more types, then change the field:
     // private List<Product> productList;
     // and change the constructor:
     // public ProductList(List<Product> products){
@@ -43,9 +43,19 @@ public class ProductList {
     public ArrayList<String> getFullList() {
         ArrayList<String> fullList = new ArrayList<>();
         for (Product p : productList) {
-            fullList.add(p.getName());
+            fullList.add(p.toString());
         }
         return fullList;
     }
 
+    // EFFECTS: finds a certain product by name
+    public Product findProduct(String name) {
+        Product result = null;
+        for (Product p : productList) {
+            if (p.getName() == name) {
+                result = p;
+            }
+        }
+        return result;
+    }
 }

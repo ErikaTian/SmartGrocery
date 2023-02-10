@@ -32,6 +32,17 @@ public class Product {
     public Date getBB() {
         return bb;
     }
+
+    /*
+     * EFFECTS: returns a string representation of a product
+     * Acknowledgement: this method is modified from "AccountNotRobust" project
+     */
+    public String toString() {
+        String priceStr = String.format("%.2f", price);  // get price to 2 decimal places as a string
+        String dateStr = bb.toString();
+        return "[" + name + ", $" + priceStr
+                + ", " + dateStr +  "]";
+    }
 }
 
 
