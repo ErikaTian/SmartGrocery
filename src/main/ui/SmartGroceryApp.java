@@ -126,6 +126,7 @@ public class SmartGroceryApp {
 
         if (!(pl.findProduct(name) == null)) {
             account.addProductToCart(pl.findProduct(name));
+
 //          account.getCartList().addProduct(pl.findProduct(name));
             //the above line doesn't work, as getCartList() only returns but
             //not change the cart-list object
@@ -138,6 +139,18 @@ public class SmartGroceryApp {
     private void viewBalance() {
         double balance = account.getBalance();
         System.out.printf("Balance: $%.2f\n", balance);
+        System.out.println("Do you want to top up?");
+        String topUp = "";
+        topUp = input.next();
+        topUp = topUp.toLowerCase();
+
+        if (topUp.equals("yes")) {
+            System.out.println("Enter the amount:");
+            double amount = input.nextDouble();
+            account.topUpBalance(amount);
+        } else if (!topUp.equals("no")) {
+            System.out.println("Input not valid... here is the main menu:");
+        }
     }
 
     // EFFECTS: print the shopping list in the cart of account
@@ -146,8 +159,30 @@ public class SmartGroceryApp {
         // Below two lines are for testing
 //        Product product1 = new Product("Apple", 5.2, new Date(20230328));
 //        cartList.addProduct(product1);
-        System.out.println(cartList.getFullList());
+        if (cartList.sizeProductList() == 0) {
+            System.out.println(cartList.getFullList());
+        } else {
+            System.out.println(cartList.getFullList());
+            System.out.println("Do you want to remove an item from the cart?");
+            String remove = "";
+            remove = input.next();
+            remove = remove.toLowerCase();
 
+            if (remove.equals("yes")) {
+                System.out.println("Enter the product name:");
+                String name = input.next();
+                account.removeProductFromCart(name);
+            } else if (!remove.equals("no")) {
+                System.out.println("Input not valid... here is the main menu:");
+            }
+        }
+    }
+
+    // REQUIRES:
+    // MODIFIES:
+    // EFFECTS: remove a product from cart
+    private void removeProduct() {
+        // write this method inside which method?
     }
 
 //    // EFFECTS: prints all information of a product

@@ -52,7 +52,9 @@ public class ProductList {
     public Product findProduct(String name) {
         Product result = null;
         for (Product p : productList) {
-            if (p.getName() == name) {
+            if (p.getName().equals(name)) {
+                // Q: "p.getName() == name" is wrong as Java is comparing references
+                // instead of objects!!! String is not a primitive type, cannot use "=="
                 result = p;
             }
         }

@@ -50,4 +50,12 @@ public class Account {
     public void addProductToCart(Product p) {
         cartList.addProduct(p);
     }
+
+    // MODIFIES: this
+    // EFFECTS: remove the product from the cart
+    public void removeProductFromCart(String name) {
+        Product p;
+        p = cartList.findProduct(name);
+        cartList.removeProduct(p);
+    }
 }
