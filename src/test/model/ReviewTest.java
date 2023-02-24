@@ -24,7 +24,7 @@ public class ReviewTest {
 
     @Test
     void testConstructor() {
-        assertEquals(new Date(20200416), test1review.getDate());
+        assertEquals(new Date(2020,4,16), test1review.getDate());
         assertEquals("This tool is not as good as I thought...", test2review.getComment());
         assertEquals(4, test3review.getRate());
     }

@@ -1,11 +1,12 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 // Represents a list of reviews for each product
 public class ReviewList {
 
-    private ArrayList<Review> reviewList;
+    private List<Review> reviewList;
 
     // Creates an empty list of new reviews
     public ReviewList() {
@@ -31,5 +32,8 @@ public class ReviewList {
 
     // MODIFIES: this
     // EFFECTS: sort all reviews based on their rating from high to low
+//    public List<Review> sortReviewByDate() {
+//        return null;
+//    }
 
 }

@@ -1,6 +1,8 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 /* A representation of a collection of products
  * plus a few commands can be used to do some tasks for the list of products:
@@ -9,11 +11,11 @@ import java.util.ArrayList;
  */
 public class ProductList {
 
-    private ArrayList<Product> productList;
+    private List<Product> productList;
 
     // Creates an empty list of new products
     public ProductList() {
-        productList = new ArrayList<>();
+        productList = new LinkedList<>();
     }
     //example: if you allow clients to pass in more types, then change the field:
     // private List<Product> productList;
@@ -21,6 +23,7 @@ public class ProductList {
     // public ProductList(List<Product> products){
     //            productList = products;
     //        }
+
 
     // MODIFIES: this
     // REQUIRES: add a product to the list

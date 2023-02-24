@@ -13,5 +13,5 @@ This application allows users to ***view*** all products in a grocery store, ***
 - As a user, I want to be able to select a product in the store and ***add*** it to the shopping cart in my account
 - As a user, I want to be able to ***remove*** a product from the shopping cart in my account
 - As a user, I want to be able to top up the balance of my account
-- As a user, I want to be able to purchase selected products on the shopping cart in my account
+- As a user, I want to be able to purchase selected products in the shopping cart in my account
 - As a user, I want to be able to select a product and add a new review for it, *for example*, "Good quality!"

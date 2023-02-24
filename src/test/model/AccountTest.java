@@ -57,7 +57,6 @@ public class AccountTest {
         assertEquals(1, test1account.getCartList().sizeProductList());
     }
 
-
     //revise tests for addProductToCartMultipleTimes method
     @Test
     public void testAddProductToCartMultipleTimes(){

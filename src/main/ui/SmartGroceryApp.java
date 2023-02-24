@@ -3,15 +3,17 @@ package ui;
 import model.Account;
 import model.Product;
 import model.ProductList;
+import model.exceptions.NonPositiveException;
 
 import java.util.Date;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 // Smart Grocery shopping application
 public class SmartGroceryApp {
     private Account account;
     private Scanner input;
-//
+
 //    private Product product1;
 //    private Product product2;
 //    private Product product3;
@@ -30,7 +32,7 @@ public class SmartGroceryApp {
         String command = null;
 
         initAccount();
-//        initList();
+        initList();
         // not sure if I need to call it here...
 
         System.out.println("Welcome to SmartGrocery!");
@@ -51,6 +53,7 @@ public class SmartGroceryApp {
     }
 
 
+    // Assume users have already logged into the account when starting the program
 //    // EFFECTS: ask for username
 //    private void askUserName() {
 //        System.out.println("\nEnter your username:");
@@ -66,8 +69,8 @@ public class SmartGroceryApp {
     private void initAccount() {
         account = new Account("Erika", 120, new ProductList());
         // if comment out below two lines, will get nullpointerException. Why?
-        input = new Scanner(System.in);
-        input.useDelimiter("\n");
+        input = new Scanner(System.in); // give input
+        input.useDelimiter("\n");  //separate things by new lines
     }
 
     // MODIFIES: this
@@ -125,13 +128,29 @@ public class SmartGroceryApp {
 //        selection = selection.toLowerCase();  // no need
 
         if (!(pl.findProduct(name) == null)) {
-            account.addProductToCart(pl.findProduct(name));
+            System.out.println(pl.findProduct(name).toString());
 
+            System.out.println("Do you want to add this item to your cart?");
+            String addItem = "";
+            addItem = input.next();
+            addItem = addItem.toLowerCase();
+
+            if (addItem.equals("yes")) {
+                account.addProductToCart(pl.findProduct(name));
+                System.out.println("Ok, it has been added!");
+            } else if (!addItem.equals("no")) {
+                System.out.println("Input not valid... here is the main menu:");
+            }
+
+        } else {
+            System.out.println("Cannot find this item... ");
+        }
+
+        //Notes:
 //          account.getCartList().addProduct(pl.findProduct(name));
             //the above line doesn't work, as getCartList() only returns but
             //not change the cart-list object
-        }
-//        System.out.print(......);
+//        System.out.println("");
         // cannot put "System.out.print(result)" after "return statement" !!!
     }
 
@@ -147,7 +166,19 @@ public class SmartGroceryApp {
         if (topUp.equals("yes")) {
             System.out.println("Enter the amount:");
             double amount = input.nextDouble();
-            account.topUpBalance(amount);
+
+//            try {
+//                //
+//            } catch (InputMismatchException e) {
+//                System.out.println("Input not valid ...\n");
+//            }
+
+            try {
+                account.topUpBalance(amount);
+            } catch (NonPositiveException e) {
+                System.out.println("Input must be a positive value to be added ...\n");
+            }
+
         } else if (!topUp.equals("no")) {
             System.out.println("Input not valid... here is the main menu:");
         }
@@ -163,7 +194,7 @@ public class SmartGroceryApp {
             System.out.println(cartList.getFullList());
         } else {
             System.out.println(cartList.getFullList());
-            System.out.println("Do you want to remove an item from the cart?");
+            System.out.println("Do you want to remove any item from the cart?");
             String remove = "";
             remove = input.next();
             remove = remove.toLowerCase();
@@ -171,19 +202,28 @@ public class SmartGroceryApp {
             if (remove.equals("yes")) {
                 System.out.println("Enter the product name:");
                 String name = input.next();
+
+                while ((cartList.findProduct(name) == null)) {
+                    System.out.println("Product not found... check the spelling and re-enter the product name:");
+                    name = input.next();
+                }
                 account.removeProductFromCart(name);
+                System.out.println("Ok, it has been removed!");
+
             } else if (!remove.equals("no")) {
                 System.out.println("Input not valid... here is the main menu:");
             }
         }
     }
 
+
     // REQUIRES:
     // MODIFIES:
     // EFFECTS: remove a product from cart
-    private void removeProduct() {
-        // write this method inside which method?
-    }
+//    private void removeProduct() {
+//        write this method inside which method?
+//    }
+
 
 //    // EFFECTS: prints all information of a product
 //    private void printProductInfo(Product product) {
