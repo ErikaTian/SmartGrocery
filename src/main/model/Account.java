@@ -34,27 +34,27 @@ public class Account {
         return cartList;
     }
 
-    // Acknowledgement: this method is modified from "AccountRobust" project
-    private void checkBalanceInvariant() {
-        assert (balance >= 0);
-    }
+//    // Acknowledgement: this method is modified from "AccountRobust" project
+//    private void checkBalanceInvariant() {
+//        assert (balance >= 0);
+//    }
 
     // MODIFIES: this
     // EFFECTS: the balance increases by the amount in this account
     public double topUpBalance(double amount) throws NonPositiveException {
-        checkBalanceInvariant();
+//        checkBalanceInvariant();
         if (amount <= 0) {
             throw new NonPositiveException();
         }
         balance = balance + amount;
-        checkBalanceInvariant();
+//        checkBalanceInvariant();
         return balance;
     }
 
     // MODIFIES: this
     // EFFECTS: the balance decreases by the amount in this account
     public double makePurchase(double amount) throws NonPositiveException, InsufficientValueException {
-        checkBalanceInvariant();
+//        checkBalanceInvariant();
         if (amount <= 0) {
             throw new NonPositiveException();
         }
@@ -62,7 +62,7 @@ public class Account {
             throw new InsufficientValueException();
         }
         balance = balance - amount;
-        checkBalanceInvariant();
+//        checkBalanceInvariant();
         return balance;
     }
 

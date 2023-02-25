@@ -6,10 +6,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Date;
-import java.util.InputMismatchException;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class AccountTest {
 
@@ -39,6 +37,11 @@ public class AccountTest {
         assertEquals(test1PL, test1account.getCartList());
         assertEquals(test2PL, test2account.getCartList());
     }
+
+//    @Test
+//    public void testCheckBalanceInvariant(){
+//        assertTrue(test1account.checkBalanceInvariant());
+//    }
 
     @Test
     public void testTopUpBalance(){
