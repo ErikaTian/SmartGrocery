@@ -1,5 +1,6 @@
 package model;
 
+import model.exceptions.InsufficientValueException;
 import model.exceptions.NonPositiveException;
 
 import java.util.InputMismatchException;
@@ -33,31 +34,36 @@ public class Account {
         return cartList;
     }
 
-    // this function is modified from TellerApp (AccountRobust project)
+    // Acknowledgement: this method is modified from "AccountRobust" project
     private void checkBalanceInvariant() {
         assert (balance >= 0);
     }
 
-    // REQUIRES: amount > 0
     // MODIFIES: this
     // EFFECTS: the balance increases by the amount in this account
-    public double topUpBalance(double amount) throws NonPositiveException, InputMismatchException {
+    public double topUpBalance(double amount) throws NonPositiveException {
         checkBalanceInvariant();
-
         if (amount <= 0) {
             throw new NonPositiveException();
         }
-
         balance = balance + amount;
         checkBalanceInvariant();
         return balance;
     }
 
-    // REQUIRES: amount > 0 AND balance >= amount before making a purchase
     // MODIFIES: this
     // EFFECTS: the balance decreases by the amount in this account
-    public double makePurchase(double amount) {
-        return balance = balance - amount;
+    public double makePurchase(double amount) throws NonPositiveException, InsufficientValueException {
+        checkBalanceInvariant();
+        if (amount <= 0) {
+            throw new NonPositiveException();
+        }
+        if (balance < amount) {
+            throw new InsufficientValueException();
+        }
+        balance = balance - amount;
+        checkBalanceInvariant();
+        return balance;
     }
 
     // MODIFIES: this

@@ -1,11 +1,15 @@
 package model;
 
+import model.exceptions.InsufficientValueException;
+import model.exceptions.NonPositiveException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Date;
+import java.util.InputMismatchException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 public class AccountTest {
 
@@ -38,26 +42,87 @@ public class AccountTest {
 
     @Test
     public void testTopUpBalance(){
-        assertEquals(105.68, test1account.topUpBalance(0.01));
-        assertEquals(156.68, test1account.topUpBalance(51));
-        assertEquals(159.08, test1account.topUpBalance(2.4));
+        try {
+            assertEquals(105.68, test1account.topUpBalance(0.01));
+        } catch (NonPositiveException e) {
+            fail();
+        }
+        try {
+            assertEquals(156.68, test1account.topUpBalance(51));
+        } catch (NonPositiveException e) {
+            fail();
+        }
+        try {
+            assertEquals(159.08, test1account.topUpBalance(2.4));
+        } catch (NonPositiveException e) {
+            fail();
+        }
+        try {
+            test1account.topUpBalance(0);
+            fail();
+        } catch (NonPositiveException e) {
+        }
+        try {
+            test1account.topUpBalance(-13);
+            fail();
+        } catch (NonPositiveException e) {
+        }
     }
 
     @Test
     public void testMakePurchase(){
-        assertEquals(13, test2account.makePurchase(0.2));
-        assertEquals(9.77, test2account.makePurchase(3.23));
-        assertEquals(0, test2account.makePurchase(9.77));
+        try {
+            assertEquals(13, test2account.makePurchase(0.2));
+        } catch (NonPositiveException e) {
+            fail();
+        } catch (InsufficientValueException e) {
+            fail();
+        }
+        try {
+            assertEquals(9.77, test2account.makePurchase(3.23));
+        } catch (NonPositiveException e) {
+            fail();
+        } catch (InsufficientValueException e) {
+            fail();
+        }
+        try {
+            assertEquals(0, test2account.makePurchase(9.77));
+        } catch (NonPositiveException e) {
+            fail();
+        } catch (InsufficientValueException e) {
+            fail();
+        }
+        try {
+            test2account.makePurchase(0);
+            fail();
+        } catch (NonPositiveException e) {
+        } catch (InsufficientValueException e) {
+            fail();
+        }
+        try {
+            test2account.makePurchase(-4);
+            fail();
+        } catch (NonPositiveException e) {
+        } catch (InsufficientValueException e) {
+            fail();
+        }
+        try {
+            test1account.makePurchase(200);
+            fail();
+        } catch (NonPositiveException e) {
+            fail();
+        } catch (InsufficientValueException e) {
+        }
     }
 
-    //revise tests for addProductToCart method
+    //add more helpers for addProductToCart method
     @Test
     public void testAddProductToCart(){
         test1account.addProductToCart(test1product);
         assertEquals(1, test1account.getCartList().sizeProductList());
     }
 
-    //revise tests for addProductToCartMultipleTimes method
+    //add more helpers for addProductToCartMultipleTimes method
     @Test
     public void testAddProductToCartMultipleTimes(){
         test2account.addProductToCart(test1product);
@@ -65,4 +130,18 @@ public class AccountTest {
         assertEquals(4, test2account.getCartList().sizeProductList());
     }
 
+    //add more helpers for addProductToCartMultipleTimes method
+    @Test
+    public void testRemoveProductFromCart(){
+        test2account.removeProductFromCart("Apple");
+        assertEquals(1, test2account.getCartList().sizeProductList());
+    }
+
+    //add more helpers for addProductToCartMultipleTimes method
+    @Test
+    public void testRemoveProductFromCartMultipleTimes(){
+        test2account.removeProductFromCart("Apple");
+        test2account.removeProductFromCart("Purdy's Chocolate Box");
+        assertEquals(0, test2account.getCartList().sizeProductList());
+    }
 }

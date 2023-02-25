@@ -39,7 +39,7 @@ public class Product {
      */
     public String toString() {
         String priceStr = String.format("%.2f", price);  // get price to 2 decimal places as a string
-        String dateStr = bb.toString();
+        String dateStr = String.valueOf(bb.getTime());  // !!!
         return "[" + name + ", $" + priceStr
                 + ", " + dateStr +  "]";
     }

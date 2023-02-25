@@ -3,7 +3,9 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -40,6 +42,9 @@ public class ReviewListTest {
         test1ReviewList.removeReview(test1review);
         test1ReviewList.removeReview(test3review);
         assertEquals(1, test1ReviewList.sizeReviewList());
+        ArrayList test1ListResult = new ArrayList<String>();
+        test1ListResult.add("[20190803, This tool is not as good as I thought..., 3]");
+        assertEquals(test1ListResult, test1ReviewList.getFullList());
     }
 
     @Test
@@ -51,6 +56,15 @@ public class ReviewListTest {
         assertEquals(3, test1ReviewList.sizeReviewList());
     }
 
-    // @Test
-    // Write tests for sorting method in ReviewList Class
+//    @Test
+//    void testSortReviewByRate() {
+//        test1ReviewList.addReview(test1review);
+//        test1ReviewList.addReview(test2review);
+//        test1ReviewList.addReview(test3review);
+//        ArrayList test1ListResult = new ArrayList<String>();
+//        test1ListResult.add(test1review);
+//        test1ListResult.add(test3review);
+//        test1ListResult.add(test2review);
+//        assertEquals(test1ListResult, test1ReviewList.sortReviewByRate());
+//    }
 }

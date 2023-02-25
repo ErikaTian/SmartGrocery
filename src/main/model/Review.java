@@ -32,4 +32,15 @@ public class Review {
     public int getRate() {
         return rate;
     }
+
+    /*
+     * EFFECTS: returns a string representation of a review
+     * Acknowledgement: this method is modified from "AccountNotRobust" project
+     */
+    public String toString() {
+        String dateStr = String.valueOf(date.getTime());
+        String rateStr = Integer.toString(rate);
+        return "[" + dateStr + ", " + comment
+                + ", " + rateStr +  "]";
+    }
 }

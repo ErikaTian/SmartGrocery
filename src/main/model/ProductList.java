@@ -28,7 +28,7 @@ public class ProductList {
     // MODIFIES: this
     // REQUIRES: add a product to the list
     public void addProduct(Product product) {
-        productList.add(product);
+        productList.add(product);     //Q: assume all products are different somewhere?
     }
 
     // MODIFIES: this
@@ -43,8 +43,8 @@ public class ProductList {
     }
 
     // EFFECTS: prints a list of all products' names
-    public ArrayList<String> getFullList() {
-        ArrayList<String> fullList = new ArrayList<>();
+    public LinkedList<String> getFullList() {
+        LinkedList<String> fullList = new LinkedList<>();
         for (Product p : productList) {
             fullList.add(p.toString());
         }

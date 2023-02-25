@@ -26,4 +26,9 @@ public class ProductTest {
         assertEquals(5.2, test1product.getPrice());
         assertEquals(new Date(20240615), test2product.getBB());
     }
+
+    @Test
+    void testToString() {
+        assertEquals("[Apple, $5.20, 20230328]", test1product.toString());
+    }
 }

@@ -30,10 +30,28 @@ public class ReviewList {
         return reviewList.size();
     }
 
+    // EFFECTS: prints a list of all reviews
+    public ArrayList<String> getFullList() {
+        ArrayList<String> fullList = new ArrayList<>();
+        String result = null;
+        for (Review r : reviewList) {
+            fullList.add(r.toString());
+        }
+        return fullList;
+    }
+
     // MODIFIES: this
-    // EFFECTS: sort all reviews based on their rating from high to low
-//    public List<Review> sortReviewByDate() {
-//        return null;
+    // EFFECTS: sort all reviews based on their rating from high to low;
+    //          if two reviews have a same rate, then rank them based on their order in the list
+//    public List<Review> sortReviewByRate() {
+//        Review result = null;
+//        int acc = 0;
+//        for (Review r : reviewList) {
+//            if (r.getRate() ???) {
+//                ???
+//            }
+//        }
+//        return ???;
 //    }
 
 }
