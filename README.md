@@ -9,8 +9,8 @@ This application allows users to ***view*** all products in a grocery store, ***
 ## User Stories
 
 - As a user, I want to view the list of all products in the grocery store
-- As a user, I want to be able to select a product and view the details, including its price, best-before date, customer reviews, etc.
-- As a user, I want to be able to select a product in the store and ***add*** it to the shopping cart in my account
+- As a user, I want to be able to select a product and view the details, including its price, best-before date, etc.
+- As a user, I want to be able to ***add*** a product (with its quantity) to the shopping cart in my account
 - As a user, I want to be able to ***remove*** a product from the shopping cart in my account
 - As a user, I want to be able to top up the balance of my account
 - As a user, I want to be able to purchase selected products in the shopping cart in my account

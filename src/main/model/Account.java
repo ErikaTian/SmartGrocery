@@ -3,14 +3,14 @@ package model;
 import model.exceptions.InsufficientValueException;
 import model.exceptions.NonPositiveException;
 
-import java.util.InputMismatchException;
-
+// Represents an account for each user
 public class Account {
 
     // fields to represent changing properties of an account
     private String name;  // customer name
     private double balance;    // remaining account balance
     private ProductList cartList;  // a list of selected products in the cart
+    //Note: should add an unchanging field like "FINAL STATIC INITIAL-VALUE = 0"
 
     // EFFECTS: constructs an account with a customer name, a balance, and a list of selected products in the cart
     public Account(String name, double balance, ProductList cartList) {

@@ -3,7 +3,7 @@ package model;
 import java.util.Date;
 
 // Represents a product with a name, a price, expiration date
-public class Product {
+public class Product implements Printable {
 
     // fields to represent changing properties of a product
     private String name;  // product name
@@ -37,6 +37,7 @@ public class Product {
      * EFFECTS: returns a string representation of a product
      * Acknowledgement: this method is modified from "AccountNotRobust" project
      */
+    @Override
     public String toString() {
         String priceStr = String.format("%.2f", price);  // get price to 2 decimal places as a string
         String dateStr = String.valueOf(bb.getTime());  // !!!

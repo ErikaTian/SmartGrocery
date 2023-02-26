@@ -3,8 +3,12 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
-// Represents a list of reviews for each product
-public class ReviewList {
+/* A representation of a collection of reviews
+ * plus a few commands can be used to do some tasks for this list:
+ * add or delete a new review, count the number of reviews on the list
+ * print the information of all reviews on the list, etc.
+ */
+public class ReviewList implements ListManager {
 
     private List<Review> reviewList;
 
@@ -26,14 +30,15 @@ public class ReviewList {
     }
 
     // EFFECTS: returns the number of reviews on the list
-    public int sizeReviewList() {
+    @Override
+    public int sizeList() {
         return reviewList.size();
     }
 
     // EFFECTS: prints a list of all reviews
-    public ArrayList<String> getFullList() {
-        ArrayList<String> fullList = new ArrayList<>();
-        String result = null;
+    @Override
+    public List<String> getFullList() {
+        List<String> fullList = new ArrayList<>();
         for (Review r : reviewList) {
             fullList.add(r.toString());
         }

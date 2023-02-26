@@ -122,7 +122,7 @@ public class AccountTest {
     @Test
     public void testAddProductToCart(){
         test1account.addProductToCart(test1product);
-        assertEquals(1, test1account.getCartList().sizeProductList());
+        assertEquals(1, test1account.getCartList().sizeList());
     }
 
     //add more helpers for addProductToCartMultipleTimes method
@@ -130,14 +130,14 @@ public class AccountTest {
     public void testAddProductToCartMultipleTimes(){
         test2account.addProductToCart(test1product);
         test2account.addProductToCart(test2product);
-        assertEquals(4, test2account.getCartList().sizeProductList());
+        assertEquals(4, test2account.getCartList().sizeList());
     }
 
     //add more helpers for addProductToCartMultipleTimes method
     @Test
     public void testRemoveProductFromCart(){
         test2account.removeProductFromCart("Apple");
-        assertEquals(1, test2account.getCartList().sizeProductList());
+        assertEquals(1, test2account.getCartList().sizeList());
     }
 
     //add more helpers for addProductToCartMultipleTimes method
@@ -145,6 +145,6 @@ public class AccountTest {
     public void testRemoveProductFromCartMultipleTimes(){
         test2account.removeProductFromCart("Apple");
         test2account.removeProductFromCart("Purdy's Chocolate Box");
-        assertEquals(0, test2account.getCartList().sizeProductList());
+        assertEquals(0, test2account.getCartList().sizeList());
     }
 }

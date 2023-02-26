@@ -6,7 +6,6 @@ import model.ProductList;
 import model.exceptions.NonPositiveException;
 
 import java.util.Date;
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 // Smart Grocery shopping application
@@ -190,7 +189,7 @@ public class SmartGroceryApp {
         // Below two lines are for testing
 //        Product product1 = new Product("Apple", 5.2, new Date(20230328));
 //        cartList.addProduct(product1);
-        if (cartList.sizeProductList() == 0) {
+        if (cartList.sizeList() == 0) {
             System.out.println(cartList.getFullList());
         } else {
             System.out.println(cartList.getFullList());

@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.LinkedList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -31,7 +30,7 @@ public class ReviewListTest {
         test1ReviewList.addReview(test1review);
         test1ReviewList.addReview(test2review);
         test1ReviewList.addReview(test3review);
-        assertEquals(3, test1ReviewList.sizeReviewList());
+        assertEquals(3, test1ReviewList.sizeList());
     }
 
     @Test
@@ -41,7 +40,7 @@ public class ReviewListTest {
         test1ReviewList.addReview(test3review);
         test1ReviewList.removeReview(test1review);
         test1ReviewList.removeReview(test3review);
-        assertEquals(1, test1ReviewList.sizeReviewList());
+        assertEquals(1, test1ReviewList.sizeList());
         ArrayList test1ListResult = new ArrayList<String>();
         test1ListResult.add("[20190803, This tool is not as good as I thought..., 3]");
         assertEquals(test1ListResult, test1ReviewList.getFullList());
@@ -51,9 +50,9 @@ public class ReviewListTest {
     void testSizeReviewList() {
         test1ReviewList.addReview(test1review);
         test1ReviewList.addReview(test2review);
-        assertEquals(2, test1ReviewList.sizeReviewList());
+        assertEquals(2, test1ReviewList.sizeList());
         test1ReviewList.addReview(test3review);
-        assertEquals(3, test1ReviewList.sizeReviewList());
+        assertEquals(3, test1ReviewList.sizeList());
     }
 
 //    @Test

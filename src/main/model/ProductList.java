@@ -1,15 +1,14 @@
 package model;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 /* A representation of a collection of products
- * plus a few commands can be used to do some tasks for the list of products:
+ * plus a few commands can be used to do some tasks for this list:
  * add or delete a new product, count the number of products on the list
- * print a list of all products' names, etc.
+ * print the information of all products on the list, etc.
  */
-public class ProductList {
+public class ProductList implements ListManager {
 
     private List<Product> productList;
 
@@ -27,8 +26,8 @@ public class ProductList {
 
     // MODIFIES: this
     // REQUIRES: add a product to the list
-    public void addProduct(Product product) {
-        productList.add(product);     //Q: assume all products are different somewhere?
+    public void addProduct(Product p) {
+        productList.add(p);     //Q: assume all products are different somewhere?
     }
 
     // MODIFIES: this
@@ -38,15 +37,17 @@ public class ProductList {
     }
 
     // EFFECTS: returns the number of products on the list
-    public int sizeProductList() {
+    @Override
+    public int sizeList() {
         return productList.size();
     }
 
     // EFFECTS: prints a list of all products' names
-    public LinkedList<String> getFullList() {
-        LinkedList<String> fullList = new LinkedList<>();
+    @Override
+    public List<String> getFullList() {
+        List<String> fullList = new LinkedList<>();
         for (Product p : productList) {
-            fullList.add(p.toString());
+            fullList.add(p.getName());
         }
         return fullList;
     }
