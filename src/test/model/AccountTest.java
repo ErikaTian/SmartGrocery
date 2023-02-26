@@ -5,9 +5,7 @@ import model.exceptions.NonPositiveException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -20,17 +18,10 @@ public class AccountTest {
     private Account test1account;
     private Account test2account;
 
-//    private ProductList test1PL;
-//    private ProductList test2PL;
-
     @BeforeEach
     public void setup(){
         test1product = new Product("Apple",5.2, new Date(20230328));
         test2product = new Product("Purdy's Chocolate Box",35.98, new Date(20240615));
-//        test1PL = new ProductList();
-//        test2PL = new ProductList();
-//        test2PL.addProduct(test1product);
-//        test2PL.addProduct(test2product);
         test1cart = new Cart();
         test2cart = new Cart();
         test2cart.addProductToWishlist(test1product, 2);
@@ -48,11 +39,6 @@ public class AccountTest {
         assertEquals(2, test2account.getCart().findQuantityForProduct("Apple"));
         assertEquals(3, test2account.getCart().findQuantityForProduct("Purdy's Chocolate Box"));
     }
-
-//    @Test
-//    public void testCheckBalanceInvariant(){
-//        assertTrue(test1account.checkBalanceInvariant());
-//    }
 
     @Test
     public void testTopUpBalance(){
@@ -129,7 +115,6 @@ public class AccountTest {
         }
     }
 
-    //add more helpers for addProductToCart method
     @Test
     public void testAddProductToCart(){
         test1account.addProductToCart(test1product, 10);
@@ -137,7 +122,6 @@ public class AccountTest {
         assertEquals(10, test1account.getCart().findQuantityForProduct("Apple"));
     }
 
-    //add more helpers for addProductToCartMultipleTimes method
     @Test
     public void testAddProductToCartMultipleTimes(){
         test1account.addProductToCart(test1product, 10);
@@ -148,7 +132,6 @@ public class AccountTest {
         assertEquals(6, test1account.getCart().findQuantityForProduct("Purdy's Chocolate Box"));
     }
 
-    //add more helpers for addProductToCartMultipleTimes method
     @Test
     public void testRemoveProductFromCart(){
         test2account.removeProductFromCart("Apple");
@@ -157,7 +140,6 @@ public class AccountTest {
         assertEquals(3, test2account.getCart().findQuantityForProduct("Purdy's Chocolate Box"));
     }
 
-    //add more helpers for addProductToCartMultipleTimes method
     @Test
     public void testRemoveProductFromCartMultipleTimes(){
         test2account.removeProductFromCart("Apple");

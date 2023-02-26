@@ -6,7 +6,6 @@ import java.util.List;
 // Represents a shopping cart in user account
 public class Cart {
 
-    //    private static final int INITIAL_QUANTITY = 1;  // may not need this
     // fields to represent changing properties of an account
     private List<Product> wishlist;  // a list of chose products
     private List<Integer> quantityList;  // quantity added for each product
@@ -14,7 +13,6 @@ public class Cart {
     // Creates an empty list of new products
     // REQUIRES: products.size() == quantities.size(); all entries in quantities are > 0;
     //           all entries in both lists are non-null
-    // MODIFIES: this
     // EFFECTS: creates a new cart that have a list of products with their corresponding quantities
     public Cart() {
         wishlist = new ArrayList<Product>();
@@ -34,22 +32,23 @@ public class Cart {
         }
     }
 
-    // REQUIRES: the wishlist contains the product
     // MODIFIES: this
     // EFFECTS: delete a product from the wishlist in the cart
     public void removeProductFromWishlist(Product product) {
-        int index = wishlist.indexOf(product);
-        wishlist.remove(product);
-        quantityList.remove(index);
+        if (wishlist.contains(product)) {
+            int index = wishlist.indexOf(product);
+            wishlist.remove(product);
+            quantityList.remove(index);
+        }
     }
 
-
-    // EFFECTS: returns the number of products on the wishlist
+    // EFFECTS: returns the total number of products on the wishlist
     public int sizeWishlist() {
         return wishlist.size();
     }
 
-    // EFFECTS: returns true if a product is on the wishlist
+    // EFFECTS: returns true if the wishlist contains a product by searching its name
+    //          false otherwise
     public boolean isProductInCart(String name) {
         boolean acc = false;
         for (Product p : wishlist) {
@@ -63,19 +62,16 @@ public class Cart {
     // EFFECTS: finds the quantity (int) of a product on the wishlist by searching its name
     //          returns 0 if the product is not on the wishlist
     public int findQuantityForProduct(String name) {
-//        String msg = null;
         int num = 0;
         for (Product p : wishlist) {
             if (p.getName().equals(name)) {
                 int index = wishlist.indexOf(p);
                 num = quantityList.get(index);
-//                msg = p.toString() + "," + "[" + "Quantity : " + Integer.toString(num) + "]";
             }
         }
         return num;
     }
 
-    // REQUIRES: the wishlist contains the product
     // EFFECTS: finds the product on the wishlist by searching its name
     //          returns null if the product is not on the wishlist
     public Product getProduct(String name) {
@@ -94,7 +90,7 @@ public class Cart {
         for (Product p : wishlist) {
             int index = wishlist.indexOf(p);
             int num = quantityList.get(index);
-            String print = "[" + p.getName()  + ", quantity: " + Integer.toString(num) + "]";
+            String print = "[" + p.getName()  + ", quantity: " + num + "]";
             fullList.add(print);
         }
         return fullList;

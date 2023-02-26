@@ -16,18 +16,11 @@ public class ProductList implements ListManager {
     public ProductList() {
         productList = new LinkedList<>();
     }
-    //example: if you allow clients to pass in more types, then change the field:
-    // private List<Product> productList;
-    // and change the constructor:
-    // public ProductList(List<Product> products){
-    //            productList = products;
-    //        }
-
 
     // MODIFIES: this
     // EFFECTS: add a product to the list
     public void addProduct(Product p) {
-        productList.add(p);     //Q: assume all products are different somewhere?
+        productList.add(p);
     }
 
     // MODIFIES: this
@@ -57,8 +50,6 @@ public class ProductList implements ListManager {
         Product result = null;
         for (Product p : productList) {
             if (p.getName().equals(name)) {
-                // Q: "p.getName() == name" is wrong as Java is comparing references
-                // instead of objects!!! String is not a primitive type, cannot use "=="
                 result = p;
             }
         }

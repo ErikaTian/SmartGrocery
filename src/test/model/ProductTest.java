@@ -23,7 +23,7 @@ public class ProductTest {
     @Test
     void testConstructor() {
         assertEquals("Apple", test1product.getName());
-        assertEquals(5.2, test1product.getPrice());
+        assertEquals(3.82, test3product.getPrice());
         assertEquals(new Date(20240615), test2product.getBB());
     }
 

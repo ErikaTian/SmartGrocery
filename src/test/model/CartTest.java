@@ -47,7 +47,11 @@ public class CartTest {
         testCart.removeProductFromWishlist(test1product);
         testCart.removeProductFromWishlist(test2product);
         assertEquals(1,testCart.sizeWishlist());
-        assertEquals(null,testCart.getProduct("Apple"));
+        assertNull(testCart.getProduct("Apple"));
+        assertEquals(test3product,testCart.getProduct("Elephant Instant Noodles"));
+        testCart.removeProductFromWishlist(test1product);
+        assertEquals(1,testCart.sizeWishlist());
+        assertNull(testCart.getProduct("Apple"));
         assertEquals(test3product,testCart.getProduct("Elephant Instant Noodles"));
     }
 
@@ -81,7 +85,7 @@ public class CartTest {
     void testGetProduct() {
         testCart.addProductToWishlist(test1product, 5);
         testCart.addProductToWishlist(test2product, 10);
-        assertEquals(null,testCart.getProduct("Elephant Instant Noodles"));
+        assertNull(testCart.getProduct("Elephant Instant Noodles"));
         assertEquals(test1product,testCart.getProduct("Apple"));
     }
 
@@ -98,5 +102,4 @@ public class CartTest {
         fullList.add(s2);
         assertEquals(fullList,testCart.getFullList());
     }
-
 }

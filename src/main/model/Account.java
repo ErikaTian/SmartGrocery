@@ -9,8 +9,7 @@ public class Account {
     // fields to represent changing properties of an account
     private String name;  // customer name
     private double balance;    // remaining account balance
-    private Cart cart;  // a wishlist of products with quantities in the cart
-    //Note: should add an unchanging field like "FINAL STATIC INITIAL-VALUE = 0"
+    private Cart cart;  // a wishlist of products with their quantities in the cart
 
     // EFFECTS: constructs an account with a customer name, a balance, and a wishlist of
     //          products with quantities in the cart
@@ -35,27 +34,19 @@ public class Account {
         return cart;
     }
 
-//    // Acknowledgement: this method is modified from "AccountRobust" project
-//    private void checkBalanceInvariant() {
-//        assert (balance >= 0);
-//    }
-
     // MODIFIES: this
     // EFFECTS: the balance increases by the amount in this account
     public double topUpBalance(double amount) throws NonPositiveException {
-//        checkBalanceInvariant();
         if (amount <= 0) {
             throw new NonPositiveException();
         }
         balance = balance + amount;
-//        checkBalanceInvariant();
         return balance;
     }
 
     // MODIFIES: this
     // EFFECTS: the balance decreases by the amount in this account
     public double makePurchase(double amount) throws NonPositiveException, InsufficientValueException {
-//        checkBalanceInvariant();
         if (amount <= 0) {
             throw new NonPositiveException();
         }
@@ -63,18 +54,17 @@ public class Account {
             throw new InsufficientValueException();
         }
         balance = balance - amount;
-//        checkBalanceInvariant();
         return balance;
     }
 
     // MODIFIES: this
-    // EFFECTS: add the product to the wishlist in the cart
+    // EFFECTS: add p to the wishlist in the cart by the quantity of i
     public void addProductToCart(Product p, int i) {
         cart.addProductToWishlist(p, i);
     }
 
     // MODIFIES: this
-    // EFFECTS: remove the product from the cart
+    // EFFECTS: remove the product from the cart by searching its name
     public void removeProductFromCart(String name) {
         Product p;
         p = cart.getProduct(name);

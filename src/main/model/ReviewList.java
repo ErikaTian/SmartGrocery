@@ -44,19 +44,4 @@ public class ReviewList implements ListManager {
         }
         return fullList;
     }
-
-    // MODIFIES: this
-    // EFFECTS: sort all reviews based on their rating from high to low;
-    //          if two reviews have a same rate, then rank them based on their order in the list
-//    public List<Review> sortReviewByRate() {
-//        Review result = null;
-//        int acc = 0;
-//        for (Review r : reviewList) {
-//            if (r.getRate() ???) {
-//                ???
-//            }
-//        }
-//        return ???;
-//    }
-
 }

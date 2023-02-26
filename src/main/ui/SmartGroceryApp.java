@@ -14,12 +14,6 @@ public class SmartGroceryApp {
     private Account account;
     private Scanner input;
 
-//    private Product product1;
-//    private Product product2;
-//    private Product product3;
-//    private ProductList pl;
-    //Why cannot define above as fields? Run it: NullpointerException
-
     // EFFECTS: runs the smart grocery application
     public SmartGroceryApp() {
         runSmartGrocery();
@@ -29,11 +23,10 @@ public class SmartGroceryApp {
     // EFFECTS: processes the user input
     private void runSmartGrocery() {
         boolean keepGoing = true;
-        String command = null;
+        String command;
 
         initAccount();
         initList();
-        // not sure if I need to call it here...
 
         System.out.println("Welcome to SmartGrocery!");
 
@@ -52,23 +45,10 @@ public class SmartGroceryApp {
         System.out.println("\nThank you for visiting SmartGrocery. Have a nice day!");
     }
 
-
-    // Assume users have already logged into the account when starting the program
-//    // EFFECTS: ask for username
-//    private void askUserName() {
-//        System.out.println("\nEnter your username:");
-//    }
-//
-//    // EFFECTS: ask for password
-//    private void askPassword() {
-//        System.out.println("\nEnter your password:");
-//    }
-
     // MODIFIES: this
     // EFFECTS: initializes account
     private void initAccount() {
         account = new Account("Erika", 120, new Cart());
-        // if comment out below two lines, will get nullpointerException. Why?
         input = new Scanner(System.in); // give input
         input.useDelimiter("\n");  //separate things by new lines
     }
@@ -116,20 +96,18 @@ public class SmartGroceryApp {
         System.out.println(pl.getFullList());
     }
 
-    // REQUIRES:
-    // MODIFIES:
-    // EFFECTS: search a product by name and add it to cart if founded
+    // MODIFIES: this
+    // EFFECTS: see details of a product by searching its name; if founded,
+    //          offer the option to add it (with a quantity) in the cart
     private void addProduct() {
         ProductList pl = initList();
-        String name = "";
+        String name;
         System.out.println("Search by product name:");
         name = input.next();
-//        String result;
-//        selection = selection.toLowerCase();  // no need
         if (!(pl.findProduct(name) == null)) {
             System.out.println(pl.findProduct(name).toString());
             System.out.println("Do you want to add this item to your cart?");
-            String addItem = "";
+            String addItem;
             addItem = input.next();
             addItem = addItem.toLowerCase();
             if (addItem.equals("yes")) {
@@ -143,31 +121,20 @@ public class SmartGroceryApp {
         } else {
             System.out.println("Cannot find this item... ");
         }
-
-        //Notes:
-//          account.getCartList().addProduct(pl.findProduct(name));
-            //the above line doesn't work, as getCartList() only returns but
-            //not change the cart-list object
-//        System.out.println("");
-        // cannot put "System.out.print(result)" after "return statement" !!!
     }
 
-    // EFFECTS: print the balance of account
+    // MODIFIES: this
+    // EFFECTS: print the balance of account; offer the option to top up the balance
     private void viewBalance() {
         double balance = account.getBalance();
         System.out.printf("Balance: $%.2f\n", balance);
         System.out.println("Do you want to top up?");
-        String topUp = "";
+        String topUp;
         topUp = input.next();
         topUp = topUp.toLowerCase();
         if (topUp.equals("yes")) {
             System.out.println("Enter the amount:");
             double amount = input.nextDouble();
-//            try {
-//                //
-//            } catch (InputMismatchException e) {
-//                System.out.println("Input not valid ...\n");
-//            }
             try {
                 account.topUpBalance(amount);
             } catch (NonPositiveException e) {
@@ -178,24 +145,23 @@ public class SmartGroceryApp {
         }
     }
 
-    // EFFECTS: print the wishlist in the cart of user account
+    // MODIFIES: this
+    // EFFECTS: print the wishlist in the cart of user account;
+    //          offer the option to remove any product from the cart
     private void viewCartList() {
         Cart cart = account.getCart();
-        // Below two lines are for testing
-//        Product product1 = new Product("Apple", 5.2, new Date(20230328));
-//        cart.addProduct(product1);
         if (cart.sizeWishlist() == 0) {
             System.out.println(cart.getFullList());
         } else {
             System.out.println(cart.getFullList());
             System.out.println("Do you want to remove any item from the cart?");
-            String remove = "";
+            String remove;
             remove = input.next();
             remove = remove.toLowerCase();
             if (remove.equals("yes")) {
                 System.out.println("Enter the product name:");
                 String name = input.next();
-                while ((cart.isProductInCart(name) == false)) {
+                while (!cart.isProductInCart(name)) {
                     System.out.println("Product not found... check the spelling and re-enter the product name:");
                     name = input.next();
                 }
@@ -206,18 +172,4 @@ public class SmartGroceryApp {
             }
         }
     }
-
-
-    // REQUIRES:
-    // MODIFIES:
-    // EFFECTS: remove a product from cart
-//    private void removeProduct() {
-//        write this method inside which method?
-//    }
-
-
-//    // EFFECTS: prints all information of a product
-//    private void printProductInfo(Product product) {
-//        System.out.println(product.getName() + product.getPrice() + product.getBB());
-//    }
 }
