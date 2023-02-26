@@ -25,13 +25,13 @@ public class ProductList implements ListManager {
 
 
     // MODIFIES: this
-    // REQUIRES: add a product to the list
+    // EFFECTS: add a product to the list
     public void addProduct(Product p) {
         productList.add(p);     //Q: assume all products are different somewhere?
     }
 
     // MODIFIES: this
-    // REQUIRES: delete a product from the list
+    // EFFECTS: delete a product from the list
     public void removeProduct(Product product) {
         productList.remove(product);
     }

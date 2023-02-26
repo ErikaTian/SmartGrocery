@@ -125,22 +125,18 @@ public class SmartGroceryApp {
         name = input.next();
 //        String result;
 //        selection = selection.toLowerCase();  // no need
-
         if (!(pl.findProduct(name) == null)) {
             System.out.println(pl.findProduct(name).toString());
-
             System.out.println("Do you want to add this item to your cart?");
             String addItem = "";
             addItem = input.next();
             addItem = addItem.toLowerCase();
-
             if (addItem.equals("yes")) {
                 account.addProductToCart(pl.findProduct(name));
                 System.out.println("Ok, it has been added!");
             } else if (!addItem.equals("no")) {
                 System.out.println("Input not valid... here is the main menu:");
             }
-
         } else {
             System.out.println("Cannot find this item... ");
         }
@@ -161,23 +157,19 @@ public class SmartGroceryApp {
         String topUp = "";
         topUp = input.next();
         topUp = topUp.toLowerCase();
-
         if (topUp.equals("yes")) {
             System.out.println("Enter the amount:");
             double amount = input.nextDouble();
-
 //            try {
 //                //
 //            } catch (InputMismatchException e) {
 //                System.out.println("Input not valid ...\n");
 //            }
-
             try {
                 account.topUpBalance(amount);
             } catch (NonPositiveException e) {
                 System.out.println("Input must be a positive value to be added ...\n");
             }
-
         } else if (!topUp.equals("no")) {
             System.out.println("Input not valid... here is the main menu:");
         }
@@ -197,18 +189,15 @@ public class SmartGroceryApp {
             String remove = "";
             remove = input.next();
             remove = remove.toLowerCase();
-
             if (remove.equals("yes")) {
                 System.out.println("Enter the product name:");
                 String name = input.next();
-
                 while ((cartList.findProduct(name) == null)) {
                     System.out.println("Product not found... check the spelling and re-enter the product name:");
                     name = input.next();
                 }
                 account.removeProductFromCart(name);
                 System.out.println("Ok, it has been removed!");
-
             } else if (!remove.equals("no")) {
                 System.out.println("Input not valid... here is the main menu:");
             }

@@ -18,13 +18,13 @@ public class ReviewList implements ListManager {
     }
 
     // MODIFIES: this
-    // REQUIRES: add a review to the list
+    // EFFECTS: add a review to the list
     public void addReview(Review review) {
         reviewList.add(review);
     }
 
     // MODIFIES: this
-    // REQUIRES: delete a review from the list
+    // EFFECTS: delete a review from the list
     public void removeReview(Review review) {
         reviewList.remove(review);
     }
