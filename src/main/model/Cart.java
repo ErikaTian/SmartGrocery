@@ -1,7 +1,6 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 // Represents a shopping cart in user account
@@ -39,8 +38,8 @@ public class Cart {
     // MODIFIES: this
     // EFFECTS: delete a product from the wishlist in the cart
     public void removeProductFromWishlist(Product product) {
-        wishlist.remove(product);
         int index = wishlist.indexOf(product);
+        wishlist.remove(product);
         quantityList.remove(index);
     }
 
@@ -76,9 +75,10 @@ public class Cart {
         return num;
     }
 
+    // REQUIRES: the wishlist contains the product
     // EFFECTS: finds the product on the wishlist by searching its name
     //          returns null if the product is not on the wishlist
-    public Product findProduct(String name) {
+    public Product getProduct(String name) {
         Product product = null;
         for (Product p : wishlist) {
             if (p.getName().equals(name)) {

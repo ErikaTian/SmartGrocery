@@ -44,8 +44,9 @@ public class AccountTest {
         assertEquals("Jennifer Brown", test1account.getName());
         assertEquals(13.2, test2account.getBalance());
         assertEquals(0, test1account.getCart().sizeWishlist());
-        assertEquals(2, test1account.getCart().findQuantityForProduct("Apple"));
-        assertEquals(3, test1account.getCart().findQuantityForProduct("Purdy's Chocolate Box"));
+        assertEquals(2, test2account.getCart().sizeWishlist());
+        assertEquals(2, test2account.getCart().findQuantityForProduct("Apple"));
+        assertEquals(3, test2account.getCart().findQuantityForProduct("Purdy's Chocolate Box"));
     }
 
 //    @Test
@@ -147,18 +148,22 @@ public class AccountTest {
         assertEquals(6, test1account.getCart().findQuantityForProduct("Purdy's Chocolate Box"));
     }
 
-//    //add more helpers for addProductToCartMultipleTimes method
-//    @Test
-//    public void testRemoveProductFromCart(){
-//        test2account.removeProductFromCart("Apple");
-//        assertEquals(1, test2account.getCart().sizeList());
-//    }
-//
-//    //add more helpers for addProductToCartMultipleTimes method
-//    @Test
-//    public void testRemoveProductFromCartMultipleTimes(){
-//        test2account.removeProductFromCart("Apple");
-//        test2account.removeProductFromCart("Purdy's Chocolate Box");
-//        assertEquals(0, test2account.getCart().sizeList());
-//    }
+    //add more helpers for addProductToCartMultipleTimes method
+    @Test
+    public void testRemoveProductFromCart(){
+        test2account.removeProductFromCart("Apple");
+        assertEquals(1, test2account.getCart().sizeWishlist());
+        assertEquals(0, test2account.getCart().findQuantityForProduct("Apple"));
+        assertEquals(3, test2account.getCart().findQuantityForProduct("Purdy's Chocolate Box"));
+    }
+
+    //add more helpers for addProductToCartMultipleTimes method
+    @Test
+    public void testRemoveProductFromCartMultipleTimes(){
+        test2account.removeProductFromCart("Apple");
+        test2account.removeProductFromCart("Purdy's Chocolate Box");
+        assertEquals(0, test2account.getCart().sizeWishlist());
+        assertFalse(test2account.getCart().isProductInCart("Apple"));
+        assertFalse(test2account.getCart().isProductInCart("Purdy's Chocolate Box"));
+    }
 }

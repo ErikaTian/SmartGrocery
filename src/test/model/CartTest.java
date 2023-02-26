@@ -37,6 +37,21 @@ public class CartTest {
     }
 
     @Test
+    void testRemoveProductFromWishlist() {
+        testCart.addProductToWishlist(test1product, 1);
+        testCart.removeProductFromWishlist(test1product);
+        assertEquals(0,testCart.sizeWishlist());
+        testCart.addProductToWishlist(test1product, 3);
+        testCart.addProductToWishlist(test2product, 2);
+        testCart.addProductToWishlist(test3product, 1);
+        testCart.removeProductFromWishlist(test1product);
+        testCart.removeProductFromWishlist(test2product);
+        assertEquals(1,testCart.sizeWishlist());
+        assertEquals(null,testCart.getProduct("Apple"));
+        assertEquals(test3product,testCart.getProduct("Elephant Instant Noodles"));
+    }
+
+    @Test
     void testSizeWishlist() {
         testCart.addProductToWishlist(test1product, 1);
         assertEquals(1,testCart.sizeWishlist());
@@ -63,6 +78,14 @@ public class CartTest {
     }
 
     @Test
+    void testGetProduct() {
+        testCart.addProductToWishlist(test1product, 5);
+        testCart.addProductToWishlist(test2product, 10);
+        assertEquals(null,testCart.getProduct("Elephant Instant Noodles"));
+        assertEquals(test1product,testCart.getProduct("Apple"));
+    }
+
+    @Test
     void testGetFullList() {
         List<String> fullList = new ArrayList<>();
         assertEquals(fullList,testCart.getFullList());
@@ -70,7 +93,7 @@ public class CartTest {
         testCart.addProductToWishlist(test2product, 2);
         testCart.addProductToWishlist(test2product, 3);
         String s1 = "[Apple, quantity: 1]";
-        String s2 = "[Elephant Instant Noodles, quantity: 5]";
+        String s2 = "[Purdy's Chocolate Box, quantity: 5]";
         fullList.add(s1);
         fullList.add(s2);
         assertEquals(fullList,testCart.getFullList());

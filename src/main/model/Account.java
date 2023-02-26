@@ -77,7 +77,7 @@ public class Account {
     // EFFECTS: remove the product from the cart
     public void removeProductFromCart(String name) {
         Product p;
-        p = cart.findProduct(name);
+        p = cart.getProduct(name);
         cart.removeProductFromWishlist(p);
 
     }
