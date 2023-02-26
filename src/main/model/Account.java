@@ -9,14 +9,15 @@ public class Account {
     // fields to represent changing properties of an account
     private String name;  // customer name
     private double balance;    // remaining account balance
-    private ProductList cartList;  // a list of selected products in the cart
+    private Cart cart;  // a wishlist of products with quantities in the cart
     //Note: should add an unchanging field like "FINAL STATIC INITIAL-VALUE = 0"
 
-    // EFFECTS: constructs an account with a customer name, a balance, and a list of selected products in the cart
-    public Account(String name, double balance, ProductList cartList) {
+    // EFFECTS: constructs an account with a customer name, a balance, and a wishlist of
+    //          products with quantities in the cart
+    public Account(String name, double balance, Cart cart) {
         this.name = name;
         this.balance = balance;
-        this.cartList = cartList;
+        this.cart = cart;
     }
 
     // EFFECTS: returns an account's customer name
@@ -29,9 +30,9 @@ public class Account {
         return balance;
     }
 
-    // EFFECTS: returns a list of selected products in the cart for this account
-    public ProductList getCartList() {
-        return cartList;
+    // EFFECTS: returns a wishlist of products with quantities in the cart for user account
+    public Cart getCart() {
+        return cart;
     }
 
 //    // Acknowledgement: this method is modified from "AccountRobust" project
@@ -67,16 +68,17 @@ public class Account {
     }
 
     // MODIFIES: this
-    // EFFECTS: add the product to the shopping list in the cart
-    public void addProductToCart(Product p) {
-        cartList.addProduct(p);
+    // EFFECTS: add the product to the wishlist in the cart
+    public void addProductToCart(Product p, int i) {
+        cart.addProductToWishlist(p, i);
     }
 
     // MODIFIES: this
     // EFFECTS: remove the product from the cart
     public void removeProductFromCart(String name) {
         Product p;
-        p = cartList.findProduct(name);
-        cartList.removeProduct(p);
+        p = cart.findProduct(name);
+        cart.removeProductFromWishlist(p);
+
     }
 }

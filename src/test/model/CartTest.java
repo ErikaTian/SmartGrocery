@@ -3,9 +3,11 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class CartTest {
     private Product test1product;
@@ -46,10 +48,32 @@ public class CartTest {
     }
 
     @Test
+    void testIsProductInCart() {
+        assertFalse(testCart.isProductInCart("Apple"));
+        testCart.addProductToWishlist(test1product, 1);
+        assertTrue(testCart.isProductInCart("Apple"));
+        assertFalse(testCart.isProductInCart("Purdy's Chocolate Box"));
+    }
+
+    @Test
     void testFindQuantityForProduct() {
         testCart.addProductToWishlist(test1product, 16);
         assertEquals(16,testCart.findQuantityForProduct("Apple"));
         assertEquals(0,testCart.findQuantityForProduct("Elephant Instant Noodles"));
+    }
+
+    @Test
+    void testGetFullList() {
+        List<String> fullList = new ArrayList<>();
+        assertEquals(fullList,testCart.getFullList());
+        testCart.addProductToWishlist(test1product, 1);
+        testCart.addProductToWishlist(test2product, 2);
+        testCart.addProductToWishlist(test2product, 3);
+        String s1 = "[Apple, quantity: 1]";
+        String s2 = "[Elephant Instant Noodles, quantity: 5]";
+        fullList.add(s1);
+        fullList.add(s2);
+        assertEquals(fullList,testCart.getFullList());
     }
 
 }

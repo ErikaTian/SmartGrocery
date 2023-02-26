@@ -1,6 +1,7 @@
 package ui;
 
 import model.Account;
+import model.Cart;
 import model.Product;
 import model.ProductList;
 import model.exceptions.NonPositiveException;
@@ -66,7 +67,7 @@ public class SmartGroceryApp {
     // MODIFIES: this
     // EFFECTS: initializes account
     private void initAccount() {
-        account = new Account("Erika", 120, new ProductList());
+        account = new Account("Erika", 120, new Cart());
         // if comment out below two lines, will get nullpointerException. Why?
         input = new Scanner(System.in); // give input
         input.useDelimiter("\n");  //separate things by new lines
@@ -132,7 +133,9 @@ public class SmartGroceryApp {
             addItem = input.next();
             addItem = addItem.toLowerCase();
             if (addItem.equals("yes")) {
-                account.addProductToCart(pl.findProduct(name));
+                System.out.println("Enter the quantity:");
+                int quantity = input.nextInt();
+                account.addProductToCart(pl.findProduct(name), quantity);
                 System.out.println("Ok, it has been added!");
             } else if (!addItem.equals("no")) {
                 System.out.println("Input not valid... here is the main menu:");
@@ -175,16 +178,16 @@ public class SmartGroceryApp {
         }
     }
 
-    // EFFECTS: print the shopping list in the cart of account
+    // EFFECTS: print the wishlist in the cart of user account
     private void viewCartList() {
-        ProductList cartList = account.getCartList();
+        Cart cart = account.getCart();
         // Below two lines are for testing
 //        Product product1 = new Product("Apple", 5.2, new Date(20230328));
-//        cartList.addProduct(product1);
-        if (cartList.sizeList() == 0) {
-            System.out.println(cartList.getFullList());
+//        cart.addProduct(product1);
+        if (cart.sizeWishlist() == 0) {
+            System.out.println(cart.getFullList());
         } else {
-            System.out.println(cartList.getFullList());
+            System.out.println(cart.getFullList());
             System.out.println("Do you want to remove any item from the cart?");
             String remove = "";
             remove = input.next();
@@ -192,7 +195,7 @@ public class SmartGroceryApp {
             if (remove.equals("yes")) {
                 System.out.println("Enter the product name:");
                 String name = input.next();
-                while ((cartList.findProduct(name) == null)) {
+                while ((cart.isProductInCart(name) == false)) {
                     System.out.println("Product not found... check the spelling and re-enter the product name:");
                     name = input.next();
                 }
