@@ -70,9 +70,9 @@ public class SmartGroceryApp {
     private void displayMenu() {
         System.out.println("\nSelect from:");
         System.out.println("\t1 -> view all items in the grocery store");
-        System.out.println("\t2 -> Load my account");
-        System.out.println("\t3 -> view my balance");
-        System.out.println("\t4 -> view the shopping list in my cart");
+        System.out.println("\t2 -> view the account balance");
+        System.out.println("\t3 -> view the shopping wishlist in the cart");
+        System.out.println("\t4 -> Load my account");
         System.out.println("\t5 -> Save my account");
         System.out.println("\t6 -> quit");
     }
@@ -84,11 +84,11 @@ public class SmartGroceryApp {
             viewList();
             addProduct();
         } else if (command.equals("2")) {
-            //loadAccount();
-        } else if (command.equals("3")) {
             viewBalance();
-        } else if (command.equals("4")) {
+        } else if (command.equals("3")) {
             viewCartList();
+        } else if (command.equals("4")) {
+            //loadAccount();
         } else if (command.equals("5")) {
             //saveAccount();
         } else {

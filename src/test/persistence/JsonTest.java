@@ -1,4 +1,4 @@
 package persistence;
 
-public class Cart {
+public class JsonTest {
 }
