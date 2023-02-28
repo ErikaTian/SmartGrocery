@@ -15,3 +15,5 @@ This application allows users to ***view*** all products in a grocery store, ***
 - As a user, I want to be able to top up the balance of my account
 - As a user, I want to be able to purchase selected products in the shopping cart in my account
 - As a user, I want to be able to select a product and add a new review for it, *for example*, "Good quality!"
+- As a user, when I select the quit option from SmartGroceryApp's menu, I want to be reminded to save my grocery list to file and have the option to do so or not
+- As a user, when I start SmartGroceryApp, I want to be given the option to load my grocery list from file. 

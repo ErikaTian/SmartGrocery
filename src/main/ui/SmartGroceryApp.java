@@ -36,7 +36,7 @@ public class SmartGroceryApp {
             System.out.println(command);
             command = command.toLowerCase();
 
-            if (command.equals("4")) {
+            if (command.equals("6")) {
                 keepGoing = false;
             } else {
                 processCommand(command);
@@ -48,7 +48,7 @@ public class SmartGroceryApp {
     // MODIFIES: this
     // EFFECTS: initializes account
     private void initAccount() {
-        account = new Account("Erika", 120, new Cart());
+        account = new Account("", 0, new Cart());
         input = new Scanner(System.in); // give input
         input.useDelimiter("\n");  //separate things by new lines
     }
@@ -70,9 +70,11 @@ public class SmartGroceryApp {
     private void displayMenu() {
         System.out.println("\nSelect from:");
         System.out.println("\t1 -> view all items in the grocery store");
-        System.out.println("\t2 -> view my balance");
-        System.out.println("\t3 -> view the shopping list in my cart");
-        System.out.println("\t4 -> quit");
+        System.out.println("\t2 -> Load my account");
+        System.out.println("\t3 -> view my balance");
+        System.out.println("\t4 -> view the shopping list in my cart");
+        System.out.println("\t5 -> Save my account");
+        System.out.println("\t6 -> quit");
     }
 
     // MODIFIES: this
@@ -82,9 +84,13 @@ public class SmartGroceryApp {
             viewList();
             addProduct();
         } else if (command.equals("2")) {
-            viewBalance();
+            //loadAccount();
         } else if (command.equals("3")) {
+            viewBalance();
+        } else if (command.equals("4")) {
             viewCartList();
+        } else if (command.equals("5")) {
+            //saveAccount();
         } else {
             System.out.println("Selection not valid...");
         }
