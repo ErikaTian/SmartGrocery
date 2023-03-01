@@ -25,6 +25,16 @@ public class Cart implements Writable {
         this.quantityList = quantityList;
     }
 
+    // EFFECTS: returns a cart's wishlist
+    public List<Product> getWishlist() {
+        return wishlist;    //Note: haven't written tests for it
+    }
+
+    // EFFECTS: returns the list of quantities corresponding to products on the wishlist
+    public List<Integer> getQuantityList() {
+        return quantityList; //Note: haven't written tests for it
+    }
+
     // MODIFIES: this
     // EFFECTS: add a product to the wishlist by the quantity of i
     public void addProductToWishlist(Product product, int i) {
