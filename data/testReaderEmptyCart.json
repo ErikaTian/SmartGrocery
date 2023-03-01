@@ -1,0 +1,8 @@
+{
+  "name": "Erika",
+  "balance": "100",
+  "cart": {
+    "wishlist": [],
+    "quantityList": []
+  }
+}
