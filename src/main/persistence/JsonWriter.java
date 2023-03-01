@@ -9,6 +9,7 @@ import java.io.PrintWriter;
 
 // this class is inspired by JsonSerializationDemo project
 // github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
+
 // Represents a writer that writes JSON representation of account to file
 public class JsonWriter {
     private static final int TAB = 4;
