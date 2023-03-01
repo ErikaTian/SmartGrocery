@@ -22,7 +22,9 @@ public class CartTest {
         test2product = new Product("Purdy's Chocolate Box",35.98, new Date(20240615));
         test3product = new Product("Elephant Instant Noodles",3.82, new Date(20240126));
 
-        testCart = new Cart();
+        List<Product> wl = new ArrayList<Product>();
+        List<Integer> ql = new ArrayList<Integer>();
+        testCart = new Cart(wl, ql);
     }
 
     @Test

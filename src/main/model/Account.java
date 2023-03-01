@@ -2,9 +2,11 @@ package model;
 
 import model.exceptions.InsufficientValueException;
 import model.exceptions.NonPositiveException;
+import org.json.JSONObject;
+import persistence.Writable;
 
 // Represents an account for each user
-public class Account {
+public class Account implements Writable {
 
     // fields to represent changing properties of an account
     private String name;  // customer name
@@ -70,5 +72,14 @@ public class Account {
         p = cart.getProduct(name);
         cart.removeProductFromWishlist(p);
 
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        json.put("balance", balance);
+        json.put("cart", cart);
+        return json;
     }
 }

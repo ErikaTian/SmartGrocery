@@ -1,9 +1,12 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.Date;
 
 // Represents a product with a name, a price, expiration date
-public class Product implements Printable {
+public class Product implements Printable, Writable {
 
     // fields to represent changing properties of a product
     private String name;  // product name
@@ -43,6 +46,15 @@ public class Product implements Printable {
         String dateStr = String.valueOf(bb.getTime());
         return "[" + name + ", $" + priceStr
                 + ", " + dateStr +  "]";
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        json.put("price", price);
+        json.put("bb", bb);
+        return json;
     }
 }
 

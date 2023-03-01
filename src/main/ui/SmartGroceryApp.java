@@ -6,13 +6,17 @@ import model.Product;
 import model.ProductList;
 import model.exceptions.NonPositiveException;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Scanner;
 
 // Smart Grocery shopping application
 public class SmartGroceryApp {
     private Account account;
     private Scanner input;
+
+    private static final String JSON_STORE = "./data/workroom.json";
 
     // EFFECTS: runs the smart grocery application
     public SmartGroceryApp() {
@@ -48,7 +52,9 @@ public class SmartGroceryApp {
     // MODIFIES: this
     // EFFECTS: initializes account
     private void initAccount() {
-        account = new Account("", 0, new Cart());
+        List<Product> wl = new ArrayList<Product>();
+        List<Integer> ql = new ArrayList<Integer>();
+        account = new Account("", 0, new Cart(wl, ql));
         input = new Scanner(System.in); // give input
         input.useDelimiter("\n");  //separate things by new lines
     }

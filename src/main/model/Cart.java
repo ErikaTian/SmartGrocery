@@ -1,22 +1,28 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 import java.util.List;
 
 // Represents a shopping cart in user account
-public class Cart {
+public class Cart implements Writable {
 
     // fields to represent changing properties of an account
     private List<Product> wishlist;  // a list of chose products
     private List<Integer> quantityList;  // quantity added for each product
 
-    // Creates an empty list of new products
+    // Creates a list of new products
     // REQUIRES: products.size() == quantities.size(); all entries in quantities are > 0;
     //           all entries in both lists are non-null
     // EFFECTS: creates a new cart that have a list of products with their corresponding quantities
-    public Cart() {
-        wishlist = new ArrayList<Product>();
-        quantityList = new ArrayList<Integer>();
+    public Cart(List<Product> wishlist, List<Integer> quantityList) {
+//        wishlist = new ArrayList<Product>();
+//        quantityList = new ArrayList<Integer>();
+        this.wishlist = wishlist;
+        this.quantityList = quantityList;
     }
 
     // MODIFIES: this
@@ -94,6 +100,33 @@ public class Cart {
             fullList.add(print);
         }
         return fullList;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("wishlist", productsToJson());
+        json.put("quantityList", quantitiesToJson());
+        return json;
+    }
+
+    // EFFECTS: returns products on the wishlist as a JSON array
+    private JSONArray productsToJson() {
+        JSONArray jsonArray = new JSONArray();
+        for (Product p : wishlist) {
+            jsonArray.put(p.toJson());
+        }
+        return jsonArray;
+    }
+
+    // EFFECTS: returns quantities associated with products as a JSON array
+    private JSONArray quantitiesToJson() {
+        JSONArray jsonArray = new JSONArray();
+        for (Integer i : quantityList) {
+            Object o = (int) i;
+            jsonArray.put(o);
+        }
+        return jsonArray;
     }
 }
 
