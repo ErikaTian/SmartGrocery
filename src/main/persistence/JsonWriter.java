@@ -1,6 +1,7 @@
 package persistence;
 
 import model.Account;
+import model.Cart;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -29,10 +30,10 @@ public class JsonWriter {
     }
 
     // MODIFIES: this
-    // EFFECTS: writes JSON representation of workroom to file
+    // EFFECTS: writes JSON representation of account to file
     public void write(Account a) {
-        JSONObject json = a.toJson();
-        saveToFile(json.toString(TAB));
+        JSONObject jsonAccount = a.toJson();
+        saveToFile(jsonAccount.toString(TAB));
     }
 
     // MODIFIES: this

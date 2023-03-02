@@ -53,7 +53,7 @@ public class Product implements Printable, Writable {
         JSONObject json = new JSONObject();
         json.put("name", name);
         json.put("price", price);
-        json.put("bb", bb);
+        json.put("bb", String.valueOf(bb.getTime())); //arbitrary, not sure it's correct
         return json;
     }
 }

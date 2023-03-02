@@ -29,7 +29,7 @@ public class JsonReaderTest extends JsonTest {
 
     @Test
     void testReaderEmptyCart() {
-        JsonReader reader = new JsonReader("./data/testReaderEmptyCart.json");
+        JsonReader reader = new JsonReader("./data/testReaderEmptyCartInAccount.json");
         try {
             Account a = reader.read();
             assertEquals("Erika", a.getName());
@@ -42,7 +42,7 @@ public class JsonReaderTest extends JsonTest {
 
     @Test
     void testReaderGeneralCart() {
-        JsonReader reader = new JsonReader("./data/testReaderGeneralCart.json");
+        JsonReader reader = new JsonReader("./data/testReaderGeneralCartInAccount.json");
         try {
             Account a = reader.read();
             assertEquals("Erika", a.getName());
