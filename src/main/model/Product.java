@@ -4,6 +4,7 @@ import org.json.JSONObject;
 import persistence.Writable;
 
 import java.util.Date;
+import java.util.Objects;
 
 // Represents a product with a name, a price, expiration date
 public class Product implements Printable, Writable {
@@ -46,6 +47,23 @@ public class Product implements Printable, Writable {
         String dateStr = String.valueOf(bb.getTime());
         return "[" + name + ", $" + priceStr
                 + ", " + dateStr +  "]";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Product product = (Product) o;
+        return name.equals(product.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 
     @Override
