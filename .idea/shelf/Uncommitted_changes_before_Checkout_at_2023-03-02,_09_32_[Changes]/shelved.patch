@@ -1,0 +1,17 @@
+Index: src/main/model/Account.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package model;\n\nimport model.exceptions.InsufficientValueException;\nimport model.exceptions.NonPositiveException;\n\n// Represents an account for each user\npublic class Account {\n\n    // fields to represent changing properties of an account\n    private String name;  // customer name\n    private double balance;    // remaining account balance\n    private Cart cart;  // a wishlist of products with their quantities in the cart\n\n    // EFFECTS: constructs an account with a customer name, a balance, and a wishlist of\n    //          products with quantities in the cart\n    public Account(String name, double balance, Cart cart) {\n        this.name = name;\n        this.balance = balance;\n        this.cart = cart;\n    }\n\n    // EFFECTS: returns an account's customer name\n    public String getName() {\n        return name;\n    }\n\n    // EFFECTS: returns an account's balance\n    public double getBalance() {\n        return balance;\n    }\n\n    // EFFECTS: returns a wishlist of products with quantities in the cart for user account\n    public Cart getCart() {\n        return cart;\n    }\n\n    // MODIFIES: this\n    // EFFECTS: the balance increases by the amount in this account\n    public double topUpBalance(double amount) throws NonPositiveException {\n        if (amount <= 0) {\n            throw new NonPositiveException();\n        }\n        balance = balance + amount;\n        return balance;\n    }\n\n    // MODIFIES: this\n    // EFFECTS: the balance decreases by the amount in this account\n    public double makePurchase(double amount) throws NonPositiveException, InsufficientValueException {\n        if (amount <= 0) {\n            throw new NonPositiveException();\n        }\n        if (balance < amount) {\n            throw new InsufficientValueException();\n        }\n        balance = balance - amount;\n        return balance;\n    }\n\n    // MODIFIES: this\n    // EFFECTS: add p to the wishlist in the cart by the quantity of i\n    public void addProductToCart(Product p, int i) {\n        cart.addProductToWishlist(p, i);\n    }\n\n    // MODIFIES: this\n    // EFFECTS: remove the product from the cart by searching its name\n    public void removeProductFromCart(String name) {\n        Product p;\n        p = cart.getProduct(name);\n        cart.removeProductFromWishlist(p);\n\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/model/Account.java b/src/main/model/Account.java
+--- a/src/main/model/Account.java	(revision f3efb2e272c75ac760a0ed256d30583e91c86712)
++++ b/src/main/model/Account.java	(date 1677739410321)
+@@ -69,6 +69,5 @@
+         Product p;
+         p = cart.getProduct(name);
+         cart.removeProductFromWishlist(p);
+-
+     }
+ }

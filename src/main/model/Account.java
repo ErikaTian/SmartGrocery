@@ -71,7 +71,6 @@ public class Account implements Writable {
         Product p;
         p = cart.getProduct(name);
         cart.removeProductFromWishlist(p);
-
     }
 
     @Override

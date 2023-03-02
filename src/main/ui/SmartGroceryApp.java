@@ -5,7 +5,11 @@ import model.Cart;
 import model.Product;
 import model.ProductList;
 import model.exceptions.NonPositiveException;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -13,13 +17,20 @@ import java.util.Scanner;
 
 // Smart Grocery shopping application
 public class SmartGroceryApp {
+    private static final String JSON_STORE = "./data/account.json";
     private Account account;
     private Scanner input;
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
 
-    private static final String JSON_STORE = "./data/workroom.json";
-
-    // EFFECTS: runs the smart grocery application
-    public SmartGroceryApp() {
+    // EFFECTS: constructs account and runs the smart grocery application
+    public SmartGroceryApp() throws FileNotFoundException {
+        input = new Scanner(System.in);
+//        List<Product> wl = new ArrayList<Product>();
+//        List<Integer> ql = new ArrayList<Integer>();
+//        account = new Account("Erika's account", 0, new Cart(wl, ql));
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
         runSmartGrocery();
     }
 
@@ -29,10 +40,10 @@ public class SmartGroceryApp {
         boolean keepGoing = true;
         String command;
 
-        initAccount();
-        initList();
-
         System.out.println("Welcome to SmartGrocery!");
+
+        initList();
+        initAccount();
 
         while (keepGoing) {
             displayMenu();
@@ -54,7 +65,11 @@ public class SmartGroceryApp {
     private void initAccount() {
         List<Product> wl = new ArrayList<Product>();
         List<Integer> ql = new ArrayList<Integer>();
-        account = new Account("", 0, new Cart(wl, ql));
+
+        // Ask for user's name
+        System.out.println("Enter your name:");
+        String name = input.next();
+        account = new Account(name, 0, new Cart(wl, ql));
         input = new Scanner(System.in); // give input
         input.useDelimiter("\n");  //separate things by new lines
     }
@@ -94,9 +109,9 @@ public class SmartGroceryApp {
         } else if (command.equals("3")) {
             viewCartList();
         } else if (command.equals("4")) {
-            //loadAccount();
+            loadAccount();
         } else if (command.equals("5")) {
-            //saveAccount();
+            saveAccount();
         } else {
             System.out.println("Selection not valid...");
         }
@@ -182,6 +197,29 @@ public class SmartGroceryApp {
             } else if (!remove.equals("no")) {
                 System.out.println("Input not valid... here is the main menu:");
             }
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads account from file
+    private void loadAccount() {
+        try {
+            account = jsonReader.read();
+            System.out.println("Loaded " + account.getName() + " from " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
+        }
+    }
+
+    // EFFECTS: saves the account to file
+    private void saveAccount() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(account);
+            jsonWriter.close();
+            System.out.println("Saved " + account.getName() + " to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
         }
     }
 }
