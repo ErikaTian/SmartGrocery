@@ -49,13 +49,16 @@ public class JsonReader {
     private Account parseAccount(JSONObject jsonObject) {
         String name = jsonObject.getString("name");
         double balance = jsonObject.getDouble("balance");
-        Cart cart = parseCart(jsonObject); // a helper fn
+        JSONObject jsonCart = jsonObject.getJSONObject("cart");;
+        Cart cart = parseCart(jsonCart); // a helper fn
         Account account = new Account(name, balance, cart);
         return account;
     }
 
     // EFFECTS: parses the cart from JSON object and returns it
     private Cart parseCart(JSONObject jsonObject) {
+//        JSONObject jsonData1 = jsonObject.getJSONObject("wishlist");
+//        JSONObject jsonData2 = jsonObject.getJSONObject("quantityList");
         List<Product> wishlist = parseWishlist(jsonObject); // a helper fn
         List<Integer> quantityList = parseQuantities(jsonObject); // a helper fn
         Cart cart = new Cart(wishlist, quantityList);
@@ -65,9 +68,12 @@ public class JsonReader {
     // EFFECTS: parses the wishlist of products from JSON object and returns it
     private List<Product> parseWishlist(JSONObject jsonObject) {
         List<Product> wishlist = new ArrayList<>();
-        JSONObject jsonO = jsonObject.getJSONObject("cart");
-        JSONArray jsonData = jsonO.getJSONArray("wishlist");
+        // Note: original
+//        JSONObject jsonO = jsonObject.getJSONObject("cart");
+//        JSONArray jsonData = jsonO.getJSONArray("wishlist");
+        JSONArray jsonData = jsonObject.getJSONArray("wishlist");
         //Note: below line doesn't work, why?
+        //Prof: didn't find "cart.wishlist" is a valid key in Json
 //        JSONArray jsonData = jsonObject.getJSONArray("cart.wishlist");
         for (Object p : jsonData) {
             JSONObject product = (JSONObject) p; // cast p from object to JSONObject
@@ -96,10 +102,7 @@ public class JsonReader {
     // EFFECTS: parses the list of quantities from JSON object and returns it
     private List<Integer> parseQuantities(JSONObject jsonObject) {
         List<Integer> quantityList = new ArrayList<>();
-//        JSONObject jsonO = jsonObject.getJSONObject("cart");
-//        JSONArray jsonData = jsonO.getJSONArray("wishlist");
-        JSONObject jsonO = jsonObject.getJSONObject("cart");
-        JSONArray jsonData = jsonO.getJSONArray("quantityList");
+        JSONArray jsonData = jsonObject.getJSONArray("quantityList");
         for (Object o: jsonData) {
 //            JSONObject quantity = (JSONObject) o; // no need
             int quantity = Integer.parseInt(o.toString());
