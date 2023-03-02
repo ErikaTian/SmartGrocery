@@ -65,7 +65,10 @@ public class JsonReader {
     // EFFECTS: parses the wishlist of products from JSON object and returns it
     private List<Product> parseWishlist(JSONObject jsonObject) {
         List<Product> wishlist = new ArrayList<>();
-        JSONArray jsonData = jsonObject.getJSONArray("wishlist");
+        JSONObject jsonO = jsonObject.getJSONObject("cart");
+        JSONArray jsonData = jsonO.getJSONArray("wishlist");
+        //Note: below line doesn't work, why?
+//        JSONArray jsonData = jsonObject.getJSONArray("cart.wishlist");
         for (Object p : jsonData) {
             JSONObject product = (JSONObject) p; // cast p from object to JSONObject
             wishlist.add(parseProduct(product));
@@ -79,10 +82,13 @@ public class JsonReader {
         double price = jsonObject.getDouble("price");
         String bb = jsonObject.getString("bb");
         // need another function to parse bb to date (20230228)???
+        //Note: below are notes for brainstorming
 //        String s1 = bb.substring(0,3);
 //        String s2 = bb.substring(4,5);
 //        String s3 = bb.substring(6,7);  // no need
-        Date date = new Date(bb);
+//        new SimpleDateFormat("dd/MM/yyyy");
+        Date date = new Date(Integer.valueOf(bb));
+        // not sure if this approach is too trivial (not systematical)
         Product p = new Product(name, price, date);
         return p;
     }
@@ -90,7 +96,10 @@ public class JsonReader {
     // EFFECTS: parses the list of quantities from JSON object and returns it
     private List<Integer> parseQuantities(JSONObject jsonObject) {
         List<Integer> quantityList = new ArrayList<>();
-        JSONArray jsonData = jsonObject.getJSONArray("quantityList");
+//        JSONObject jsonO = jsonObject.getJSONObject("cart");
+//        JSONArray jsonData = jsonO.getJSONArray("wishlist");
+        JSONObject jsonO = jsonObject.getJSONObject("cart");
+        JSONArray jsonData = jsonO.getJSONArray("quantityList");
         for (Object o: jsonData) {
 //            JSONObject quantity = (JSONObject) o; // no need
             int quantity = Integer.parseInt(o.toString());
