@@ -26,9 +26,25 @@ public class SmartGroceryApp {
     // EFFECTS: constructs account and runs the smart grocery application
     public SmartGroceryApp() throws FileNotFoundException {
         input = new Scanner(System.in);
+        //Note: creates account in init()
 //        List<Product> wl = new ArrayList<Product>();
 //        List<Integer> ql = new ArrayList<Integer>();
 //        account = new Account("Erika's account", 0, new Cart(wl, ql));
+
+        //Note: move initAccount() to SmartGroceryApp() instead of runSmartGrocery()
+        // MODIFIES: this
+        // EFFECTS: initializes account
+//        private void initAccount() {
+        List<Product> wl = new ArrayList<Product>();
+        List<Integer> ql = new ArrayList<Integer>();
+            // Ask for user's name
+        System.out.println("Enter your name:");
+        String name = input.next();
+        account = new Account(name, 0, new Cart(wl, ql));
+        input = new Scanner(System.in); // give input
+        input.useDelimiter("\n");  //separate things by new lines
+//        }
+
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
         runSmartGrocery();
@@ -43,7 +59,7 @@ public class SmartGroceryApp {
         System.out.println("Welcome to SmartGrocery!");
 
         initList();
-        initAccount();
+//        initAccount(); move initAccount() to SmartGroceryApp()
 
         while (keepGoing) {
             displayMenu();
@@ -58,20 +74,6 @@ public class SmartGroceryApp {
             }
         }
         System.out.println("\nThank you for visiting SmartGrocery. Have a nice day!");
-    }
-
-    // MODIFIES: this
-    // EFFECTS: initializes account
-    private void initAccount() {
-        List<Product> wl = new ArrayList<Product>();
-        List<Integer> ql = new ArrayList<Integer>();
-
-        // Ask for user's name
-        System.out.println("Enter your name:");
-        String name = input.next();
-        account = new Account(name, 0, new Cart(wl, ql));
-        input = new Scanner(System.in); // give input
-        input.useDelimiter("\n");  //separate things by new lines
     }
 
     // MODIFIES: this
@@ -108,9 +110,9 @@ public class SmartGroceryApp {
             viewBalance();
         } else if (command.equals("3")) {
             viewCartList();
-        } else if (command.equals("4")) {
+        } else if (command.equals("4")) {  //want to get rid of "4" "5"
             loadAccount();
-        } else if (command.equals("5")) {
+        } else if (command.equals("5")) { //let app ask user directly
             saveAccount();
         } else {
             System.out.println("Selection not valid...");
