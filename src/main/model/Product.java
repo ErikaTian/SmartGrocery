@@ -74,6 +74,8 @@ public class Product implements Printable, Writable {
         json.put("bb", String.valueOf(bb.getTime())); //arbitrary, not sure it's correct
         return json;
     }
+
+
 }
 
 

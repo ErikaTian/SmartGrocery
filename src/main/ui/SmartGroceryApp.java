@@ -41,6 +41,7 @@ public class SmartGroceryApp {
         System.out.println("Enter your name:");
         String name = input.next();
         account = new Account(name, 0, new Cart(wl, ql));
+
         input = new Scanner(System.in); // give input
         input.useDelimiter("\n");  //separate things by new lines
 //        }
@@ -50,6 +51,12 @@ public class SmartGroceryApp {
         runSmartGrocery();
     }
 
+//    // MODIFIES: this
+//    // EFFECTS: search user in the database by using name
+//    private boolean hasAccount() {
+//
+//    }
+//
     // MODIFIES: this
     // EFFECTS: processes the user input
     private void runSmartGrocery() {
