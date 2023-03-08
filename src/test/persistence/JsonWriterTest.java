@@ -1,8 +1,10 @@
 package persistence;
 
 import model.Account;
+import model.AccountMap;
 import model.Cart;
 import model.Product;
+import model.exceptions.DuplicateAccountException;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -38,19 +40,23 @@ public class JsonWriterTest extends JsonTest {
             List<Product> pl= new ArrayList<>();
             List<Integer> il= new ArrayList<>();
             Cart c = new Cart(pl, il);
-            Account a = new Account("Erika", 100, c);
+            Account a = new Account("Erika",100, c);
+            AccountMap accounts = new AccountMap();
+            accounts.addAccount("Erika", a);
             JsonWriter writer = new JsonWriter("./data/testWriterEmptyCartInAccount.json");
             writer.open();
             writer.write(a);
             writer.close();
 
             JsonReader reader = new JsonReader("./data/testWriterEmptyCartInAccount.json");
-            a = reader.read();
+            accounts = reader.read();
             assertEquals("Erika", a.getName());
             assertEquals(100, a.getBalance());
             assertEquals(0, a.getCart().getWishlist().size());
         } catch (IOException e) {
             fail("Exception should not have been thrown");
+        } catch (DuplicateAccountException e) {
+            System.out.println("This user has already exists!");
         }
     }
 
@@ -70,13 +76,15 @@ public class JsonWriterTest extends JsonTest {
             il.add(7);
             Cart c = new Cart(pl, il);
             Account a = new Account("Erika", 100, c);
+            AccountMap accounts = new AccountMap();
+            accounts.addAccount("Erika", a);
             JsonWriter writer = new JsonWriter("./data/testWriterGeneralCartInAccount.json");
             writer.open();
             writer.write(a);
             writer.close();
 
             JsonReader reader = new JsonReader("./data/testWriterGeneralCartInAccount.json");
-            a = reader.read();
+            accounts = reader.read();
             assertEquals("Erika", a.getName());
             assertEquals(100, a.getBalance());
             assertEquals(3, a.getCart().getWishlist().size());
@@ -91,6 +99,8 @@ public class JsonWriterTest extends JsonTest {
 
         } catch (IOException e) {
             fail("Exception should not have been thrown");
+        } catch (DuplicateAccountException e) {
+            System.out.println("This user has already exists!");
         }
     }
 }

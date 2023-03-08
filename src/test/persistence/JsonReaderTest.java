@@ -1,6 +1,7 @@
 package persistence;
 
 import model.Account;
+import model.AccountMap;
 import model.Product;
 import org.junit.jupiter.api.Test;
 
@@ -20,7 +21,7 @@ public class JsonReaderTest extends JsonTest {
     void testReaderNonExistentFile() {
         JsonReader reader = new JsonReader("./data/noSuchFile.json");
         try {
-            Account a = reader.read();
+            AccountMap account = reader.read();
             fail();
         } catch (IOException e) {
             // all good here
@@ -31,7 +32,8 @@ public class JsonReaderTest extends JsonTest {
     void testReaderEmptyCart() {
         JsonReader reader = new JsonReader("./data/testReaderEmptyCartInAccount.json");
         try {
-            Account a = reader.read();
+            AccountMap accounts = reader.read();
+            Account a = accounts.getAccountByName("Erika");
             assertEquals("Erika", a.getName());
             assertEquals(100, a.getBalance());
             assertEquals(0, a.getCart().sizeWishlist());
@@ -44,7 +46,8 @@ public class JsonReaderTest extends JsonTest {
     void testReaderGeneralCart() {
         JsonReader reader = new JsonReader("./data/testReaderGeneralCartInAccount.json");
         try {
-            Account a = reader.read();
+            AccountMap accounts = reader.read();
+            Account a = accounts.getAccountByName("Erika");
             assertEquals("Erika", a.getName());
             assertEquals(100, a.getBalance());
             List<Product> pl = a.getCart().getWishlist();

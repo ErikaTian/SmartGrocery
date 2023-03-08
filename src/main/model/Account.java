@@ -8,6 +8,8 @@ import persistence.Writable;
 // Represents an account for each user
 public class Account implements Writable {
 
+    private static final int INITIAL_VALUE = 0;
+
     // fields to represent changing properties of an account
     private String name;  // customer name
     private double balance;    // remaining account balance
@@ -20,6 +22,14 @@ public class Account implements Writable {
         this.balance = balance;
         this.cart = cart;
     }
+
+    // EFFECTS: constructs an account with a customer name, an initial balance of 0,
+    //           and an empty cart without any product
+//    public Account(String name) {
+//        this.name = name;
+//        this.balance = INITIAL_VALUE;
+//        this.cart = new Cart();
+//    }
 
     // EFFECTS: returns an account's customer name
     public String getName() {

@@ -25,6 +25,11 @@ public class Cart implements Writable {
         this.quantityList = quantityList;
     }
 
+//    public Cart() {
+//        wishlist = new ArrayList<Product>();
+//        quantityList = new ArrayList<Integer>();
+//    }
+
     // EFFECTS: returns a cart's wishlist
     public List<Product> getWishlist() {
         return wishlist;    //Note: haven't written tests for it

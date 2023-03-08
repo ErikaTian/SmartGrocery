@@ -1,8 +1,10 @@
 package persistence;
 
 import model.Account;
+import model.AccountMap;
 import model.Cart;
 import model.Product;
+import model.exceptions.DuplicateAccountException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -10,9 +12,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Stream;
 
 // this class is inspired by JsonSerializationDemo project
@@ -29,10 +29,16 @@ public class JsonReader {
 
     // EFFECTS: reads account from file and returns it;
     // throws IOException if an error occurs reading data from file
-    public Account read() throws IOException {
+    public AccountMap read() throws IOException {
         String jsonData = readFile(source);
         JSONObject jsonObject = new JSONObject(jsonData);
-        return parseAccount(jsonObject);
+        AccountMap accounts = null;
+        try {
+            accounts = parseAccountMap(jsonObject);
+        } catch (DuplicateAccountException e) {
+            System.out.println("This is not possible!");
+        }
+        return accounts;
     }
 
     // EFFECTS: reads source file as string and returns it
@@ -43,6 +49,19 @@ public class JsonReader {
             stream.forEach(s -> contentBuilder.append(s));
         }
         return contentBuilder.toString();
+    }
+
+    // EFFECTS: parses a set of accounts from JSON object and returns it
+    private AccountMap parseAccountMap(JSONObject jsonObject) throws DuplicateAccountException {
+        AccountMap accounts = new AccountMap();
+        Iterable<String> names = jsonObject.keySet();
+        while (names.iterator().hasNext()) {
+            String name = names.iterator().next();
+            Object account = jsonObject.get(name);
+            JSONObject acc = (JSONObject) account;
+            accounts.addAccount(name, parseAccount(acc));
+        }
+        return accounts;
     }
 
     // EFFECTS: parses the account from JSON object and returns it

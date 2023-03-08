@@ -1,12 +1,8 @@
 {
     "balance": 0,
-    "name": "Erika",
+    "name": "Peter",
     "cart": {
-        "wishlist": [{
-            "bb": "20230328",
-            "price": 5.2,
-            "name": "Apple"
-        }],
-        "quantityList": [23]
+        "wishlist": [],
+        "quantityList": []
     }
 }

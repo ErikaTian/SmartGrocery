@@ -1,9 +1,6 @@
 package ui;
 
-import model.Account;
-import model.Cart;
-import model.Product;
-import model.ProductList;
+import model.*;
 import model.exceptions.NonPositiveException;
 import persistence.JsonReader;
 import persistence.JsonWriter;
@@ -19,6 +16,7 @@ import java.util.Scanner;
 public class SmartGroceryApp {
     private static final String JSON_STORE = "./data/account.json";
     private Account account;
+    private AccountMap accounts;
     private Scanner input;
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
@@ -213,7 +211,7 @@ public class SmartGroceryApp {
     // EFFECTS: loads account from file
     private void loadAccount() {
         try {
-            account = jsonReader.read();
+            accounts = jsonReader.read();
             System.out.println("Loaded " + account.getName() + " from " + JSON_STORE);
         } catch (IOException e) {
             System.out.println("Unable to read from file: " + JSON_STORE);

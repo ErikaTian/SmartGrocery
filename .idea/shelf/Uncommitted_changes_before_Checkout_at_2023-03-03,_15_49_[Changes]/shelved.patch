@@ -1,0 +1,19 @@
+Index: src/main/model/Product.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package model;\n\nimport java.util.Date;\n\n// Represents a product with a name, a price, expiration date\npublic class Product implements Printable {\n\n    // fields to represent changing properties of a product\n    private String name;  // product name\n    private double price;    // product price\n    private Date bb;  // best-before date for product\n\n    // EFFECTS: constructs product with a name, a price, an age, a quantity in storage\n    //          expiration date\n    public Product(String name, double price, Date bb) {\n        this.name = name;\n        this.price = price;\n        this.bb = bb;\n    }\n\n    // EFFECTS: returns a product's name\n    public String getName() {\n        return name;\n    }\n\n    // EFFECTS: returns a product's price\n    public double getPrice() {\n        return price;\n    }\n\n    // EFFECTS: returns a product's best before date\n    public Date getBB() {\n        return bb;\n    }\n\n    /*\n     * EFFECTS: returns a string representation of a product\n     * Acknowledgement: this method is modified from \"AccountNotRobust\" project\n     */\n    @Override\n    public String toString() {\n        String priceStr = String.format(\"%.2f\", price);  // get price to 2 decimal places as a string\n        String dateStr = String.valueOf(bb.getTime());\n        return \"[\" + name + \", $\" + priceStr\n                + \", \" + dateStr +  \"]\";\n    }\n}\n\n\n\n\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/model/Product.java b/src/main/model/Product.java
+--- a/src/main/model/Product.java	(revision f3efb2e272c75ac760a0ed256d30583e91c86712)
++++ b/src/main/model/Product.java	(date 1677887347710)
+@@ -44,6 +44,8 @@
+         return "[" + name + ", $" + priceStr
+                 + ", " + dateStr +  "]";
+     }
++
++
+ }
+ 
+ 
