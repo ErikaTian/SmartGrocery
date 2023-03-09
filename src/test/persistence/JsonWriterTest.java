@@ -42,9 +42,11 @@ public class JsonWriterTest extends JsonTest {
             List<Product> pl= new ArrayList<>();
             List<Integer> il= new ArrayList<>();
             Cart c = new Cart(pl, il);
-            Account a = new Account("Erika",100, c);
+            Account a1 = new Account("Erika",100, c);
+            Account a2 = new Account("Peter",20, c);
             AccountMap accounts = new AccountMap();
-            accounts.addAccount("Erika", a);
+            accounts.addAccount("Erika", a1);
+            accounts.addAccount("Peter", a2);
             JsonWriter writer = new JsonWriter("./data/testWriterEmptyCartInAccount.json");
             writer.open();
             writer.write(accounts);

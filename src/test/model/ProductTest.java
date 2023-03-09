@@ -31,4 +31,21 @@ public class ProductTest {
     void testToString() {
         assertEquals("[Apple, $5.20, 20230328]", test1product.toString());
     }
+
+    @Test
+    void testEquals() {
+        Product p = null;
+        String s = "product";
+        assertFalse(test1product.equals(p));
+        assertFalse(test1product.equals(s));
+        assertTrue(test1product.equals(test1product));
+        assertFalse(test1product.equals(test2product));
+    }
+
+    @Test
+    void testHashCode() {
+        assertEquals(63476569, test1product.hashCode());
+        assertEquals(-907354604, test2product.hashCode());
+        assertEquals(-911598411, test3product.hashCode());
+    }
 }

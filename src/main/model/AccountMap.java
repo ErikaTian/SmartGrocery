@@ -24,7 +24,9 @@ public class AccountMap implements Writable {
     }
 
     public void addAccount(String name, Account account) {
-        if (!hasAccountWithName(name)) {
+        if (accounts == null) {
+            accounts.put(name, account);
+        } else if (!hasAccountWithName(name)) {
             accounts.put(name, account);
         }
     }

@@ -7,10 +7,7 @@ import persistence.JsonWriter;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 // Smart Grocery shopping application
 public class SmartGroceryApp {
@@ -23,48 +20,43 @@ public class SmartGroceryApp {
 
     // EFFECTS: constructs account and runs the smart grocery application
     public SmartGroceryApp() throws FileNotFoundException {
-        input = new Scanner(System.in);
-        //Note: creates account in init()
-//        List<Product> wl = new ArrayList<Product>();
-//        List<Integer> ql = new ArrayList<Integer>();
-//        account = new Account("Erika's account", 0, new Cart(wl, ql));
-
-        //Note: move initAccount() to SmartGroceryApp() instead of runSmartGrocery()
-        // MODIFIES: this
-        // EFFECTS: initializes account
-//        private void initAccount() {
-        List<Product> wl = new ArrayList<Product>();
-        List<Integer> ql = new ArrayList<Integer>();
-            // Ask for user's name
-        System.out.println("Enter your name:");
-        String name = input.next();
-        account = new Account(name, 0, new Cart(wl, ql));
-
         input = new Scanner(System.in); // give input
         input.useDelimiter("\n");  //separate things by new lines
-//        }
 
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
+
+        initAccount();
         runSmartGrocery();
     }
 
-//    // MODIFIES: this
-//    // EFFECTS: search user in the database by using name
-//    private boolean hasAccount() {
-//
-//    }
-//
+    //Note: move initAccount() to SmartGroceryApp() instead of runSmartGrocery()
+    // MODIFIES: this
+    // EFFECTS: initializes account of this user
+    private void initAccount() {
+        // Ask for user's name
+        System.out.println("Enter your name:");
+        String name = input.next();
+        System.out.println("Hi, " + name + "! Welcome to SmartGrocery!");
+        account = new Account(name, 0, new Cart(new ArrayList<Product>(), new ArrayList<Integer>()));
+        accounts = new AccountMap();
+
+//        if (!accounts.hasAccountWithName(name)) {
+//            accounts.addAccount(name, account);
+//        }  else {
+//            Account a = accounts.getAccountByName(name);
+//            a = account;
+//        }
+    }
+
     // MODIFIES: this
     // EFFECTS: processes the user input
     private void runSmartGrocery() {
         boolean keepGoing = true;
         String command;
 
-        System.out.println("Welcome to SmartGrocery!");
-
         initList();
-//        initAccount(); move initAccount() to SmartGroceryApp()
+//      Note: initAccount(); move initAccount() to SmartGroceryApp()
 
         while (keepGoing) {
             displayMenu();
@@ -212,6 +204,7 @@ public class SmartGroceryApp {
     private void loadAccount() {
         try {
             accounts = jsonReader.read();
+            account = accounts.getAccountByName(account.getName());
             System.out.println("Loaded " + account.getName() + " from " + JSON_STORE);
         } catch (IOException e) {
             System.out.println("Unable to read from file: " + JSON_STORE);
@@ -221,6 +214,7 @@ public class SmartGroceryApp {
     // EFFECTS: saves the account to file
     private void saveAccount() {
         try {
+            accounts.addAccount(account.getName(), account);
             jsonWriter.open();
             jsonWriter.write(accounts);
             jsonWriter.close();
