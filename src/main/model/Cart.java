@@ -19,25 +19,18 @@ public class Cart implements Writable {
     //           all entries in both lists are non-null
     // EFFECTS: creates a new cart that have a list of products with their corresponding quantities
     public Cart(List<Product> wishlist, List<Integer> quantityList) {
-//        wishlist = new ArrayList<Product>();
-//        quantityList = new ArrayList<Integer>();
         this.wishlist = wishlist;
         this.quantityList = quantityList;
     }
 
-//    public Cart() {
-//        wishlist = new ArrayList<Product>();
-//        quantityList = new ArrayList<Integer>();
-//    }
-
     // EFFECTS: returns a cart's wishlist
     public List<Product> getWishlist() {
-        return wishlist;    //Note: haven't written tests for it
+        return wishlist;
     }
 
     // EFFECTS: returns the list of quantities corresponding to products on the wishlist
     public List<Integer> getQuantityList() {
-        return quantityList; //Note: haven't written tests for it
+        return quantityList;
     }
 
     // MODIFIES: this
@@ -117,6 +110,7 @@ public class Cart implements Writable {
         return fullList;
     }
 
+    // EFFECTS: convert Cart to JSONObject
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();

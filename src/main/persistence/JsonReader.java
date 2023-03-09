@@ -17,7 +17,7 @@ import java.util.stream.Stream;
 // this class is inspired by JsonSerializationDemo project
 // github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
 
-// Represents a reader that reads saved accounts from JSON data stored in file
+// Represents a reader that reads saved a collection of accounts from JSON data stored in file
 public class JsonReader {
     private String source;
 
@@ -26,7 +26,7 @@ public class JsonReader {
         this.source = source;
     }
 
-    // EFFECTS: reads account from file and returns it;
+    // EFFECTS: reads a collection of accounts from file and returns it;
     // throws IOException if an error occurs reading data from file
     public AccountMap read() throws IOException {
         String jsonData = readFile(source);
@@ -46,7 +46,7 @@ public class JsonReader {
         return contentBuilder.toString();
     }
 
-    // EFFECTS: parses a set of accounts from JSON object and returns it
+    // EFFECTS: parses a collection of accounts from JSON object and returns it
     private AccountMap parseAccountMap(JSONObject jsonObject) {
         AccountMap accounts = new AccountMap();
         Set<String> names = jsonObject.keySet();
@@ -55,13 +55,6 @@ public class JsonReader {
             Account a = parseAccount(jsonAccount);
             accounts.addAccount(s, a);
         }
-        // Note: better to use a for loop NOT a while loop
-//        while (names.iterator().hasNext()) {
-//            String name = names.iterator().next();
-//            Object account = jsonObject.get(name);
-//            JSONObject acc = (JSONObject) account;
-//            accounts.addAccount(name, parseAccount(acc));
-//        }
         return accounts;
     }
 
@@ -69,7 +62,8 @@ public class JsonReader {
     private Account parseAccount(JSONObject jsonObject) {
         String name = jsonObject.getString("name");
         double balance = jsonObject.getDouble("balance");
-        JSONObject jsonCart = jsonObject.getJSONObject("cart");;
+        JSONObject jsonCart = jsonObject.getJSONObject("cart");
+        ;
         Cart cart = parseCart(jsonCart); // a helper fn
         Account account = new Account(name, balance, cart);
         return account;
@@ -77,8 +71,6 @@ public class JsonReader {
 
     // EFFECTS: parses the cart from JSON object and returns it
     private Cart parseCart(JSONObject jsonObject) {
-//        JSONObject jsonData1 = jsonObject.getJSONObject("wishlist");
-//        JSONObject jsonData2 = jsonObject.getJSONObject("quantityList");
         List<Product> wishlist = parseWishlist(jsonObject); // a helper fn
         List<Integer> quantityList = parseQuantities(jsonObject); // a helper fn
         Cart cart = new Cart(wishlist, quantityList);
@@ -88,13 +80,7 @@ public class JsonReader {
     // EFFECTS: parses the wishlist of products from JSON object and returns it
     private List<Product> parseWishlist(JSONObject jsonObject) {
         List<Product> wishlist = new ArrayList<>();
-        // Note: original
-//        JSONObject jsonO = jsonObject.getJSONObject("cart");
-//        JSONArray jsonData = jsonO.getJSONArray("wishlist");
         JSONArray jsonData = jsonObject.getJSONArray("wishlist");
-        //Note: below line doesn't work, why?
-        //Prof: didn't find "cart.wishlist" is a valid key in Json
-//        JSONArray jsonData = jsonObject.getJSONArray("cart.wishlist");
         for (Object p : jsonData) {
             JSONObject product = (JSONObject) p; // cast p from object to JSONObject
             wishlist.add(parseProduct(product));
@@ -107,14 +93,7 @@ public class JsonReader {
         String name = jsonObject.getString("name");
         double price = jsonObject.getDouble("price");
         String bb = jsonObject.getString("bb");
-        // need another function to parse bb to date (20230228)???
-        //Note: below are notes for brainstorming
-//        String s1 = bb.substring(0,3);
-//        String s2 = bb.substring(4,5);
-//        String s3 = bb.substring(6,7);  // no need
-//        new SimpleDateFormat("dd/MM/yyyy");
         Date date = new Date(Integer.valueOf(bb));
-        // not sure if this approach is too trivial (not systematical)
         Product p = new Product(name, price, date);
         return p;
     }
@@ -123,12 +102,10 @@ public class JsonReader {
     private List<Integer> parseQuantities(JSONObject jsonObject) {
         List<Integer> quantityList = new ArrayList<>();
         JSONArray jsonData = jsonObject.getJSONArray("quantityList");
-        for (Object o: jsonData) {
-//            JSONObject quantity = (JSONObject) o; // no need
+        for (Object o : jsonData) {
             int quantity = Integer.parseInt(o.toString());
             quantityList.add(quantity);
         }
         return quantityList;
     }
-
 }

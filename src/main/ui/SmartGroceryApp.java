@@ -22,7 +22,8 @@ public class SmartGroceryApp {
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
 
-    // EFFECTS: constructs a set of accounts in the grocery store and runs the smart grocery application
+    // MODIFIES: this
+    // EFFECTS: initializes account of this user and runs the smart grocery application
     public SmartGroceryApp() throws FileNotFoundException {
         input = new Scanner(System.in); // give input
         input.useDelimiter("\n");  //separate things by new lines
@@ -35,15 +36,13 @@ public class SmartGroceryApp {
     }
 
     // MODIFIES: this
-    // EFFECTS: initializes account of this user
+    // EFFECTS: initializes account of this user and retrieves the collection of accounts in the grocery store
     private void initAccount() {
-        // Ask for user's name
         System.out.println("Enter your name:");
         String name = input.next();
         System.out.println("Hi, " + name + "! Welcome to SmartGrocery!");
         account = new Account(name);
         accounts = new AccountMap();
-
         try {
             accounts = jsonReader.read();
         } catch (IOException e) {
@@ -58,7 +57,6 @@ public class SmartGroceryApp {
         String command;
 
         initList();
-//      Note: initAccountMap(); move initAccountMap() to SmartGroceryApp()
 
         while (keepGoing) {
             displayMenu();
@@ -109,9 +107,9 @@ public class SmartGroceryApp {
             viewBalance();
         } else if (command.equals("3")) {
             viewCartList();
-        } else if (command.equals("4")) {  //want to get rid of "4" "5"
+        } else if (command.equals("4")) {
             loadAccount();
-        } else if (command.equals("5")) { //let app ask user directly
+        } else if (command.equals("5")) {
             saveAccount();
         } else {
             System.out.println("Selection not valid...");
@@ -202,7 +200,7 @@ public class SmartGroceryApp {
     }
 
     // MODIFIES: this
-    // EFFECTS: loads account from file
+    // EFFECTS: loads existing account for this user from file
     private void loadAccount() {
         if (accounts.hasAccountWithName(account.getName())) {
             account = accounts.getAccountByName(account.getName());
@@ -210,22 +208,13 @@ public class SmartGroceryApp {
         } else {
             System.out.println("You have no existing account. Remember to save your account before leaving today!");
         }
-
-//        Note: App already reads the json file at the beginning
-//        try {
-//            accounts = jsonReader.read();
-//            account = accounts.getAccountByName(account.getName());
-//            System.out.println("Loaded " + account.getName() + " from " + JSON_STORE);
-//        } catch (IOException e) {
-//            System.out.println("Unable to read from file: " + JSON_STORE);
-//        }
     }
 
+    // MODIFIES: this
     // EFFECTS: saves the account to file
     private void saveAccount() {
         try {
             accounts.addAccount(account.getName(), account);
-
             jsonWriter.open();
             jsonWriter.write(accounts);
             jsonWriter.close();

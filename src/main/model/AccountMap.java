@@ -16,27 +16,27 @@ public class AccountMap implements Writable {
         accounts = new HashMap<>();
     }
 
-    // EFFECTS: returns an account by searching username
+    // EFFECTS: returns an account by searching username in this collection
     public Account getAccountByName(String name) {
         return accounts.get(name);
     }
 
     // MODIFIES: this
-    // EFFECTS: returns an account by searching username
+    // EFFECTS: if account doesn't exist in this collection, then put it with its username as key
+    //          in this collection; otherwise, replace the existing account associated with username
+    //          by (current) account; Notice ".put" function will achieve both goals
     public void addAccount(String name, Account account) {
         accounts.put(name, account);
-// Note: there is no need to check if accounts have this account, because we will do either
-//       (1) add this account to accounts
-//       (2) replace the old account in accounts with this account using the same key
-//       both cases use accounts.put(name, account);
     }
 
+    // EFFECTS: returns true if user's account exists in this collection,
     public boolean hasAccountWithName(String name) {
         Account a = null;
         a = getAccountByName(name);
         return a != null;
     }
 
+    // EFFECTS: convert AccountMap to JSONObject
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();

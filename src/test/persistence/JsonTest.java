@@ -1,11 +1,7 @@
 package persistence;
 
-import model.Account;
-import model.Cart;
 import model.Product;
-
 import java.util.Date;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
