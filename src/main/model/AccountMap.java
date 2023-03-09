@@ -23,11 +23,10 @@ public class AccountMap implements Writable {
         return accounts.get(name);
     }
 
-    public void addAccount(String name, Account account) throws DuplicateAccountException {
-        if (hasAccountWithName(name)) {
-            throw new DuplicateAccountException();
+    public void addAccount(String name, Account account) {
+        if (!hasAccountWithName(name)) {
+            accounts.put(name, account);
         }
-        accounts.put(name, account);
     }
 
     public boolean hasAccountWithName(String name) {

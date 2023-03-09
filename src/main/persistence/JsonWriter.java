@@ -1,6 +1,7 @@
 package persistence;
 
 import model.Account;
+import model.AccountMap;
 import model.Cart;
 import org.json.JSONObject;
 
@@ -30,10 +31,10 @@ public class JsonWriter {
     }
 
     // MODIFIES: this
-    // EFFECTS: writes JSON representation of account to file
-    public void write(Account a) {
-        JSONObject jsonAccount = a.toJson();
-        saveToFile(jsonAccount.toString(TAB));
+    // EFFECTS: writes JSON representation of a set of accounts to file
+    public void write(AccountMap accounts) {
+        JSONObject jsonAccounts = accounts.toJson();
+        saveToFile(jsonAccounts.toString(TAB));
     }
 
     // MODIFIES: this

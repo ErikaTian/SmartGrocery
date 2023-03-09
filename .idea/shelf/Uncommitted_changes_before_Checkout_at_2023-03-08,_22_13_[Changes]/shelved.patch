@@ -1,0 +1,720 @@
+Index: data/testReaderEmptyCartInAccount.json
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>{\n  \"Erika\": { \"name\": \"Erika\",\n    \"balance\": \"100\",\n    \"cart\": {\n      \"wishlist\": [],\n      \"quantityList\": []\n    }\n  },\n  \"Peter\": { \"name\": \"Peter\",\n    \"balance\": \"0\",\n    \"cart\": {\n      \"wishlist\": [],\n      \"quantityList\": []\n    }\n  }\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/data/testReaderEmptyCartInAccount.json b/data/testReaderEmptyCartInAccount.json
+--- a/data/testReaderEmptyCartInAccount.json	
++++ b/data/testReaderEmptyCartInAccount.json	
+@@ -1,13 +1,17 @@
+ {
+-  "Erika": { "name": "Erika",
++  "Erika":
++  {
++    "name": "Erika",
+     "balance": "100",
+     "cart": {
+       "wishlist": [],
+       "quantityList": []
+     }
+   },
+-  "Peter": { "name": "Peter",
+-    "balance": "0",
++  "Peter":
++  {
++    "name": "Peter",
++    "balance": "20",
+     "cart": {
+       "wishlist": [],
+       "quantityList": []
+Index: src/main/ui/SmartGroceryApp.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package ui;\n\nimport model.*;\nimport model.exceptions.NonPositiveException;\nimport persistence.JsonReader;\nimport persistence.JsonWriter;\n\nimport java.io.FileNotFoundException;\nimport java.io.IOException;\nimport java.util.ArrayList;\nimport java.util.Date;\nimport java.util.List;\nimport java.util.Scanner;\n\n// Smart Grocery shopping application\npublic class SmartGroceryApp {\n    private static final String JSON_STORE = \"./data/account.json\";\n    private Account account;\n    private AccountMap accounts;\n    private Scanner input;\n    private JsonWriter jsonWriter;\n    private JsonReader jsonReader;\n\n    // EFFECTS: constructs account and runs the smart grocery application\n    public SmartGroceryApp() throws FileNotFoundException {\n        input = new Scanner(System.in);\n        //Note: creates account in init()\n//        List<Product> wl = new ArrayList<Product>();\n//        List<Integer> ql = new ArrayList<Integer>();\n//        account = new Account(\"Erika's account\", 0, new Cart(wl, ql));\n\n        //Note: move initAccount() to SmartGroceryApp() instead of runSmartGrocery()\n        // MODIFIES: this\n        // EFFECTS: initializes account\n//        private void initAccount() {\n        List<Product> wl = new ArrayList<Product>();\n        List<Integer> ql = new ArrayList<Integer>();\n            // Ask for user's name\n        System.out.println(\"Enter your name:\");\n        String name = input.next();\n        account = new Account(name, 0, new Cart(wl, ql));\n\n        input = new Scanner(System.in); // give input\n        input.useDelimiter(\"\\n\");  //separate things by new lines\n//        }\n\n        jsonWriter = new JsonWriter(JSON_STORE);\n        jsonReader = new JsonReader(JSON_STORE);\n        runSmartGrocery();\n    }\n\n//    // MODIFIES: this\n//    // EFFECTS: search user in the database by using name\n//    private boolean hasAccount() {\n//\n//    }\n//\n    // MODIFIES: this\n    // EFFECTS: processes the user input\n    private void runSmartGrocery() {\n        boolean keepGoing = true;\n        String command;\n\n        System.out.println(\"Welcome to SmartGrocery!\");\n\n        initList();\n//        initAccount(); move initAccount() to SmartGroceryApp()\n\n        while (keepGoing) {\n            displayMenu();\n            command = input.next();\n            System.out.println(command);\n            command = command.toLowerCase();\n\n            if (command.equals(\"6\")) {\n                keepGoing = false;\n            } else {\n                processCommand(command);\n            }\n        }\n        System.out.println(\"\\nThank you for visiting SmartGrocery. Have a nice day!\");\n    }\n\n    // MODIFIES: this\n    // EFFECTS: initializes a list of products in the grocery store\n    private ProductList initList() {\n        Product product1 = new Product(\"Apple\", 5.2, new Date(20230328));\n        Product product2 = new Product(\"Purdy's Chocolate Box\", 35.98, new Date(20240615));\n        Product product3 = new Product(\"Elephant Instant Noodles\", 3.82, new Date(20240126));\n        ProductList pl = new ProductList();\n        pl.addProduct(product1);\n        pl.addProduct(product2);\n        pl.addProduct(product3);\n        return pl;\n    }\n\n    // EFFECTS: displays menu of options to user\n    private void displayMenu() {\n        System.out.println(\"\\nSelect from:\");\n        System.out.println(\"\\t1 -> view all items in the grocery store\");\n        System.out.println(\"\\t2 -> view the account balance\");\n        System.out.println(\"\\t3 -> view the shopping wishlist in the cart\");\n        System.out.println(\"\\t4 -> Load my account\");\n        System.out.println(\"\\t5 -> Save my account\");\n        System.out.println(\"\\t6 -> quit\");\n    }\n\n    // MODIFIES: this\n    // EFFECTS: processes user command\n    private void processCommand(String command) {\n        if (command.equals(\"1\")) {\n            viewList();\n            addProduct();\n        } else if (command.equals(\"2\")) {\n            viewBalance();\n        } else if (command.equals(\"3\")) {\n            viewCartList();\n        } else if (command.equals(\"4\")) {  //want to get rid of \"4\" \"5\"\n            loadAccount();\n        } else if (command.equals(\"5\")) { //let app ask user directly\n            saveAccount();\n        } else {\n            System.out.println(\"Selection not valid...\");\n        }\n    }\n\n    // EFFECTS: print the list of all products in the grocery store\n    private void viewList() {\n        ProductList pl = initList();\n        System.out.println(pl.getFullList());\n    }\n\n    // MODIFIES: this\n    // EFFECTS: see details of a product by searching its name; if founded,\n    //          offer the option to add it (with a quantity) in the cart\n    private void addProduct() {\n        ProductList pl = initList();\n        String name;\n        System.out.println(\"Search by product name:\");\n        name = input.next();\n        if (!(pl.findProduct(name) == null)) {\n            System.out.println(pl.findProduct(name).toString());\n            System.out.println(\"Do you want to add this item to your cart?\");\n            String addItem;\n            addItem = input.next();\n            addItem = addItem.toLowerCase();\n            if (addItem.equals(\"yes\")) {\n                System.out.println(\"Enter the quantity:\");\n                int quantity = input.nextInt();\n                account.addProductToCart(pl.findProduct(name), quantity);\n                System.out.println(\"Ok, it has been added!\");\n            } else if (!addItem.equals(\"no\")) {\n                System.out.println(\"Input not valid... here is the main menu:\");\n            }\n        } else {\n            System.out.println(\"Cannot find this item... \");\n        }\n    }\n\n    // MODIFIES: this\n    // EFFECTS: print the balance of account; offer the option to top up the balance\n    private void viewBalance() {\n        double balance = account.getBalance();\n        System.out.printf(\"Balance: $%.2f\\n\", balance);\n        System.out.println(\"Do you want to top up?\");\n        String topUp;\n        topUp = input.next();\n        topUp = topUp.toLowerCase();\n        if (topUp.equals(\"yes\")) {\n            System.out.println(\"Enter the amount:\");\n            double amount = input.nextDouble();\n            try {\n                account.topUpBalance(amount);\n            } catch (NonPositiveException e) {\n                System.out.println(\"Input must be a positive value to be added ...\\n\");\n            }\n        } else if (!topUp.equals(\"no\")) {\n            System.out.println(\"Input not valid... here is the main menu:\");\n        }\n    }\n\n    // MODIFIES: this\n    // EFFECTS: print the wishlist in the cart of user account;\n    //          offer the option to remove any product from the cart\n    private void viewCartList() {\n        Cart cart = account.getCart();\n        if (cart.sizeWishlist() == 0) {\n            System.out.println(cart.getFullList());\n        } else {\n            System.out.println(cart.getFullList());\n            System.out.println(\"Do you want to remove any item from the cart?\");\n            String remove;\n            remove = input.next();\n            remove = remove.toLowerCase();\n            if (remove.equals(\"yes\")) {\n                System.out.println(\"Enter the product name:\");\n                String name = input.next();\n                while (!cart.isProductInCart(name)) {\n                    System.out.println(\"Product not found... check the spelling and re-enter the product name:\");\n                    name = input.next();\n                }\n                account.removeProductFromCart(name);\n                System.out.println(\"Ok, it has been removed!\");\n            } else if (!remove.equals(\"no\")) {\n                System.out.println(\"Input not valid... here is the main menu:\");\n            }\n        }\n    }\n\n    // MODIFIES: this\n    // EFFECTS: loads account from file\n    private void loadAccount() {\n        try {\n            accounts = jsonReader.read();\n            System.out.println(\"Loaded \" + account.getName() + \" from \" + JSON_STORE);\n        } catch (IOException e) {\n            System.out.println(\"Unable to read from file: \" + JSON_STORE);\n        }\n    }\n\n    // EFFECTS: saves the account to file\n    private void saveAccount() {\n        try {\n            jsonWriter.open();\n            jsonWriter.write(account);\n            jsonWriter.close();\n            System.out.println(\"Saved \" + account.getName() + \" to \" + JSON_STORE);\n        } catch (FileNotFoundException e) {\n            System.out.println(\"Unable to write to file: \" + JSON_STORE);\n        }\n    }\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/ui/SmartGroceryApp.java b/src/main/ui/SmartGroceryApp.java
+--- a/src/main/ui/SmartGroceryApp.java	
++++ b/src/main/ui/SmartGroceryApp.java	
+@@ -9,7 +9,6 @@
+ import java.io.IOException;
+ import java.util.ArrayList;
+ import java.util.Date;
+-import java.util.List;
+ import java.util.Scanner;
+ 
+ // Smart Grocery shopping application
+@@ -23,7 +22,11 @@
+ 
+     // EFFECTS: constructs account and runs the smart grocery application
+     public SmartGroceryApp() throws FileNotFoundException {
+-        input = new Scanner(System.in);
++        input = new Scanner(System.in); // give input
++        input.useDelimiter("\n");  //separate things by new lines
++
++        jsonWriter = new JsonWriter(JSON_STORE);
++        jsonReader = new JsonReader(JSON_STORE);
+         //Note: creates account in init()
+ //        List<Product> wl = new ArrayList<Product>();
+ //        List<Integer> ql = new ArrayList<Integer>();
+@@ -33,19 +36,7 @@
+         // MODIFIES: this
+         // EFFECTS: initializes account
+ //        private void initAccount() {
+-        List<Product> wl = new ArrayList<Product>();
+-        List<Integer> ql = new ArrayList<Integer>();
+-            // Ask for user's name
+-        System.out.println("Enter your name:");
+-        String name = input.next();
+-        account = new Account(name, 0, new Cart(wl, ql));
+ 
+-        input = new Scanner(System.in); // give input
+-        input.useDelimiter("\n");  //separate things by new lines
+-//        }
+-
+-        jsonWriter = new JsonWriter(JSON_STORE);
+-        jsonReader = new JsonReader(JSON_STORE);
+         runSmartGrocery();
+     }
+ 
+@@ -55,6 +46,22 @@
+ //
+ //    }
+ //
++
++    // MODIFIES: this
++    // EFFECTS: initializes this user's account either by loading saved account or
++    //          creates a new account
++    private void initAccount() {
++        // Ask for user's name
++        System.out.println("Enter your name:");
++        String name = input.next();
++        try {
++            accounts = jsonReader.read();
++        } catch (IOException e) {
++            System.out.println("Unable to read from file: " + JSON_STORE);
++        }
++        checkUserExistingAccount(name);
++    }
++
+     // MODIFIES: this
+     // EFFECTS: processes the user input
+     private void runSmartGrocery() {
+@@ -63,6 +70,7 @@
+ 
+         System.out.println("Welcome to SmartGrocery!");
+ 
++        initAccount();
+         initList();
+ //        initAccount(); move initAccount() to SmartGroceryApp()
+ 
+@@ -116,7 +124,9 @@
+         } else if (command.equals("3")) {
+             viewCartList();
+         } else if (command.equals("4")) {  //want to get rid of "4" "5"
+-            loadAccount();
++            String name = input.next();
++            name = name.toLowerCase();
++            loadAccount(name);
+         } else if (command.equals("5")) { //let app ask user directly
+             saveAccount();
+         } else {
+@@ -207,22 +217,45 @@
+         }
+     }
+ 
++    // MODIFIES: this
++    // EFFECTS: checks if the user's account has already existed; if the user wants
++    //          to load his/her existing account, loads it from file; otherwise,
++    //          creates a new account for this user and add it to the grocery store
++    private void checkUserExistingAccount(String name) {
++        if (accounts.hasAccountWithName(name)) {
++            System.out.println("Do you want to load your account? Please enter yes or no:");
++            String option = input.next();
++            option = option.toLowerCase();
++            if (option.equals("yes")) {
++                account = accounts.getAccountByName(name);
++                System.out.println("Loaded " + account.getName() + " from " + JSON_STORE);
++            } else if (option.equals("no")) {
++                System.out.println("Alert: if you don't load your account before saving new products, "
++                        + "you will lose previous records! You can also manually load your account later.");
++            } else {
++                System.out.println("Input not valid... Please re-enter: ");
++                checkUserExistingAccount(name);
++            }
++        } else {
++            Account a = new Account(name, 0, new Cart(new ArrayList<Product>(), new ArrayList<Integer>()));
++            account = a;
++            accounts.addAccount(name, a);
++        }
++    }
++
+     // MODIFIES: this
+     // EFFECTS: loads account from file
+-    private void loadAccount() {
+-        try {
+-            accounts = jsonReader.read();
+-            System.out.println("Loaded " + account.getName() + " from " + JSON_STORE);
+-        } catch (IOException e) {
+-            System.out.println("Unable to read from file: " + JSON_STORE);
+-        }
++    private void loadAccount(String name) {
++        String thisUser = account.getName();
++        account = accounts.getAccountByName(thisUser);
++        System.out.println("Loaded " + account.getName() + " from " + JSON_STORE);
+     }
+ 
+     // EFFECTS: saves the account to file
+     private void saveAccount() {
+         try {
+             jsonWriter.open();
+-            jsonWriter.write(account);
++            jsonWriter.write(accounts);
+             jsonWriter.close();
+             System.out.println("Saved " + account.getName() + " to " + JSON_STORE);
+         } catch (FileNotFoundException e) {
+Index: src/test/persistence/JsonReaderTest.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package persistence;\n\nimport model.Account;\nimport model.AccountMap;\nimport model.Product;\nimport org.junit.jupiter.api.Test;\n\nimport java.io.IOException;\nimport java.util.ArrayList;\nimport java.util.Date;\nimport java.util.List;\n\nimport static org.junit.jupiter.api.Assertions.assertEquals;\nimport static org.junit.jupiter.api.Assertions.fail;\n\n// this class is inspired by JsonSerializationDemo project\n// github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo\npublic class JsonReaderTest extends JsonTest {\n\n    @Test\n    void testReaderNonExistentFile() {\n        JsonReader reader = new JsonReader(\"./data/noSuchFile.json\");\n        try {\n            AccountMap account = reader.read();\n            fail();\n        } catch (IOException e) {\n            // all good here\n        }\n    }\n\n    @Test\n    void testReaderEmptyCart() {\n        JsonReader reader = new JsonReader(\"./data/testReaderEmptyCartInAccount.json\");\n        try {\n            AccountMap accounts = reader.read();\n            Account a1 = accounts.getAccountByName(\"Erika\");\n            assertEquals(\"Erika\", a1.getName());\n            assertEquals(100, a1.getBalance());\n            assertEquals(0, a1.getCart().sizeWishlist());\n            Account a2 = accounts.getAccountByName(\"Peter\");\n            assertEquals(\"Peter\", a2.getName());\n            assertEquals(0, a2.getBalance());\n            assertEquals(0, a2.getCart().sizeWishlist());\n        } catch (IOException e) {\n            fail(\"Couldn't read from file\");\n        }\n    }\n\n    @Test\n    void testReaderGeneralCart() {\n        JsonReader reader = new JsonReader(\"./data/testReaderGeneralCartInAccount.json\");\n        try {\n            AccountMap accounts = reader.read();\n            Account a = accounts.getAccountByName(\"Erika\");\n            assertEquals(\"Erika\", a.getName());\n            assertEquals(100, a.getBalance());\n            List<Product> pl = a.getCart().getWishlist();\n            List<Integer> il = a.getCart().getQuantityList();\n            assertEquals(3, pl.size());\n            assertEquals(3, il.size());\n            assertEquals(10, il.get(0));\n            assertEquals(3, il.get(1));\n            assertEquals(5, il.get(2));\n            checkProduct(\"Apple\", 5.2, new Date(20230328), pl.get(0));\n            checkProduct(\"Purdy's Chocolate Box\", 35.98, new Date(20240615), pl.get(1));\n            checkProduct(\"Elephant Instant Noodles\", 3.82, new Date(20240126), pl.get(2));\n            // Note: date formatting still has problems !!!\n\n//Note: cannot use below plan as two same objects will be stored at different memory slots\n//            Product p1 = new Product(\"Apple\",5.2, new Date(20230328));\n//            Product p2 = new Product(\"Purdy's Chocolate Box\",35.98, new Date(20240615));\n//            Product p3 = new Product(\"Elephant Instant Noodles\",3.82, new Date(20240126));\n//            List<Product> testPl = new ArrayList<>();\n//            testPl.add(p1);\n//            testPl.add(p2);\n//            testPl.add(p3);\n//            List<Integer> testIl = new ArrayList<>();\n//            testIl.add(10);\n//            testIl.add(3);\n//            testIl.add(5);\n//            checkAccount(testPl, testIl, a.getCart());\n        } catch (IOException e) {\n            fail(\"Couldn't read from file\");\n        }\n    }\n\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/test/persistence/JsonReaderTest.java b/src/test/persistence/JsonReaderTest.java
+--- a/src/test/persistence/JsonReaderTest.java	
++++ b/src/test/persistence/JsonReaderTest.java	
+@@ -39,7 +39,7 @@
+             assertEquals(0, a1.getCart().sizeWishlist());
+             Account a2 = accounts.getAccountByName("Peter");
+             assertEquals("Peter", a2.getName());
+-            assertEquals(0, a2.getBalance());
++            assertEquals(20, a2.getBalance());
+             assertEquals(0, a2.getCart().sizeWishlist());
+         } catch (IOException e) {
+             fail("Couldn't read from file");
+@@ -51,19 +51,31 @@
+         JsonReader reader = new JsonReader("./data/testReaderGeneralCartInAccount.json");
+         try {
+             AccountMap accounts = reader.read();
+-            Account a = accounts.getAccountByName("Erika");
+-            assertEquals("Erika", a.getName());
+-            assertEquals(100, a.getBalance());
+-            List<Product> pl = a.getCart().getWishlist();
+-            List<Integer> il = a.getCart().getQuantityList();
+-            assertEquals(3, pl.size());
+-            assertEquals(3, il.size());
+-            assertEquals(10, il.get(0));
+-            assertEquals(3, il.get(1));
+-            assertEquals(5, il.get(2));
+-            checkProduct("Apple", 5.2, new Date(20230328), pl.get(0));
+-            checkProduct("Purdy's Chocolate Box", 35.98, new Date(20240615), pl.get(1));
+-            checkProduct("Elephant Instant Noodles", 3.82, new Date(20240126), pl.get(2));
++            Account a1 = accounts.getAccountByName("Erika");
++            assertEquals("Erika", a1.getName());
++            assertEquals(100, a1.getBalance());
++            List<Product> pl1 = a1.getCart().getWishlist();
++            List<Integer> il1 = a1.getCart().getQuantityList();
++            assertEquals(3, pl1.size());
++            assertEquals(3, il1.size());
++            assertEquals(10, il1.get(0));
++            assertEquals(3, il1.get(1));
++            assertEquals(5, il1.get(2));
++            checkProduct("Apple", 5.2, new Date(20230328), pl1.get(0));
++            checkProduct("Purdy's Chocolate Box", 35.98, new Date(20240615), pl1.get(1));
++            checkProduct("Elephant Instant Noodles", 3.82, new Date(20240126), pl1.get(2));
++
++            Account a2 = accounts.getAccountByName("Peter");
++            assertEquals("Peter", a2.getName());
++            assertEquals(20, a2.getBalance());
++            List<Product> pl2 = a2.getCart().getWishlist();
++            List<Integer> il2 = a2.getCart().getQuantityList();
++            assertEquals(2, pl2.size());
++            assertEquals(2, il2.size());
++            assertEquals(20, il2.get(0));
++            assertEquals(99, il2.get(1));
++            checkProduct("Apple", 5.2, new Date(20230328), pl2.get(0));
++            checkProduct("Purdy's Chocolate Box", 35.98, new Date(20240615), pl2.get(1));
+             // Note: date formatting still has problems !!!
+ 
+ //Note: cannot use below plan as two same objects will be stored at different memory slots
+Index: src/test/persistence/JsonWriterTest.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package persistence;\n\nimport model.Account;\nimport model.AccountMap;\nimport model.Cart;\nimport model.Product;\nimport model.exceptions.DuplicateAccountException;\nimport org.junit.jupiter.api.Test;\n\nimport java.io.IOException;\nimport java.util.ArrayList;\nimport java.util.Date;\nimport java.util.List;\n\nimport static org.junit.jupiter.api.Assertions.assertEquals;\nimport static org.junit.jupiter.api.Assertions.fail;\n\n// this class is inspired by JsonSerializationDemo project\n// github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo\npublic class JsonWriterTest extends JsonTest {\n\n    @Test\n    void testWriterInvalidFile() {\n        try {\n            List<Product> pl= new ArrayList<>();\n            List<Integer> il= new ArrayList<>();\n            Cart c = new Cart(pl, il);\n            Account a = new Account(\"Erika\", 100, c);\n            JsonWriter writer = new JsonWriter(\"./data/my\\0illegal:fileName.json\");\n            writer.open();\n            fail(\"IOException was expected\");\n        } catch (IOException e) {\n            // pass\n        }\n    }\n\n    @Test\n    void testWriterEmptyWorkroom() {\n        try {\n            List<Product> pl= new ArrayList<>();\n            List<Integer> il= new ArrayList<>();\n            Cart c = new Cart(pl, il);\n            Account a = new Account(\"Erika\",100, c);\n            AccountMap accounts = new AccountMap();\n            accounts.addAccount(\"Erika\", a);\n            JsonWriter writer = new JsonWriter(\"./data/testWriterEmptyCartInAccount.json\");\n            writer.open();\n            writer.write(a);\n            writer.close();\n\n            JsonReader reader = new JsonReader(\"./data/testWriterEmptyCartInAccount.json\");\n            accounts = reader.read();\n            assertEquals(\"Erika\", a.getName());\n            assertEquals(100, a.getBalance());\n            assertEquals(0, a.getCart().getWishlist().size());\n        } catch (IOException e) {\n            fail(\"Exception should not have been thrown\");\n        } catch (DuplicateAccountException e) {\n            System.out.println(\"This user has already exists!\");\n        }\n    }\n\n    @Test\n    void testWriterGeneralWorkroom() {\n        try {\n            Product p1 = new Product(\"Apple\",5.2, new Date(20230328));\n            Product p2 = new Product(\"Purdy's Chocolate Box\",35.98, new Date(20240615));\n            Product p3 = new Product(\"Elephant Instant Noodles\",3.82, new Date(20240126));\n            List<Product> pl= new ArrayList<>();\n            List<Integer> il= new ArrayList<>();\n            pl.add(p3);\n            pl.add(p1);\n            pl.add(p2);\n            il.add(14);\n            il.add(20);\n            il.add(7);\n            Cart c = new Cart(pl, il);\n            Account a = new Account(\"Erika\", 100, c);\n            AccountMap accounts = new AccountMap();\n            accounts.addAccount(\"Erika\", a);\n            JsonWriter writer = new JsonWriter(\"./data/testWriterGeneralCartInAccount.json\");\n            writer.open();\n            writer.write(a);\n            writer.close();\n\n            JsonReader reader = new JsonReader(\"./data/testWriterGeneralCartInAccount.json\");\n            accounts = reader.read();\n            assertEquals(\"Erika\", a.getName());\n            assertEquals(100, a.getBalance());\n            assertEquals(3, a.getCart().getWishlist().size());\n            List<Product> productList = a.getCart().getWishlist();\n            List<Integer> quantityList = a.getCart().getQuantityList();\n            assertEquals(14, quantityList.get(0));\n            assertEquals(20, quantityList.get(1));\n            assertEquals(7, quantityList.get(2));\n            checkProduct(\"Elephant Instant Noodles\",3.82, new Date(20240126), productList.get(0));\n            checkProduct(\"Apple\", 5.2, new Date(20230328), productList.get(1));\n            checkProduct(\"Purdy's Chocolate Box\",35.98, new Date(20240615), productList.get(2));\n\n        } catch (IOException e) {\n            fail(\"Exception should not have been thrown\");\n        } catch (DuplicateAccountException e) {\n            System.out.println(\"This user has already exists!\");\n        }\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/test/persistence/JsonWriterTest.java b/src/test/persistence/JsonWriterTest.java
+--- a/src/test/persistence/JsonWriterTest.java	
++++ b/src/test/persistence/JsonWriterTest.java	
+@@ -25,7 +25,8 @@
+             List<Product> pl= new ArrayList<>();
+             List<Integer> il= new ArrayList<>();
+             Cart c = new Cart(pl, il);
+-            Account a = new Account("Erika", 100, c);
++            Account a1 = new Account("Erika", 100, c);
++            Account a2 = new Account("Peter", 20, c);
+             JsonWriter writer = new JsonWriter("./data/my\0illegal:fileName.json");
+             writer.open();
+             fail("IOException was expected");
+@@ -37,27 +38,33 @@
+     @Test
+     void testWriterEmptyWorkroom() {
+         try {
+-            List<Product> pl= new ArrayList<>();
+-            List<Integer> il= new ArrayList<>();
++            List<Product> pl = new ArrayList<>();
++            List<Integer> il = new ArrayList<>();
+             Cart c = new Cart(pl, il);
+-            Account a = new Account("Erika",100, c);
++            Account a1 = new Account("Erika", 100, c);
++            Account a2 = new Account("Peter", 20, c);
+             AccountMap accounts = new AccountMap();
+-            accounts.addAccount("Erika", a);
++            accounts.addAccount("Erika", a1);
++            accounts.addAccount("Peter", a2);
+             JsonWriter writer = new JsonWriter("./data/testWriterEmptyCartInAccount.json");
+             writer.open();
+-            writer.write(a);
++            writer.write(accounts);
+             writer.close();
+ 
+             JsonReader reader = new JsonReader("./data/testWriterEmptyCartInAccount.json");
+             accounts = reader.read();
+-            assertEquals("Erika", a.getName());
+-            assertEquals(100, a.getBalance());
+-            assertEquals(0, a.getCart().getWishlist().size());
++            assertEquals("Erika", accounts.getAccountByName("Erika").getName());
++            assertEquals(100, accounts.getAccountByName("Erika").getBalance());
++            assertEquals(0, accounts.getAccountByName("Erika").getCart().getWishlist().size());
++            assertEquals("Peter", accounts.getAccountByName("Peter").getName());
++            assertEquals(20, accounts.getAccountByName("Peter").getBalance());
++            assertEquals(0, accounts.getAccountByName("Peter").getCart().getWishlist().size());
+         } catch (IOException e) {
+             fail("Exception should not have been thrown");
+-        } catch (DuplicateAccountException e) {
+-            System.out.println("This user has already exists!");
+         }
++//        catch (DuplicateAccountException e) {
++//            System.out.println("This user has already exists!");
++//        }
+     }
+ 
+     @Test
+@@ -66,41 +73,61 @@
+             Product p1 = new Product("Apple",5.2, new Date(20230328));
+             Product p2 = new Product("Purdy's Chocolate Box",35.98, new Date(20240615));
+             Product p3 = new Product("Elephant Instant Noodles",3.82, new Date(20240126));
+-            List<Product> pl= new ArrayList<>();
+-            List<Integer> il= new ArrayList<>();
+-            pl.add(p3);
+-            pl.add(p1);
+-            pl.add(p2);
+-            il.add(14);
+-            il.add(20);
+-            il.add(7);
+-            Cart c = new Cart(pl, il);
+-            Account a = new Account("Erika", 100, c);
++            List<Product> pl1= new ArrayList<>();
++            List<Integer> il1= new ArrayList<>();
++            List<Product> pl2= new ArrayList<>();
++            List<Integer> il2= new ArrayList<>();
++            pl1.add(p3);
++            pl1.add(p1);
++            pl1.add(p2);
++            il1.add(14);
++            il1.add(20);
++            il1.add(7);
++            pl2.add(p1);
++            pl2.add(p2);
++            il2.add(20);
++            il2.add(99);
++            Cart c1 = new Cart(pl1, il1);
++            Cart c2 = new Cart(pl2, il2);
++            Account a1 = new Account("Erika", 100, c1);
++            Account a2 = new Account("Peter", 20, c2);
+             AccountMap accounts = new AccountMap();
+-            accounts.addAccount("Erika", a);
++            accounts.addAccount("Erika", a1);
++            accounts.addAccount("Peter", a2);
+             JsonWriter writer = new JsonWriter("./data/testWriterGeneralCartInAccount.json");
+             writer.open();
+-            writer.write(a);
++            writer.write(accounts);
+             writer.close();
+ 
+             JsonReader reader = new JsonReader("./data/testWriterGeneralCartInAccount.json");
+             accounts = reader.read();
+-            assertEquals("Erika", a.getName());
+-            assertEquals(100, a.getBalance());
+-            assertEquals(3, a.getCart().getWishlist().size());
+-            List<Product> productList = a.getCart().getWishlist();
+-            List<Integer> quantityList = a.getCart().getQuantityList();
+-            assertEquals(14, quantityList.get(0));
+-            assertEquals(20, quantityList.get(1));
+-            assertEquals(7, quantityList.get(2));
+-            checkProduct("Elephant Instant Noodles",3.82, new Date(20240126), productList.get(0));
+-            checkProduct("Apple", 5.2, new Date(20230328), productList.get(1));
+-            checkProduct("Purdy's Chocolate Box",35.98, new Date(20240615), productList.get(2));
++            assertEquals("Erika", accounts.getAccountByName("Erika").getName());
++            assertEquals(100, accounts.getAccountByName("Erika").getBalance());
++            assertEquals(3, accounts.getAccountByName("Erika").getCart().getWishlist().size());
++            List<Product> productList1 = accounts.getAccountByName("Erika").getCart().getWishlist();
++            List<Integer> quantityList1 = accounts.getAccountByName("Erika").getCart().getQuantityList();
++            assertEquals(14, quantityList1.get(0));
++            assertEquals(20, quantityList1.get(1));
++            assertEquals(7, quantityList1.get(2));
++            checkProduct("Elephant Instant Noodles",3.82, new Date(20240126), productList1.get(0));
++            checkProduct("Apple", 5.2, new Date(20230328), productList1.get(1));
++            checkProduct("Purdy's Chocolate Box",35.98, new Date(20240615), productList1.get(2));
++
++            assertEquals("Peter", accounts.getAccountByName("Peter").getName());
++            assertEquals(20, accounts.getAccountByName("Peter").getBalance());
++            assertEquals(2, accounts.getAccountByName("Peter").getCart().getWishlist().size());
++            List<Product> productList2 = accounts.getAccountByName("Peter").getCart().getWishlist();
++            List<Integer> quantityList2 = accounts.getAccountByName("Peter").getCart().getQuantityList();
++            assertEquals(20, quantityList2.get(0));
++            assertEquals(99, quantityList2.get(1));
++            checkProduct("Apple", 5.2, new Date(20230328), productList2.get(0));
++            checkProduct("Purdy's Chocolate Box",35.98, new Date(20240615), productList2.get(1));
+ 
+         } catch (IOException e) {
+             fail("Exception should not have been thrown");
+-        } catch (DuplicateAccountException e) {
+-            System.out.println("This user has already exists!");
+         }
++//        catch (DuplicateAccountException e) {
++//            System.out.println("This user has already exists!");
++//        }
+     }
+ }
+Index: data/account.json
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>{\n    \"balance\": 0,\n    \"name\": \"Peter\",\n    \"cart\": {\n        \"wishlist\": [],\n        \"quantityList\": []\n    }\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/data/account.json b/data/account.json
+--- a/data/account.json	
++++ b/data/account.json	
+@@ -1,8 +1,20 @@
+ {
+-    "balance": 0,
++  "Erika":
++  {
++    "name": "Erika",
++    "balance": "100",
++    "cart": {
++      "wishlist": [],
++      "quantityList": []
++    }
++  },
++  "Peter":
++  {
+     "name": "Peter",
++    "balance": "20",
+     "cart": {
+-        "wishlist": [],
+-        "quantityList": []
++      "wishlist": [],
++      "quantityList": []
+     }
++  }
+ }
+\ No newline at end of file
+Index: data/testReaderGeneralCartInAccount.json
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>{\n  \"name\": \"Erika\",\n  \"balance\": \"100\",\n  \"cart\": {\n    \"wishlist\": [\n      {\n        \"name\": \"Apple\",\n        \"price\": \"5.2\",\n        \"bb\": \"20230328\"\n      },\n      {\n        \"name\": \"Purdy's Chocolate Box\",\n        \"price\": \"35.98\",\n        \"bb\": \"20240615\"\n      },\n      {\n        \"name\": \"Elephant Instant Noodles\",\n        \"price\": \"3.82\",\n        \"bb\": \"20240126\"\n      }\n    ],\n    \"quantityList\": [\"10\", \"3\", \"5\"]\n  }\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/data/testReaderGeneralCartInAccount.json b/data/testReaderGeneralCartInAccount.json
+--- a/data/testReaderGeneralCartInAccount.json	
++++ b/data/testReaderGeneralCartInAccount.json	
+@@ -1,24 +1,47 @@
+ {
+-  "name": "Erika",
+-  "balance": "100",
+-  "cart": {
+-    "wishlist": [
+-      {
+-        "name": "Apple",
+-        "price": "5.2",
+-        "bb": "20230328"
+-      },
+-      {
+-        "name": "Purdy's Chocolate Box",
+-        "price": "35.98",
+-        "bb": "20240615"
+-      },
+-      {
+-        "name": "Elephant Instant Noodles",
+-        "price": "3.82",
+-        "bb": "20240126"
+-      }
+-    ],
+-    "quantityList": ["10", "3", "5"]
++  "Erika":
++  {
++    "name": "Erika",
++    "balance": "100",
++    "cart": {
++      "wishlist": [
++        {
++          "name": "Apple",
++          "price": "5.2",
++          "bb": "20230328"
++        },
++        {
++          "name": "Purdy's Chocolate Box",
++          "price": "35.98",
++          "bb": "20240615"
++        },
++        {
++          "name": "Elephant Instant Noodles",
++          "price": "3.82",
++          "bb": "20240126"
++        }
++      ],
++      "quantityList": ["10", "3", "5"]
++    }
++  },
++  "Peter":
++  {
++    "name": "Peter",
++    "balance": "20",
++    "cart": {
++      "wishlist": [
++        {
++          "name": "Apple",
++          "price": "5.2",
++          "bb": "20230328"
++        },
++        {
++          "name": "Purdy's Chocolate Box",
++          "price": "35.98",
++          "bb": "20240615"
++        }
++      ],
++      "quantityList": ["20", "99"]
++    }
+   }
+ }
+\ No newline at end of file
+Index: data/testWriterGeneralCartInAccount.json
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>{\n    \"balance\": 100,\n    \"name\": \"Erika\",\n    \"cart\": {\n        \"wishlist\": [\n            {\n                \"bb\": \"20240126\",\n                \"price\": 3.82,\n                \"name\": \"Elephant Instant Noodles\"\n            },\n            {\n                \"bb\": \"20230328\",\n                \"price\": 5.2,\n                \"name\": \"Apple\"\n            },\n            {\n                \"bb\": \"20240615\",\n                \"price\": 35.98,\n                \"name\": \"Purdy's Chocolate Box\"\n            }\n        ],\n        \"quantityList\": [\n            14,\n            20,\n            7\n        ]\n    }\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/data/testWriterGeneralCartInAccount.json b/data/testWriterGeneralCartInAccount.json
+--- a/data/testWriterGeneralCartInAccount.json	
++++ b/data/testWriterGeneralCartInAccount.json	
+@@ -1,28 +1,52 @@
+ {
+-    "balance": 100,
+-    "name": "Erika",
+-    "cart": {
+-        "wishlist": [
+-            {
+-                "bb": "20240126",
+-                "price": 3.82,
+-                "name": "Elephant Instant Noodles"
+-            },
+-            {
+-                "bb": "20230328",
+-                "price": 5.2,
+-                "name": "Apple"
+-            },
+-            {
+-                "bb": "20240615",
+-                "price": 35.98,
+-                "name": "Purdy's Chocolate Box"
+-            }
+-        ],
+-        "quantityList": [
+-            14,
+-            20,
+-            7
+-        ]
++    "Erika": {
++        "balance": 100,
++        "name": "Erika",
++        "cart": {
++            "wishlist": [
++                {
++                    "bb": "20240126",
++                    "price": 3.82,
++                    "name": "Elephant Instant Noodles"
++                },
++                {
++                    "bb": "20230328",
++                    "price": 5.2,
++                    "name": "Apple"
++                },
++                {
++                    "bb": "20240615",
++                    "price": 35.98,
++                    "name": "Purdy's Chocolate Box"
++                }
++            ],
++            "quantityList": [
++                14,
++                20,
++                7
++            ]
++        }
++    },
++    "Peter": {
++        "balance": 20,
++        "name": "Peter",
++        "cart": {
++            "wishlist": [
++                {
++                    "bb": "20230328",
++                    "price": 5.2,
++                    "name": "Apple"
++                },
++                {
++                    "bb": "20240615",
++                    "price": 35.98,
++                    "name": "Purdy's Chocolate Box"
++                }
++            ],
++            "quantityList": [
++                20,
++                99
++            ]
++        }
+     }
+ }
+\ No newline at end of file
+Index: src/test/model/ProductTest.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package model;\n\nimport org.junit.jupiter.api.BeforeEach;\nimport org.junit.jupiter.api.Test;\n\nimport java.util.Date;\n\nimport static org.junit.jupiter.api.Assertions.*;\n\npublic class ProductTest {\n\n    private Product test1product;\n    private Product test2product;\n    private Product test3product;\n\n    @BeforeEach\n    void runBefore() {\n        test1product = new Product(\"Apple\",5.2, new Date(20230328));\n        test2product = new Product(\"Purdy's Chocolate Box\",35.98, new Date(20240615));\n        test3product = new Product(\"Elephant Instant Noodles\",3.82, new Date(20240126));\n    }\n\n    @Test\n    void testConstructor() {\n        assertEquals(\"Apple\", test1product.getName());\n        assertEquals(3.82, test3product.getPrice());\n        assertEquals(new Date(20240615), test2product.getBB());\n    }\n\n    @Test\n    void testToString() {\n        assertEquals(\"[Apple, $5.20, 20230328]\", test1product.toString());\n    }\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/test/model/ProductTest.java b/src/test/model/ProductTest.java
+--- a/src/test/model/ProductTest.java	
++++ b/src/test/model/ProductTest.java	
+@@ -31,4 +31,19 @@
+     void testToString() {
+         assertEquals("[Apple, $5.20, 20230328]", test1product.toString());
+     }
++
++    @Test
++    void testEquals() {
++        Product p = null;
++        String s = "product";
++        assertTrue(test1product.equals(test1product));
++        assertFalse(test1product.equals(p));
++        assertFalse(test1product.equals(s));
++    }
++    @Test
++    void testHashCode() {
++        assertEquals(63476569, test1product.hashCode());
++        assertEquals(-907354604, test2product.hashCode());
++        assertEquals(-911598411, test3product.hashCode());
++    }
+ }
+\ No newline at end of file
+Index: src/main/persistence/JsonWriter.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package persistence;\n\nimport model.Account;\nimport model.Cart;\nimport org.json.JSONObject;\n\nimport java.io.File;\nimport java.io.FileNotFoundException;\nimport java.io.PrintWriter;\n\n// this class is inspired by JsonSerializationDemo project\n// github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo\n\n// Represents a writer that writes JSON representation of account to file\npublic class JsonWriter {\n    private static final int TAB = 4;\n    private PrintWriter writer;\n    private String destination;\n\n    // EFFECTS: constructs writer to write to destination file\n    public JsonWriter(String destination) {\n        this.destination = destination;\n    }\n\n    // MODIFIES: this\n    // EFFECTS: opens writer; throws FileNotFoundException if destination file cannot\n    // be opened for writing\n    public void open() throws FileNotFoundException {\n        writer = new PrintWriter(new File(destination));\n    }\n\n    // MODIFIES: this\n    // EFFECTS: writes JSON representation of account to file\n    public void write(Account a) {\n        JSONObject jsonAccount = a.toJson();\n        saveToFile(jsonAccount.toString(TAB));\n    }\n\n    // MODIFIES: this\n    // EFFECTS: closes writer\n    public void close() {\n        writer.close();\n    }\n\n    // MODIFIES: this\n    // EFFECTS: writes string to file\n    private void saveToFile(String json) {\n        writer.print(json);\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/persistence/JsonWriter.java b/src/main/persistence/JsonWriter.java
+--- a/src/main/persistence/JsonWriter.java	
++++ b/src/main/persistence/JsonWriter.java	
+@@ -1,6 +1,7 @@
+ package persistence;
+ 
+ import model.Account;
++import model.AccountMap;
+ import model.Cart;
+ import org.json.JSONObject;
+ 
+@@ -30,10 +31,10 @@
+     }
+ 
+     // MODIFIES: this
+-    // EFFECTS: writes JSON representation of account to file
+-    public void write(Account a) {
+-        JSONObject jsonAccount = a.toJson();
+-        saveToFile(jsonAccount.toString(TAB));
++    // EFFECTS: writes JSON representation of a set of accounts to file
++    public void write(AccountMap accounts) {
++        JSONObject jsonAccounts = accounts.toJson();
++        saveToFile(jsonAccounts.toString(TAB));
+     }
+ 
+     // MODIFIES: this
+Index: data/testWriterEmptyCartInAccount.json
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>{\n    \"balance\": 100,\n    \"name\": \"Erika\",\n    \"cart\": {\n        \"wishlist\": [],\n        \"quantityList\": []\n    }\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/data/testWriterEmptyCartInAccount.json b/data/testWriterEmptyCartInAccount.json
+--- a/data/testWriterEmptyCartInAccount.json	
++++ b/data/testWriterEmptyCartInAccount.json	
+@@ -1,8 +1,18 @@
+ {
+-    "balance": 100,
+-    "name": "Erika",
+-    "cart": {
+-        "wishlist": [],
+-        "quantityList": []
++    "Erika": {
++        "balance": 100,
++        "name": "Erika",
++        "cart": {
++            "wishlist": [],
++            "quantityList": []
++        }
++    },
++    "Peter": {
++        "balance": 20,
++        "name": "Peter",
++        "cart": {
++            "wishlist": [],
++            "quantityList": []
++        }
+     }
+ }
+\ No newline at end of file
+Index: src/main/model/AccountMap.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package model;\n\nimport model.exceptions.DuplicateAccountException;\nimport org.json.JSONArray;\nimport org.json.JSONObject;\nimport persistence.Writable;\n\nimport java.util.HashMap;\nimport java.util.List;\nimport java.util.Map;\nimport java.util.Set;\n\npublic class AccountMap implements Writable {\n    private Map<String, Account> accounts;\n\n    // EFFECTS: constructs a set of accounts with a name, and an account\n    public AccountMap() {\n        accounts = new HashMap<>();\n    }\n\n    // Write specifications for this class\n    public Account getAccountByName(String name) {\n        return accounts.get(name);\n    }\n\n    public void addAccount(String name, Account account) throws DuplicateAccountException {\n        if (hasAccountWithName(name)) {\n            throw new DuplicateAccountException();\n        }\n        accounts.put(name, account);\n    }\n\n    public boolean hasAccountWithName(String name) {\n        Account a = null;\n        a = getAccountByName(name);\n        return a != null;\n    }\n\n    @Override\n    public JSONObject toJson() {\n        JSONObject json = new JSONObject();\n        Set<String> keySet = accounts.keySet();\n        for (String s : keySet) {\n            Account a = accounts.get(s);\n            json.put(s, a.toJson());\n        }\n        return json;\n    }\n}\n
+===================================================================
+diff --git a/src/main/model/AccountMap.java b/src/main/model/AccountMap.java
+--- a/src/main/model/AccountMap.java	
++++ b/src/main/model/AccountMap.java	
+@@ -23,11 +23,10 @@
+         return accounts.get(name);
+     }
+ 
+-    public void addAccount(String name, Account account) throws DuplicateAccountException {
+-        if (hasAccountWithName(name)) {
+-            throw new DuplicateAccountException();
+-        }
+-        accounts.put(name, account);
++    public void addAccount(String name, Account account) {
++        if (!hasAccountWithName(name)) {
++            accounts.put(name, account);
++        }
+     }
+ 
+     public boolean hasAccountWithName(String name) {

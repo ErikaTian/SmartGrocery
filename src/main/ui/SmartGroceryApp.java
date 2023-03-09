@@ -222,7 +222,7 @@ public class SmartGroceryApp {
     private void saveAccount() {
         try {
             jsonWriter.open();
-            jsonWriter.write(account);
+            jsonWriter.write(accounts);
             jsonWriter.close();
             System.out.println("Saved " + account.getName() + " to " + JSON_STORE);
         } catch (FileNotFoundException e) {

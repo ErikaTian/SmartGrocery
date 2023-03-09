@@ -1,8 +1,8 @@
-{
+{"Erika": {
     "balance": 100,
     "name": "Erika",
     "cart": {
         "wishlist": [],
         "quantityList": []
     }
-}
+}}

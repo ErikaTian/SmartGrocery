@@ -7,7 +7,7 @@
     }
   },
   "Peter": { "name": "Peter",
-    "balance": "0",
+    "balance": "20",
     "cart": {
       "wishlist": [],
       "quantityList": []

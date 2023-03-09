@@ -1,28 +1,52 @@
 {
-    "balance": 100,
-    "name": "Erika",
-    "cart": {
-        "wishlist": [
-            {
-                "bb": "20240126",
-                "price": 3.82,
-                "name": "Elephant Instant Noodles"
-            },
-            {
-                "bb": "20230328",
-                "price": 5.2,
-                "name": "Apple"
-            },
-            {
-                "bb": "20240615",
-                "price": 35.98,
-                "name": "Purdy's Chocolate Box"
-            }
-        ],
-        "quantityList": [
-            14,
-            20,
-            7
-        ]
+    "Erika": {
+        "balance": 100,
+        "name": "Erika",
+        "cart": {
+            "wishlist": [
+                {
+                    "bb": "20240126",
+                    "price": 3.82,
+                    "name": "Elephant Instant Noodles"
+                },
+                {
+                    "bb": "20230328",
+                    "price": 5.2,
+                    "name": "Apple"
+                },
+                {
+                    "bb": "20240615",
+                    "price": 35.98,
+                    "name": "Purdy's Chocolate Box"
+                }
+            ],
+            "quantityList": [
+                14,
+                20,
+                7
+            ]
+        }
+    },
+    "Peter": {
+        "balance": 20,
+        "name": "Peter",
+        "cart": {
+            "wishlist": [
+                {
+                    "bb": "20230328",
+                    "price": 5.2,
+                    "name": "Apple"
+                },
+                {
+                    "bb": "20240615",
+                    "price": 35.98,
+                    "name": "Purdy's Chocolate Box"
+                }
+            ],
+            "quantityList": [
+                1,
+                99
+            ]
+        }
     }
 }
