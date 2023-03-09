@@ -22,7 +22,7 @@ public class AccountMap implements Writable {
     }
 
     public void addAccount(String name, Account account) throws DuplicateAccountException {
-        if (!hasAccountWithName(name)) {
+        if (hasAccountWithName(name)) {
             throw new DuplicateAccountException();
         }
         accounts.put(name, account);
@@ -36,7 +36,16 @@ public class AccountMap implements Writable {
 
     @Override
     public JSONObject toJson() {
-        JSONObject json = new JSONObject(accounts);
+        JSONArray jsonArray1 = new JSONArray();
+        JSONArray jsonArray2 = new JSONArray();
+        JSONObject json = new JSONObject();
+        String key;
+        for (Account a : accounts) {
+            jsonArray2.put(a.toJson());
+            key = a.getName();
+        }
+        json.put("name", name);
+        json.put("balance", balance);
         return json;
     }
 }
