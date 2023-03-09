@@ -28,8 +28,10 @@ public class AccountMap implements Writable {
         if (!hasAccountWithName(name)) {
             accounts.put(name, account);
         } else {
-            Account a = accounts.get(name);
-            a = account;
+            // Note: this drives me crazy
+//            Account a = accounts.get(name);
+//            a = account;
+            accounts.put(name, account);
         }
     }
 
