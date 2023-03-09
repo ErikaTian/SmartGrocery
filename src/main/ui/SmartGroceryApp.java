@@ -18,7 +18,7 @@ public class SmartGroceryApp {
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
 
-    // EFFECTS: constructs account and runs the smart grocery application
+    // EFFECTS: constructs a set of accounts in the grocery store and runs the smart grocery application
     public SmartGroceryApp() throws FileNotFoundException {
         input = new Scanner(System.in); // give input
         input.useDelimiter("\n");  //separate things by new lines
@@ -30,7 +30,6 @@ public class SmartGroceryApp {
         runSmartGrocery();
     }
 
-    //Note: move initAccount() to SmartGroceryApp() instead of runSmartGrocery()
     // MODIFIES: this
     // EFFECTS: initializes account of this user
     private void initAccount() {
@@ -41,12 +40,11 @@ public class SmartGroceryApp {
         account = new Account(name, 0, new Cart(new ArrayList<Product>(), new ArrayList<Integer>()));
         accounts = new AccountMap();
 
-//        if (!accounts.hasAccountWithName(name)) {
-//            accounts.addAccount(name, account);
-//        }  else {
-//            Account a = accounts.getAccountByName(name);
-//            a = account;
-//        }
+        try {
+            accounts = jsonReader.read();
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
+        }
     }
 
     // MODIFIES: this
@@ -56,7 +54,7 @@ public class SmartGroceryApp {
         String command;
 
         initList();
-//      Note: initAccount(); move initAccount() to SmartGroceryApp()
+//      Note: initAccountMap(); move initAccountMap() to SmartGroceryApp()
 
         while (keepGoing) {
             displayMenu();
@@ -202,23 +200,33 @@ public class SmartGroceryApp {
     // MODIFIES: this
     // EFFECTS: loads account from file
     private void loadAccount() {
-        try {
-            accounts = jsonReader.read();
+        if (accounts.hasAccountWithName(account.getName())) {
             account = accounts.getAccountByName(account.getName());
-            System.out.println("Loaded " + account.getName() + " from " + JSON_STORE);
-        } catch (IOException e) {
-            System.out.println("Unable to read from file: " + JSON_STORE);
+            System.out.println("Loaded " + account.getName() + "'account from " + JSON_STORE);
+        } else {
+            System.out.println("You have no existing account. Remember to save your account before leaving today!");
         }
+
+//        Note: App already reads the json file at the beginning
+//        try {
+//            accounts = jsonReader.read();
+//            account = accounts.getAccountByName(account.getName());
+//            System.out.println("Loaded " + account.getName() + " from " + JSON_STORE);
+//        } catch (IOException e) {
+//            System.out.println("Unable to read from file: " + JSON_STORE);
+//        }
     }
 
     // EFFECTS: saves the account to file
     private void saveAccount() {
         try {
+//            if (!accounts.hasAccountWithName(account.getName()))
             accounts.addAccount(account.getName(), account);
+
             jsonWriter.open();
             jsonWriter.write(accounts);
             jsonWriter.close();
-            System.out.println("Saved " + account.getName() + " to " + JSON_STORE);
+            System.out.println("Saved " + account.getName() + "'account to " + JSON_STORE);
         } catch (FileNotFoundException e) {
             System.out.println("Unable to write to file: " + JSON_STORE);
         }
