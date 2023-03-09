@@ -1,8 +1,16 @@
 {
-  "name": "Erika",
-  "balance": "100",
-  "cart": {
-    "wishlist": [],
-    "quantityList": []
+  "Erika": { "name": "Erika",
+    "balance": "100",
+    "cart": {
+      "wishlist": [],
+      "quantityList": []
+    }
+  },
+  "Peter": { "name": "Peter",
+    "balance": "0",
+    "cart": {
+      "wishlist": [],
+      "quantityList": []
+    }
   }
 }

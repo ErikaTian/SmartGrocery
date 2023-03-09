@@ -33,10 +33,14 @@ public class JsonReaderTest extends JsonTest {
         JsonReader reader = new JsonReader("./data/testReaderEmptyCartInAccount.json");
         try {
             AccountMap accounts = reader.read();
-            Account a = accounts.getAccountByName("Erika");
-            assertEquals("Erika", a.getName());
-            assertEquals(100, a.getBalance());
-            assertEquals(0, a.getCart().sizeWishlist());
+            Account a1 = accounts.getAccountByName("Erika");
+            assertEquals("Erika", a1.getName());
+            assertEquals(100, a1.getBalance());
+            assertEquals(0, a1.getCart().sizeWishlist());
+            Account a2 = accounts.getAccountByName("Peter");
+            assertEquals("Peter", a2.getName());
+            assertEquals(0, a2.getBalance());
+            assertEquals(0, a2.getCart().sizeWishlist());
         } catch (IOException e) {
             fail("Couldn't read from file");
         }

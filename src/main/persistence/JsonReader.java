@@ -54,13 +54,19 @@ public class JsonReader {
     // EFFECTS: parses a set of accounts from JSON object and returns it
     private AccountMap parseAccountMap(JSONObject jsonObject) throws DuplicateAccountException {
         AccountMap accounts = new AccountMap();
-        Iterable<String> names = jsonObject.keySet();
-        while (names.iterator().hasNext()) {
-            String name = names.iterator().next();
-            Object account = jsonObject.get(name);
-            JSONObject acc = (JSONObject) account;
-            accounts.addAccount(name, parseAccount(acc));
+        Set<String> names = jsonObject.keySet();
+        for (String s : names) {
+            JSONObject jsonAccount = jsonObject.getJSONObject(s);
+            Account a = parseAccount(jsonAccount);
+            accounts.addAccount(s, a);
         }
+        // Note: better to use a for loop NOT a while loop
+//        while (names.iterator().hasNext()) {
+//            String name = names.iterator().next();
+//            Object account = jsonObject.get(name);
+//            JSONObject acc = (JSONObject) account;
+//            accounts.addAccount(name, parseAccount(acc));
+//        }
         return accounts;
     }
 

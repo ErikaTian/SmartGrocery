@@ -6,7 +6,9 @@ import org.json.JSONObject;
 import persistence.Writable;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class AccountMap implements Writable {
     private Map<String, Account> accounts;
@@ -36,16 +38,12 @@ public class AccountMap implements Writable {
 
     @Override
     public JSONObject toJson() {
-        JSONArray jsonArray1 = new JSONArray();
-        JSONArray jsonArray2 = new JSONArray();
         JSONObject json = new JSONObject();
-        String key;
-        for (Account a : accounts) {
-            jsonArray2.put(a.toJson());
-            key = a.getName();
+        Set<String> keySet = accounts.keySet();
+        for (String s : keySet) {
+            Account a = accounts.get(s);
+            json.put(s, a.toJson());
         }
-        json.put("name", name);
-        json.put("balance", balance);
         return json;
     }
 }
