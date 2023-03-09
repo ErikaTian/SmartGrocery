@@ -19,6 +19,7 @@ public class AccountTest {
     private Cart test2cart;
     private Account test1account;
     private Account test2account;
+    private Account test3account;
 
     @BeforeEach
     public void setup(){
@@ -36,6 +37,7 @@ public class AccountTest {
         test2cart.addProductToWishlist(test2product, 3);
         test1account = new Account("Jennifer Brown", 105.67, test1cart);
         test2account = new Account("Henry Hsu", 13.2, test2cart);
+        test3account = new Account("Erika Tian");
     }
 
     @Test
@@ -46,6 +48,9 @@ public class AccountTest {
         assertEquals(2, test2account.getCart().sizeWishlist());
         assertEquals(2, test2account.getCart().findQuantityForProduct("Apple"));
         assertEquals(3, test2account.getCart().findQuantityForProduct("Purdy's Chocolate Box"));
+        assertEquals("Erika Tian", test3account.getName());
+        assertEquals(0, test3account.getBalance());
+        assertEquals(0, test3account.getCart().sizeWishlist());
     }
 
     @Test

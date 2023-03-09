@@ -41,7 +41,7 @@ public class SmartGroceryApp {
         System.out.println("Enter your name:");
         String name = input.next();
         System.out.println("Hi, " + name + "! Welcome to SmartGrocery!");
-        account = new Account(name, 0, new Cart(new ArrayList<Product>(), new ArrayList<Integer>()));
+        account = new Account(name);
         accounts = new AccountMap();
 
         try {

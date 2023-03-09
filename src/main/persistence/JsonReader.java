@@ -4,7 +4,6 @@ import model.Account;
 import model.AccountMap;
 import model.Cart;
 import model.Product;
-import model.exceptions.DuplicateAccountException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -33,11 +32,7 @@ public class JsonReader {
         String jsonData = readFile(source);
         JSONObject jsonObject = new JSONObject(jsonData);
         AccountMap accounts = null;
-        try {
-            accounts = parseAccountMap(jsonObject);
-        } catch (DuplicateAccountException e) {
-            System.out.println("This is not possible!");
-        }
+        accounts = parseAccountMap(jsonObject);
         return accounts;
     }
 
@@ -52,7 +47,7 @@ public class JsonReader {
     }
 
     // EFFECTS: parses a set of accounts from JSON object and returns it
-    private AccountMap parseAccountMap(JSONObject jsonObject) throws DuplicateAccountException {
+    private AccountMap parseAccountMap(JSONObject jsonObject) {
         AccountMap accounts = new AccountMap();
         Set<String> names = jsonObject.keySet();
         for (String s : names) {

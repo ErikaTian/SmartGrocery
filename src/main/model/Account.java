@@ -5,6 +5,8 @@ import model.exceptions.NonPositiveException;
 import org.json.JSONObject;
 import persistence.Writable;
 
+import java.util.ArrayList;
+
 // Represents an account for each user
 public class Account implements Writable {
 
@@ -12,7 +14,7 @@ public class Account implements Writable {
 
     // fields to represent changing properties of an account
     private String name;  // customer name
-    private double balance;    // remaining account balance
+    private double balance;    // account balance
     private Cart cart;  // a wishlist of products with their quantities in the cart
 
     // EFFECTS: constructs an account with a customer name, a balance, and a wishlist of
@@ -24,12 +26,12 @@ public class Account implements Writable {
     }
 
     // EFFECTS: constructs an account with a customer name, an initial balance of 0,
-    //           and an empty cart without any product
-//    public Account(String name) {
-//        this.name = name;
-//        this.balance = INITIAL_VALUE;
-//        this.cart = new Cart();
-//    }
+    //          and an empty cart without any product
+    public Account(String name) {
+        this.name = name;
+        this.balance = INITIAL_VALUE;
+        this.cart = new Cart(new ArrayList<>(), new ArrayList<>());
+    }
 
     // EFFECTS: returns an account's customer name
     public String getName() {
@@ -83,6 +85,7 @@ public class Account implements Writable {
         cart.removeProductFromWishlist(p);
     }
 
+    // EFFECTS: convert Account to JSONObject
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();

@@ -4,7 +4,6 @@ import model.Account;
 import model.AccountMap;
 import model.Cart;
 import model.Product;
-import model.exceptions.DuplicateAccountException;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
