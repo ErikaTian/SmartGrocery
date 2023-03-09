@@ -1,0 +1,26 @@
+Index: data/account.json
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>{\n    \"balance\": 0,\n    \"name\": \"Erika\",\n    \"cart\": {\n        \"wishlist\": [{\n            \"bb\": \"20240615\",\n            \"price\": 35.98,\n            \"name\": \"Purdy's Chocolate Box\"\n        }],\n        \"quantityList\": [23]\n    }\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/data/account.json b/data/account.json
+--- a/data/account.json	
++++ b/data/account.json	
+@@ -1,12 +1,1 @@
+-{
+-    "balance": 0,
+-    "name": "Erika",
+-    "cart": {
+-        "wishlist": [{
+-            "bb": "20240615",
+-            "price": 35.98,
+-            "name": "Purdy's Chocolate Box"
+-        }],
+-        "quantityList": [23]
+-    }
+-}
+\ No newline at end of file
++{}
+\ No newline at end of file

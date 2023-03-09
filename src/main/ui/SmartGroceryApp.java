@@ -10,6 +10,10 @@ import java.io.IOException;
 import java.util.*;
 
 // Smart Grocery shopping application
+// REQUIRES: if this grocery shop doesn't have any existing user accounts, account.json
+//           needs an empty {} in it s.t. it's a valid starting file for JsonReader to read;
+//           then any user can start to use SmartGroceryApp
+
 public class SmartGroceryApp {
     private static final String JSON_STORE = "./data/account.json";
     private Account account;
