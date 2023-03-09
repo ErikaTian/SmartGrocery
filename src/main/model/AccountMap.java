@@ -23,6 +23,7 @@ public class AccountMap implements Writable {
         return accounts.get(name);
     }
 
+
     public void addAccount(String name, Account account) {
         if (!hasAccountWithName(name)) {
             accounts.put(name, account);

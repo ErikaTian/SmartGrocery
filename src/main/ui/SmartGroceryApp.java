@@ -220,7 +220,6 @@ public class SmartGroceryApp {
     // EFFECTS: saves the account to file
     private void saveAccount() {
         try {
-//            if (!accounts.hasAccountWithName(account.getName()))
             accounts.addAccount(account.getName(), account);
 
             jsonWriter.open();
