@@ -25,14 +25,14 @@ public class AccountTest {
     public void setup(){
         test1product = new Product("Apple",5.2, new Date(20230328));
         test2product = new Product("Purdy's Chocolate Box",35.98, new Date(20240615));
-        List<Product> wl1 = new ArrayList<Product>();
-        List<Integer> ql1 = new ArrayList<Integer>();
+        List<Product> wl1 = new ArrayList<>();
+        List<Integer> ql1 = new ArrayList<>();
         test1cart = new Cart(wl1, ql1);
-        List<Product> wl2 = new ArrayList<Product>();
-        List<Integer> ql2 = new ArrayList<Integer>();
+        List<Product> wl2 = new ArrayList<>();
+        List<Integer> ql2 = new ArrayList<>();
         test2cart = new Cart(wl2, ql2);
         // Note: only one set of wl, ql will cause failures of tests, as they refer to
-        //       same objects so that change test1cart, test2cart simoutanously
+        //       same objects so that change test1cart, test2cart simultaneously
         test2cart.addProductToWishlist(test1product, 2);
         test2cart.addProductToWishlist(test2product, 3);
         test1account = new Account("Jennifer Brown", 105.67, test1cart);

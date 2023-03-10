@@ -22,8 +22,8 @@ public class CartTest {
         test2product = new Product("Purdy's Chocolate Box",35.98, new Date(20240615));
         test3product = new Product("Elephant Instant Noodles",3.82, new Date(20240126));
 
-        List<Product> wl = new ArrayList<Product>();
-        List<Integer> ql = new ArrayList<Integer>();
+        List<Product> wl = new ArrayList<>();
+        List<Integer> ql = new ArrayList<>();
         testCart = new Cart(wl, ql);
     }
 

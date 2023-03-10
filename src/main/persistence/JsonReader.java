@@ -63,7 +63,7 @@ public class JsonReader {
         String name = jsonObject.getString("name");
         double balance = jsonObject.getDouble("balance");
         JSONObject jsonCart = jsonObject.getJSONObject("cart");
-        ;
+
         Cart cart = parseCart(jsonCart); // a helper fn
         Account account = new Account(name, balance, cart);
         return account;

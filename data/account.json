@@ -1,24 +1,14 @@
 {
     "Erika": {
-        "balance": 0,
+        "balance": 100,
         "name": "Erika",
         "cart": {
-            "wishlist": [
-                {
-                    "bb": "20240126",
-                    "price": 3.82,
-                    "name": "Elephant Instant Noodles"
-                },
-                {
-                    "bb": "20230328",
-                    "price": 5.2,
-                    "name": "Apple"
-                }
-            ],
-            "quantityList": [
-                1,
-                100
-            ]
+            "wishlist": [{
+                "bb": "20230328",
+                "price": 5.2,
+                "name": "Apple"
+            }],
+            "quantityList": [100]
         }
     },
     "Stanley": {
@@ -53,6 +43,18 @@
                 1,
                 99
             ]
+        }
+    },
+    "Mina": {
+        "balance": 0,
+        "name": "Mina",
+        "cart": {
+            "wishlist": [{
+                "bb": "20240615",
+                "price": 35.98,
+                "name": "Purdy's Chocolate Box"
+            }],
+            "quantityList": [1]
         }
     }
 }

@@ -21,6 +21,11 @@ public class AccountMap implements Writable {
         return accounts.get(name);
     }
 
+    // EFFECTS: returns the size of this collection
+    public int getSize() {
+        return accounts.size();
+    }
+
     // MODIFIES: this
     // EFFECTS: if account doesn't exist in this collection, then put it with its username as key
     //          in this collection; otherwise, replace the existing account associated with username
