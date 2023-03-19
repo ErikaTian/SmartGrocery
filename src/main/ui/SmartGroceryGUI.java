@@ -4,16 +4,20 @@ import model.Account;
 import model.AccountMap;
 import model.Product;
 import model.ProductList;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
 import static java.awt.Color.*;
+import static java.util.Objects.isNull;
 
 public class SmartGroceryGUI extends JFrame implements ActionListener {
     private static final String JSON_STORE = "./data/account.json";
@@ -22,6 +26,8 @@ public class SmartGroceryGUI extends JFrame implements ActionListener {
     private Product product3;
     private Account account;
     private AccountMap accounts;
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
 
     private JPanel mainMenu;
     private JPanel productLists;
@@ -45,6 +51,8 @@ public class SmartGroceryGUI extends JFrame implements ActionListener {
         setVisible(true);
         setLocationRelativeTo(null);
 
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
         initProductList();
         initAccount();
         initMenu();
@@ -70,7 +78,7 @@ public class SmartGroceryGUI extends JFrame implements ActionListener {
     // MODIFIES: this
     // EFFECTS: initializes account of this user and retrieves the collection of accounts in the grocery store
     private void initAccount() {
-        account = new Account("Erika");
+        account = new Account("");
         accounts = new AccountMap();
     }
 
@@ -168,9 +176,9 @@ public class SmartGroceryGUI extends JFrame implements ActionListener {
         } else if (e.getActionCommand().equals("View the shopping wishlist in the cart")) {
             viewAccount();
         } else if (e.getActionCommand().equals("Load my account")) {
-            //
+            loadAccount();
         } else if (e.getActionCommand().equals("Save my account")) {
-            //
+            saveAccount();
         } else if (e.getActionCommand().equals("Quit")) {
             //
         } else if (e.getActionCommand().equals("Return to main menu")) {
@@ -233,13 +241,39 @@ public class SmartGroceryGUI extends JFrame implements ActionListener {
         modifySmallButton(button7, accountInfo);
     }
 
+
+    // MODIFIES: this
+    // EFFECTS: loads existing account for this user from file
+    private void loadAccount() {
+        if (accounts.hasAccountWithName(account.getName())) {
+            account = accounts.getAccountByName(account.getName());
+            System.out.println("Loaded " + account.getName() + "'account from " + JSON_STORE);
+        } else {
+            System.out.println("You have no existing account. Remember to save your account before leaving today!");
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: saves the account to file
+    private void saveAccount() {
+        try {
+            accounts.addAccount(account.getName(), account);
+            jsonWriter.open();
+            jsonWriter.write(accounts);
+            jsonWriter.close();
+            System.out.println("Saved " + account.getName() + "'account to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
+
     // EFFECTS: returns to the main menu
     private void returnToMainMenu() {
         mainMenu.setVisible(true);
-        if (productLists.isVisible()) {
+        if (!isNull(productLists) && productLists.isVisible()) {
             productLists.setVisible(false);
         }
-        if (accountInfo.isVisible()) {
+        if (!isNull(accountInfo) && accountInfo.isVisible()) {
             accountInfo.setVisible(false);
         }
     }
