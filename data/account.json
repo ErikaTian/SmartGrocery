@@ -1,60 +1,8 @@
-{
-    "Erika": {
-        "balance": 100,
-        "name": "Erika",
-        "cart": {
-            "wishlist": [{
-                "bb": "20230328",
-                "price": 5.2,
-                "name": "Apple"
-            }],
-            "quantityList": [100]
-        }
-    },
-    "Stanley": {
-        "balance": 0,
-        "name": "Stanley",
-        "cart": {
-            "wishlist": [{
-                "bb": "20240615",
-                "price": 35.98,
-                "name": "Purdy's Chocolate Box"
-            }],
-            "quantityList": [1]
-        }
-    },
-    "Peter": {
-        "balance": 20,
-        "name": "Peter",
-        "cart": {
-            "wishlist": [
-                {
-                    "bb": "20230328",
-                    "price": 5.2,
-                    "name": "Apple"
-                },
-                {
-                    "bb": "20240615",
-                    "price": 35.98,
-                    "name": "Purdy's Chocolate Box"
-                }
-            ],
-            "quantityList": [
-                1,
-                99
-            ]
-        }
-    },
-    "Mina": {
-        "balance": 0,
-        "name": "Mina",
-        "cart": {
-            "wishlist": [{
-                "bb": "20240615",
-                "price": 35.98,
-                "name": "Purdy's Chocolate Box"
-            }],
-            "quantityList": [1]
-        }
+{"": {
+    "balance": 0,
+    "name": "Erika",
+    "cart": {
+        "wishlist": [],
+        "quantityList": []
     }
-}
+}}
