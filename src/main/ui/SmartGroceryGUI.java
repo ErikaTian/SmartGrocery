@@ -84,8 +84,8 @@ public class SmartGroceryGUI extends JFrame implements ActionListener {
     // EFFECTS: initializes all buttons on the main menu
     public void initButtons() {
         button1 = new JButton("View all items in the grocery store");
-        button2 = new JButton("View the account balance");
-        button3 = new JButton("View the shopping wishlist in the cart");
+        button2 = new JButton("Add to cart");
+        button3 = new JButton("View the cart");
         button4 = new JButton("Load my account");
         button5 = new JButton("Save my account");
         button6 = new JButton("Quit");
@@ -130,7 +130,7 @@ public class SmartGroceryGUI extends JFrame implements ActionListener {
 
         addLabel(mainMenu);
         addButton(button1, mainMenu);
-        addButton(button2, mainMenu);
+//        addButton(button2, mainMenu);
         addButton(button3, mainMenu);
         addButton(button4, mainMenu);
         addButton(button5, mainMenu);
@@ -183,9 +183,9 @@ public class SmartGroceryGUI extends JFrame implements ActionListener {
         button1.addActionListener(this);
         button1.setActionCommand("View all items in the grocery store");
         button2.addActionListener(this);
-        button2.setActionCommand("View the account balance");
+        button2.setActionCommand("Add to cart");
         button3.addActionListener(this);
-        button3.setActionCommand("View the shopping wishlist in the cart");
+        button3.setActionCommand("View the cart");
         button4.addActionListener(this);
         button4.setActionCommand("Load my account");
         button5.addActionListener(this);
@@ -202,9 +202,9 @@ public class SmartGroceryGUI extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("View all items in the grocery store")) {
             displayProductList();
-        } else if (e.getActionCommand().equals("View the account balance")) {
-            //
-        } else if (e.getActionCommand().equals("View the shopping wishlist in the cart")) {
+        } else if (e.getActionCommand().equals("Add to cart")) {
+            addItem();
+        } else if (e.getActionCommand().equals("View the cart")) {
             viewAccount();
         } else if (e.getActionCommand().equals("Load my account")) {
             loadAccount();
@@ -219,9 +219,6 @@ public class SmartGroceryGUI extends JFrame implements ActionListener {
         } else if (e.getActionCommand().equals("myAccount")) {
             popUpWindow();
         }
-//        else if (e.getActionCommand().equals("OK")) {
-//            returnToMainMenu();
-//        }
     }
 
     // MODIFIES: this
@@ -243,9 +240,17 @@ public class SmartGroceryGUI extends JFrame implements ActionListener {
         JList<String> list = new JList<>(myList);
         productLists.add(list);
 
-        JButton btn1 = new JButton("Add to cart");
-        modifySmallButton(btn1, productLists);
+        addButton(button2, productLists);
+//        JButton btn1 = new JButton("Add to cart");
+//        modifySmallButton(btn1, productLists);
         modifySmallButton(button7, productLists);
+    }
+
+//     EFFECTS: pops up new window and asks the quantity for selected item
+    private int addItem() {
+        String answer = JOptionPane.showInputDialog("Enter the quantity: ");
+        int quantity = Integer.parseInt(answer);
+        return quantity;
     }
 
     // MODIFIES: this
