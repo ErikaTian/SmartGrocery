@@ -3,6 +3,7 @@ package ui;
 import model.Account;
 import model.AccountMap;
 import model.Product;
+import model.ProductList;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
@@ -24,6 +25,7 @@ public class SmartGroceryGUI extends JFrame implements ActionListener {
     private Product product1;
     private Product product2;
     private Product product3;
+    private ProductList pl;
     private Account account;
     private AccountMap accounts;
     private JsonWriter jsonWriter;
@@ -42,10 +44,13 @@ public class SmartGroceryGUI extends JFrame implements ActionListener {
     private JButton button6;
     private JButton button7;
     private JButton button8;
+    private JButton button9;
 
+    private JList<String> productJList;
     private JLabel welcomeLabel;
     private JLabel nameLabel;
     private JTextField nameField;
+
 
     // Creates a new JFrame displaying the grocery store
     public SmartGroceryGUI() {
@@ -78,6 +83,10 @@ public class SmartGroceryGUI extends JFrame implements ActionListener {
         product1 = new Product("Apple", 5.2, new Date(20230328));
         product2 = new Product("Purdy's Chocolate Box", 35.98, new Date(20240615));
         product3 = new Product("Elephant Instant Noodles", 3.82, new Date(20240126));
+        pl = new ProductList();
+        pl.addProduct(product1);
+        pl.addProduct(product2);
+        pl.addProduct(product3);
     }
 
     // MODIFIES: this
@@ -86,11 +95,12 @@ public class SmartGroceryGUI extends JFrame implements ActionListener {
         button1 = new JButton("View all items in the grocery store");
         button2 = new JButton("Add to cart");
         button3 = new JButton("View the cart");
-        button4 = new JButton("Load my account");
-        button5 = new JButton("Save my account");
+        button4 = new JButton("Load your account");
+        button5 = new JButton("Save your account");
         button6 = new JButton("Quit");
         button7 = new JButton("Return to main menu");
         button8 = new JButton("Search");
+        button9 = new JButton("Remove an item");
     }
 
     // MODIFIES: this
@@ -187,15 +197,17 @@ public class SmartGroceryGUI extends JFrame implements ActionListener {
         button3.addActionListener(this);
         button3.setActionCommand("View the cart");
         button4.addActionListener(this);
-        button4.setActionCommand("Load my account");
+        button4.setActionCommand("Load your account");
         button5.addActionListener(this);
-        button5.setActionCommand("Save my account");
+        button5.setActionCommand("Save your account");
         button6.addActionListener(this);
         button6.setActionCommand("Quit");
         button7.addActionListener(this);
         button7.setActionCommand("Return to main menu");
         button8.addActionListener(this);
         button8.setActionCommand("myAccount");
+        button9.addActionListener(this);
+        button9.setActionCommand("Remove an item");
     }
 
     @Override
@@ -206,9 +218,9 @@ public class SmartGroceryGUI extends JFrame implements ActionListener {
             addItem();
         } else if (e.getActionCommand().equals("View the cart")) {
             viewAccount();
-        } else if (e.getActionCommand().equals("Load my account")) {
+        } else if (e.getActionCommand().equals("Load your account")) {
             loadAccount();
-        } else if (e.getActionCommand().equals("Save my account")) {
+        } else if (e.getActionCommand().equals("Save your account")) {
             saveAccount();
         } else if (e.getActionCommand().equals("Quit")) {
             setVisible(false);
@@ -218,6 +230,8 @@ public class SmartGroceryGUI extends JFrame implements ActionListener {
             returnToMainMenu();
         } else if (e.getActionCommand().equals("myAccount")) {
             popUpWindow();
+        } else if (e.getActionCommand().equals("Remove an item")) {
+            removeItem();
         }
     }
 
@@ -237,8 +251,8 @@ public class SmartGroceryGUI extends JFrame implements ActionListener {
         myList.addElement(product1.toString());
         myList.addElement(product2.toString());
         myList.addElement(product3.toString());
-        JList<String> list = new JList<>(myList);
-        productLists.add(list);
+        productJList = new JList<>(myList);
+        productLists.add(productJList);
 
         addButton(button2, productLists);
 //        JButton btn1 = new JButton("Add to cart");
@@ -246,11 +260,13 @@ public class SmartGroceryGUI extends JFrame implements ActionListener {
         modifySmallButton(button7, productLists);
     }
 
-//     EFFECTS: pops up new window and asks the quantity for selected item
-    private int addItem() {
+    // EFFECTS: pops up new window and asks the quantity for selected item
+    private void addItem() {
+        String selectedProduct = productJList.getSelectedValue();
+        String kept = selectedProduct.substring(0, selectedProduct.indexOf(","));
         String answer = JOptionPane.showInputDialog("Enter the quantity: ");
         int quantity = Integer.parseInt(answer);
-        return quantity;
+        account.addProductToCart(pl.findProduct(kept), quantity);
     }
 
     // MODIFIES: this
@@ -277,9 +293,22 @@ public class SmartGroceryGUI extends JFrame implements ActionListener {
         JList<String> list = new JList<>(myAccount);
         accountInfo.add(list);
 
+        addButton(button9, accountInfo);
         modifySmallButton(button7, accountInfo);
     }
 
+    // EFFECTS: pops up new window and asks which item to remove
+    private void removeItem() {
+        String removeName = JOptionPane.showInputDialog("Remove an item (name): ");
+        if (!account.getCart().isProductInCart(removeName)) {
+            String s1 = "Product not found... please check the spelling!";
+            JOptionPane.showMessageDialog(null, s1, "title", JOptionPane.WARNING_MESSAGE);
+        } else {
+            account.removeProductFromCart(removeName);
+            String s2 = "Ok, the product has been removed!";
+            JOptionPane.showMessageDialog(null, s2, "title", JOptionPane.PLAIN_MESSAGE);
+        }
+    }
 
     // MODIFIES: this
     // EFFECTS: loads existing account for this user from file

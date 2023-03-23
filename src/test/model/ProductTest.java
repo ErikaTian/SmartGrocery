@@ -29,7 +29,7 @@ public class ProductTest {
 
     @Test
     void testToString() {
-        assertEquals("[Apple, $5.20, 20230328]", test1product.toString());
+        assertEquals("Apple, $5.20, 20230328", test1product.toString());
     }
 
     @Test
