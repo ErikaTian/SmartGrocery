@@ -58,7 +58,7 @@ public class SmartGroceryGUI extends JFrame implements ActionListener {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(600, 500);
 //        setLayout(new FlowLayout());
-        setVisible(true);
+//        setVisible(true);
         setLocationRelativeTo(null);
 
         jsonWriter = new JsonWriter(JSON_STORE);
@@ -145,6 +145,7 @@ public class SmartGroceryGUI extends JFrame implements ActionListener {
         addButton(button4, mainMenu);
         addButton(button5, mainMenu);
         addButton(button6, mainMenu);
+
     }
 
     // MODIFIES: this
@@ -242,7 +243,8 @@ public class SmartGroceryGUI extends JFrame implements ActionListener {
         add(productLists, BorderLayout.CENTER);
         productLists.setBorder(BorderFactory.createBevelBorder(100));
         productLists.setBackground(white);
-        productLists.setLayout(new GridLayout(10,1));
+//        productLists.setLayout(new GridLayout(10,1));
+        productLists.setLayout(new FlowLayout());
         productLists.setSize(500,400);
         productLists.setVisible(true);
         mainMenu.setVisible(false);
@@ -255,9 +257,10 @@ public class SmartGroceryGUI extends JFrame implements ActionListener {
         productLists.add(productJList);
 
         addButton(button2, productLists);
+        addButton(button7, productLists);
 //        JButton btn1 = new JButton("Add to cart");
 //        modifySmallButton(btn1, productLists);
-        modifySmallButton(button7, productLists);
+//        modifySmallButton(button7, productLists);
     }
 
     // EFFECTS: pops up new window and asks the quantity for selected item
@@ -275,11 +278,35 @@ public class SmartGroceryGUI extends JFrame implements ActionListener {
         accountInfo = new JPanel();
         add(accountInfo, BorderLayout.CENTER);
         accountInfo.setBorder(BorderFactory.createBevelBorder(100));
-        accountInfo.setLayout(new GridLayout(10,10));
+        accountInfo.setBackground(white);
+//        accountInfo.setLayout(new GridLayout(10,10));
+        accountInfo.setLayout(new FlowLayout());
         accountInfo.setSize(500,400);
         accountInfo.setVisible(true);
         mainMenu.setVisible(false);
 
+//        DefaultListModel<String> myAccount = new DefaultListModel<>();
+//        myAccount.addElement("Name: " + account.getName());
+//        myAccount.addElement("Balance: " + String.format("%.2f", account.getBalance()));
+//        List<String> fullList = account.getCart().getFullList();
+//        String result = "";
+//        for (String s : fullList) {
+//            result = result + "\n" + s;
+//        }
+//        result = "Cart: " + result;
+//        myAccount.addElement(result);
+//        JList<String> list = new JList<>(myAccount);
+//        accountInfo.add(list);
+        JList<String> account = updateAccount();
+        accountInfo.add(account);
+
+        addButton(button9, accountInfo);
+        addButton(button7, accountInfo);
+//        modifySmallButton(button7, accountInfo);
+    }
+
+    // EFFECTS: pops up new window and asks which item to remove
+    private JList<String> updateAccount() {
         DefaultListModel<String> myAccount = new DefaultListModel<>();
         myAccount.addElement("Name: " + account.getName());
         myAccount.addElement("Balance: " + String.format("%.2f", account.getBalance()));
@@ -291,11 +318,9 @@ public class SmartGroceryGUI extends JFrame implements ActionListener {
         result = "Cart: " + result;
         myAccount.addElement(result);
         JList<String> list = new JList<>(myAccount);
-        accountInfo.add(list);
-
-        addButton(button9, accountInfo);
-        modifySmallButton(button7, accountInfo);
+        return list;
     }
+
 
     // EFFECTS: pops up new window and asks which item to remove
     private void removeItem() {
@@ -307,6 +332,8 @@ public class SmartGroceryGUI extends JFrame implements ActionListener {
             account.removeProductFromCart(removeName);
             String s2 = "Ok, the product has been removed!";
             JOptionPane.showMessageDialog(null, s2, "title", JOptionPane.PLAIN_MESSAGE);
+            accountInfo.setVisible(false);
+            viewAccount();
         }
     }
 
