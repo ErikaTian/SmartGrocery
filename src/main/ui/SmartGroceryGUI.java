@@ -20,6 +20,11 @@ import java.util.List;
 import static java.awt.Color.*;
 import static java.util.Objects.isNull;
 
+// Smart Grocery shopping application GUI
+// REQUIRES: if this grocery shop doesn't have any existing user accounts, account.json
+//           needs an empty {} in it s.t. it's a valid starting file for JsonReader to read;
+//           then any user can start to use SmartGroceryApp
+
 public class SmartGroceryGUI extends JFrame implements ActionListener {
     private static final String JSON_STORE = "./data/account.json";
     private Product product1;
@@ -51,14 +56,13 @@ public class SmartGroceryGUI extends JFrame implements ActionListener {
     private JLabel nameLabel;
     private JTextField nameField;
 
-
-    // Creates a new JFrame displaying the grocery store
+    // MODIFIES: this
+    // EFFECTS: Creates a new JFrame displaying the grocery store
     public SmartGroceryGUI() {
         super("SmartGroceryGUI");
+        splashWindow();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(600, 500);
-//        setLayout(new FlowLayout());
-//        setVisible(true);
         setLocationRelativeTo(null);
 
         jsonWriter = new JsonWriter(JSON_STORE);
@@ -67,14 +71,24 @@ public class SmartGroceryGUI extends JFrame implements ActionListener {
         initButtons();
         initAccount();
         initMainMenu();
-//        addLabel(mainMenu);
-//        addButton(button1, mainMenu);
-//        addButton(button2, mainMenu);
-//        addButton(button3, mainMenu);
-//        addButton(button4, mainMenu);
-//        addButton(button5, mainMenu);
-//        addButton(button6, mainMenu);
         addButtonEvent();
+    }
+
+    // EFFECTS: Displays a splash screen for 3 seconds
+    private void splashWindow() {
+        JWindow splashScreen = new JWindow();
+        splashScreen.setSize(800, 600);
+        splashScreen.setLocationRelativeTo(null);
+        splashScreen.add(new JLabel(new ImageIcon("./data/Welcome to SmartGroceryApp.png")));
+        splashScreen.setVisible(true);
+
+        try {
+            Thread.sleep(2500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } finally {
+            splashScreen.setVisible(false);
+        }
     }
 
     // MODIFIES: this
@@ -104,7 +118,7 @@ public class SmartGroceryGUI extends JFrame implements ActionListener {
     }
 
     // MODIFIES: this
-    // EFFECTS: initializes account of this user and retrieves the collection of accounts in the grocery store
+    // EFFECTS: initializes an account and retrieves the collection of accounts in the grocery store
     private void initAccount() {
         account = new Account("");
         accounts = new AccountMap();
@@ -125,31 +139,16 @@ public class SmartGroceryGUI extends JFrame implements ActionListener {
         mainMenu.setLayout(new GridLayout(7,1));
         mainMenu.setVisible(true);
 
-//        welcomeLabel = new JLabel();
-//        welcomeLabel.setText("Welcome to SmartGroceryApp!");
-//        welcomeLabel.setFont(new Font("Times New Roman", Font.ITALIC, 20));
-//        welcomeLabel.setForeground(Color.black);
-//        mainMenu.add(welcomeLabel);
-//
-//        mainMenu.add(button1);
-//        mainMenu.add(button2);
-//        mainMenu.add(button3);
-//        mainMenu.add(button4);
-//        mainMenu.add(button5);
-//        mainMenu.add(button6);
-
         addLabel(mainMenu);
         addButton(button1, mainMenu);
-//        addButton(button2, mainMenu);
         addButton(button3, mainMenu);
         addButton(button4, mainMenu);
         addButton(button5, mainMenu);
         addButton(button6, mainMenu);
-
     }
 
     // MODIFIES: this
-    // EFFECTS: adds a button to the main menu
+    // EFFECTS: adds a welcome label to the main menu
     public void addLabel(JPanel panel) {
         welcomeLabel = new JLabel();
         welcomeLabel.setText("Welcome to SmartGroceryApp!");
@@ -167,21 +166,6 @@ public class SmartGroceryGUI extends JFrame implements ActionListener {
         button.setFont(new Font("Times New Roman", Font.BOLD, 15));
         button.setBackground(Color.BLACK);
         button.setForeground(blue);
-        panel.add(button);
-        setLocationRelativeTo(null);
-        setVisible(true);
-        setResizable(false);
-    }
-
-    // MODIFIES: this
-    // EFFECTS: adds a button to sub-menu
-    public void modifySmallButton(JButton button, JPanel panel) {
-        button.setFont(new Font("Times New Roman", Font.BOLD, 15));
-        button.setPreferredSize(new Dimension(200,750));
-        button.setBounds(10,100, getSize().width, getSize().height);
-        button.setMargin(new Insets(10,10,10,10));
-        button.setBackground(Color.BLACK);
-        button.setForeground(red);
         panel.add(button);
         setLocationRelativeTo(null);
         setVisible(true);
@@ -211,6 +195,8 @@ public class SmartGroceryGUI extends JFrame implements ActionListener {
         button9.setActionCommand("Remove an item");
     }
 
+    // MODIFIES: this
+    // EFFECTS: sets actions for all ActionListeners
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("View all items in the grocery store")) {
@@ -243,7 +229,6 @@ public class SmartGroceryGUI extends JFrame implements ActionListener {
         add(productLists, BorderLayout.CENTER);
         productLists.setBorder(BorderFactory.createBevelBorder(100));
         productLists.setBackground(white);
-//        productLists.setLayout(new GridLayout(10,1));
         productLists.setLayout(new FlowLayout());
         productLists.setSize(500,400);
         productLists.setVisible(true);
@@ -258,11 +243,9 @@ public class SmartGroceryGUI extends JFrame implements ActionListener {
 
         addButton(button2, productLists);
         addButton(button7, productLists);
-//        JButton btn1 = new JButton("Add to cart");
-//        modifySmallButton(btn1, productLists);
-//        modifySmallButton(button7, productLists);
     }
 
+    // MODIFIES: this
     // EFFECTS: pops up new window and asks the quantity for selected item
     private void addItem() {
         String selectedProduct = productJList.getSelectedValue();
@@ -273,39 +256,26 @@ public class SmartGroceryGUI extends JFrame implements ActionListener {
     }
 
     // MODIFIES: this
-    // EFFECTS: displays the wishlist in the cart on the screen
+    // EFFECTS: displays account information with a wishlist in the cart on the screen
     private void viewAccount() {
         accountInfo = new JPanel();
         add(accountInfo, BorderLayout.CENTER);
         accountInfo.setBorder(BorderFactory.createBevelBorder(100));
         accountInfo.setBackground(white);
-//        accountInfo.setLayout(new GridLayout(10,10));
         accountInfo.setLayout(new FlowLayout());
         accountInfo.setSize(500,400);
         accountInfo.setVisible(true);
         mainMenu.setVisible(false);
 
-//        DefaultListModel<String> myAccount = new DefaultListModel<>();
-//        myAccount.addElement("Name: " + account.getName());
-//        myAccount.addElement("Balance: " + String.format("%.2f", account.getBalance()));
-//        List<String> fullList = account.getCart().getFullList();
-//        String result = "";
-//        for (String s : fullList) {
-//            result = result + "\n" + s;
-//        }
-//        result = "Cart: " + result;
-//        myAccount.addElement(result);
-//        JList<String> list = new JList<>(myAccount);
-//        accountInfo.add(list);
         JList<String> account = updateAccount();
         accountInfo.add(account);
 
         addButton(button9, accountInfo);
         addButton(button7, accountInfo);
-//        modifySmallButton(button7, accountInfo);
     }
 
-    // EFFECTS: pops up new window and asks which item to remove
+    // MODIFIES: this
+    // EFFECTS: updates account information
     private JList<String> updateAccount() {
         DefaultListModel<String> myAccount = new DefaultListModel<>();
         myAccount.addElement("Name: " + account.getName());
@@ -321,24 +291,24 @@ public class SmartGroceryGUI extends JFrame implements ActionListener {
         return list;
     }
 
-
-    // EFFECTS: pops up new window and asks which item to remove
+    // MODIFIES: this
+    // EFFECTS: pops up new window, asks which item to remove and removes the item
     private void removeItem() {
         String removeName = JOptionPane.showInputDialog("Remove an item (name): ");
         if (!account.getCart().isProductInCart(removeName)) {
             String s1 = "Product not found... please check the spelling!";
-            JOptionPane.showMessageDialog(null, s1, "title", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, s1, "Reminder", JOptionPane.WARNING_MESSAGE);
         } else {
             account.removeProductFromCart(removeName);
             String s2 = "Ok, the product has been removed!";
-            JOptionPane.showMessageDialog(null, s2, "title", JOptionPane.PLAIN_MESSAGE);
+            JOptionPane.showMessageDialog(null, s2, "Reminder", JOptionPane.PLAIN_MESSAGE);
             accountInfo.setVisible(false);
             viewAccount();
         }
     }
 
     // MODIFIES: this
-    // EFFECTS: loads existing account for this user from file
+    // EFFECTS: loads existing account for this user from data file
     private void loadAccount() {
         accountPanel = new JPanel();
         add(accountPanel, BorderLayout.CENTER);
@@ -356,24 +326,24 @@ public class SmartGroceryGUI extends JFrame implements ActionListener {
         accountPanel.add(nameField);
         accountPanel.add(button8);
         accountPanel.add(button7);
-//        modifySmallButton(button7, accountPanel);
     }
 
+    // MODIFIES: this
     // EFFECTS: pops up new window and displays messages
     private void popUpWindow() {
         account = new Account(nameField.getText());
         if (accounts.hasAccountWithName(account.getName())) {
             account = accounts.getAccountByName(account.getName());
             String s1 = "Loaded " + account.getName() + "'account from " + JSON_STORE;
-            JOptionPane.showMessageDialog(null, s1, "title", JOptionPane.PLAIN_MESSAGE);
+            JOptionPane.showMessageDialog(null, s1, "Reminder", JOptionPane.PLAIN_MESSAGE);
         } else {
             String s2 = "You have no existing account. Remember to save your account before leaving today!";
-            JOptionPane.showMessageDialog(null, s2, "title", JOptionPane.PLAIN_MESSAGE);
+            JOptionPane.showMessageDialog(null, s2, "Reminder", JOptionPane.PLAIN_MESSAGE);
         }
     }
 
     // MODIFIES: this
-    // EFFECTS: saves the account to file
+    // EFFECTS: saves the account to data file
     private void saveAccount() {
         try {
             accounts.addAccount(account.getName(), account);
@@ -386,6 +356,7 @@ public class SmartGroceryGUI extends JFrame implements ActionListener {
         }
     }
 
+    // MODIFIES: this
     // EFFECTS: returns to the main menu
     private void returnToMainMenu() {
         mainMenu.setVisible(true);
@@ -400,6 +371,8 @@ public class SmartGroceryGUI extends JFrame implements ActionListener {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: runs SmartGroceryGUI class
     public static void main(String[] args) {
         new SmartGroceryGUI();
     }

@@ -4,16 +4,28 @@
         "name": "Erika",
         "cart": {
             "wishlist": [{
-                "bb": "20240126",
-                "price": 3.82,
-                "name": "Elephant Instant Noodles"
+                "bb": "20230328",
+                "price": 5.2,
+                "name": "Apple"
             }],
-            "quantityList": [100]
+            "quantityList": [200]
         }
     },
     "Peter": {
         "balance": 0,
         "name": "Peter",
+        "cart": {
+            "wishlist": [{
+                "bb": "20230328",
+                "price": 5.2,
+                "name": "Apple"
+            }],
+            "quantityList": [1]
+        }
+    },
+    "Anna": {
+        "balance": 0,
+        "name": "Anna",
         "cart": {
             "wishlist": [{
                 "bb": "20230328",
