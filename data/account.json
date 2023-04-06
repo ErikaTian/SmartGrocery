@@ -1,14 +1,14 @@
 {
     "Erika": {
-        "balance": 0,
+        "balance": 10,
         "name": "Erika",
         "cart": {
             "wishlist": [{
-                "bb": "20230328",
-                "price": 5.2,
-                "name": "Apple"
+                "bb": "20240615",
+                "price": 35.98,
+                "name": "Purdy's Chocolate Box"
             }],
-            "quantityList": [200]
+            "quantityList": [1]
         }
     },
     "Peter": {

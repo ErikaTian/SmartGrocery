@@ -66,6 +66,7 @@ public class SmartGroceryApp {
 
             if (command.equals("6")) {
                 keepGoing = false;
+                printLog();
             } else {
                 processCommand(command);
             }
@@ -221,6 +222,13 @@ public class SmartGroceryApp {
             System.out.println("Saved " + account.getName() + "'account to " + JSON_STORE);
         } catch (FileNotFoundException e) {
             System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
+
+    // EFFECTS: prints log
+    public void printLog() {
+        for (Event next : EventLog.getInstance()) {
+            System.out.println(next.toString() + "\n");
         }
     }
 }

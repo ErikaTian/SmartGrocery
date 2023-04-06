@@ -55,6 +55,7 @@ public class Account implements Writable {
             throw new NonPositiveException();
         }
         balance = balance + amount;
+
         return balance;
     }
 
@@ -75,6 +76,8 @@ public class Account implements Writable {
     // EFFECTS: add p to the wishlist in the cart by the quantity of i
     public void addProductToCart(Product p, int i) {
         cart.addProductToWishlist(p, i);
+
+        EventLog.getInstance().logEvent(new Event("A product has been added!"));
     }
 
     // MODIFIES: this
@@ -83,6 +86,8 @@ public class Account implements Writable {
         Product p;
         p = cart.getProduct(name);
         cart.removeProductFromWishlist(p);
+
+        EventLog.getInstance().logEvent(new Event("A product has been removed!"));
     }
 
     // EFFECTS: convert Account to JSONObject

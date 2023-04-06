@@ -1,9 +1,7 @@
 package ui;
 
-import model.Account;
-import model.AccountMap;
-import model.Product;
-import model.ProductList;
+import model.*;
+import model.Event;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
@@ -212,6 +210,7 @@ public class SmartGroceryGUI extends JFrame implements ActionListener {
         } else if (e.getActionCommand().equals("Quit")) {
             setVisible(false);
             dispose();
+            printLog();
             System.exit(0);
         } else if (e.getActionCommand().equals("Return to main menu")) {
             returnToMainMenu();
@@ -368,6 +367,13 @@ public class SmartGroceryGUI extends JFrame implements ActionListener {
         }
         if (!isNull(accountPanel) && accountPanel.isVisible()) {
             accountPanel.setVisible(false);
+        }
+    }
+
+    // EFFECTS: prints log
+    public void printLog() {
+        for (Event next : EventLog.getInstance()) {
+            System.out.println(next.toString() + "\n");
         }
     }
 
