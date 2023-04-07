@@ -66,11 +66,11 @@ public class SmartGroceryApp {
 
             if (command.equals("6")) {
                 keepGoing = false;
-                printLog();
             } else {
                 processCommand(command);
             }
         }
+        printLog();
         System.out.println("\nThank you for visiting SmartGrocery. Have a nice day!");
     }
 
@@ -79,7 +79,7 @@ public class SmartGroceryApp {
     private ProductList initList() {
         Product product1 = new Product("Apple", 5.2, new Date(20230328));
         Product product2 = new Product("Purdy's Chocolate Box", 35.98, new Date(20240615));
-        Product product3 = new Product("Elephant Instant Noodles", 3.82, new Date(20240126));
+        Product product3 = new Product("Elephant Instant Noodle", 3.82, new Date(20240126));
         ProductList pl = new ProductList();
         pl.addProduct(product1);
         pl.addProduct(product2);

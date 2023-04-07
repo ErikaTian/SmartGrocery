@@ -44,6 +44,7 @@ public class Cart implements Writable {
             int num = quantityList.get(index) + i;
             quantityList.set(index, num);
         }
+        EventLog.getInstance().logEvent(new Event(product.getName() + " was added with a quantity of " + i + "."));
     }
 
     // MODIFIES: this
@@ -54,6 +55,7 @@ public class Cart implements Writable {
             wishlist.remove(product);
             quantityList.remove(index);
         }
+        EventLog.getInstance().logEvent(new Event(product.getName() + " was removed by user."));
     }
 
     // EFFECTS: returns the total number of products on the wishlist

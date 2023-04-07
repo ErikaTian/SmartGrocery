@@ -3,12 +3,30 @@
         "balance": 10,
         "name": "Erika",
         "cart": {
-            "wishlist": [{
-                "bb": "20240615",
-                "price": 35.98,
-                "name": "Purdy's Chocolate Box"
-            }],
-            "quantityList": [1]
+            "wishlist": [
+                {
+                    "bb": "20240615",
+                    "price": 35.98,
+                    "name": "Purdy's Chocolate Box"
+                },
+                {
+                    "bb": "20240126",
+                    "price": 3.82,
+                    "name": "Elephant Instant Noodle"
+                }
+            ],
+            "quantityList": [
+                1,
+                100
+            ]
+        }
+    },
+    "Alice": {
+        "balance": 0,
+        "name": "Alice",
+        "cart": {
+            "wishlist": [],
+            "quantityList": []
         }
     },
     "Peter": {

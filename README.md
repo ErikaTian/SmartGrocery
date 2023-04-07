@@ -25,3 +25,36 @@ This application allows users to ***view*** all products in a grocery store, ***
 - You can locate my visual component by running the "SmartGroceryGUI". A splash window will appear with welcome greeting to users.
 - You can save the state of my application by clicking "Save your account" on the main menu.
 - You can reload the state of my application by clicking "Load your account" on the main menu, and clicking "Search" after entering your name. If you don't have existing account, tha App will remind you that "You have no existing account."
+
+# Phase 4: Task 2
+### Examples when running "Main" (console-based UI):
+
+Thu Apr 06 22:05:47 PDT 2023
+User added $100.0 to the account.
+
+Thu Apr 06 22:06:05 PDT 2023
+Apple was added with a quantity of 1.
+
+Thu Apr 06 22:06:17 PDT 2023
+Elephant Instant Noodle was removed by user.
+
+
+### Examples when running "SmartGroceryGUI":
+
+Thu Apr 06 22:12:00 PDT 2023
+Elephant Instant Noodle was added with a quantity of 100.
+
+Thu Apr 06 22:12:26 PDT 2023
+Purdy's Chocolate Box was removed by user.
+
+Thu Apr 06 22:12:47 PDT 2023
+Apple was added with a quantity of 32.
+
+Thu Apr 06 22:13:00 PDT 2023
+Apple was added with a quantity of 19.
+
+Thu Apr 06 22:13:17 PDT 2023
+Elephant Instant Noodle was removed by user.
+
+Thu Apr 06 22:13:25 PDT 2023
+Purdy's Chocolate Box was added with a quantity of 1.

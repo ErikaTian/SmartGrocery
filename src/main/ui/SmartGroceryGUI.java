@@ -94,7 +94,7 @@ public class SmartGroceryGUI extends JFrame implements ActionListener {
     private void initProductList() {
         product1 = new Product("Apple", 5.2, new Date(20230328));
         product2 = new Product("Purdy's Chocolate Box", 35.98, new Date(20240615));
-        product3 = new Product("Elephant Instant Noodles", 3.82, new Date(20240126));
+        product3 = new Product("Elephant Instant Noodle", 3.82, new Date(20240126));
         pl = new ProductList();
         pl.addProduct(product1);
         pl.addProduct(product2);
