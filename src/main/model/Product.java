@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.Objects;
 
 // Represents a product with a name, a price, expiration date
-public class Product implements Printable, Writable {
+public class Product implements Writable {
 
     // fields to represent changing properties of a product
     private String name;  // product name
@@ -41,7 +41,6 @@ public class Product implements Printable, Writable {
      * EFFECTS: returns a string representation of a product
      * Acknowledgement: this method is modified from "AccountNotRobust" project
      */
-    @Override
     public String toString() {
         String priceStr = String.format("%.2f", price);  // get price to 2 decimal places as a string
         String dateStr = String.valueOf(bb.getTime());

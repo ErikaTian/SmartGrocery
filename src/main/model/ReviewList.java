@@ -8,7 +8,7 @@ import java.util.List;
  * add or delete a new review, count the number of reviews on the list
  * print the information of all reviews on the list, etc.
  */
-public class ReviewList implements ListManager {
+public class ReviewList {
 
     private List<Review> reviewList;
 
@@ -30,13 +30,11 @@ public class ReviewList implements ListManager {
     }
 
     // EFFECTS: returns the number of reviews on the list
-    @Override
     public int sizeList() {
         return reviewList.size();
     }
 
     // EFFECTS: prints a list of all reviews
-    @Override
     public List<String> getFullList() {
         List<String> fullList = new ArrayList<>();
         for (Review r : reviewList) {

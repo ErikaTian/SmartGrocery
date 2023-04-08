@@ -1,5 +1,5 @@
 {
-    "Erika": {
+  "Erika": {
         "balance": 10,
         "name": "Erika",
         "cart": {
@@ -13,11 +13,17 @@
                     "bb": "20240126",
                     "price": 3.82,
                     "name": "Elephant Instant Noodle"
+                },
+                {
+                    "bb": "20230328",
+                    "price": 5.2,
+                    "name": "Apple"
                 }
             ],
             "quantityList": [
                 1,
-                100
+                100,
+                3
             ]
         }
     },

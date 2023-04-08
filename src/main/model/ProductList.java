@@ -8,7 +8,7 @@ import java.util.List;
  * add or delete a new product, count the number of products on the list
  * print the information of all products on the list, etc.
  */
-public class ProductList implements ListManager {
+public class ProductList {
 
     private List<Product> productList;
 
@@ -30,13 +30,13 @@ public class ProductList implements ListManager {
     }
 
     // EFFECTS: returns the number of products on the list
-    @Override
+
     public int sizeList() {
         return productList.size();
     }
 
     // EFFECTS: prints a list of all products' names
-    @Override
+
     public List<String> getFullList() {
         List<String> fullList = new LinkedList<>();
         for (Product p : productList) {

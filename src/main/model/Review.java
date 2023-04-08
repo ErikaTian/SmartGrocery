@@ -3,7 +3,7 @@ package model;
 import java.util.Date;
 
 // Represents a review for each product
-public class Review implements Printable {
+public class Review {
 
     // fields to represent changing properties of a review
     private Date date;    // date when the review was written
@@ -37,7 +37,6 @@ public class Review implements Printable {
      * EFFECTS: returns a string representation of a review
      * Acknowledgement: this method is modified from "AccountNotRobust" project
      */
-    @Override
     public String toString() {
         String dateStr = String.valueOf(date.getTime());
         String rateStr = Integer.toString(rate);

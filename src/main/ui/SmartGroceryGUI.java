@@ -12,7 +12,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 import static java.awt.Color.*;
@@ -25,10 +27,6 @@ import static java.util.Objects.isNull;
 
 public class SmartGroceryGUI extends JFrame implements ActionListener {
     private static final String JSON_STORE = "./data/account.json";
-    private Product product1;
-    private Product product2;
-    private Product product3;
-    private ProductList pl;
     private Account account;
     private AccountMap accounts;
     private JsonWriter jsonWriter;
@@ -65,11 +63,11 @@ public class SmartGroceryGUI extends JFrame implements ActionListener {
 
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
-        initProductList();
-        initButtons();
+
         initAccount();
-        initMainMenu();
+        initButtons();
         addButtonEvent();
+        initMainMenu();
     }
 
     // EFFECTS: Displays a splash screen for 3 seconds
@@ -90,15 +88,29 @@ public class SmartGroceryGUI extends JFrame implements ActionListener {
     }
 
     // MODIFIES: this
-    // EFFECTS: initializes the list of all products in the grocery store
-    private void initProductList() {
-        product1 = new Product("Apple", 5.2, new Date(20230328));
-        product2 = new Product("Purdy's Chocolate Box", 35.98, new Date(20240615));
-        product3 = new Product("Elephant Instant Noodle", 3.82, new Date(20240126));
-        pl = new ProductList();
+    // EFFECTS: initializes the product list in the grocery store
+    private ProductList initProductList() {
+        Product product1 = new Product("Apple", 5.2, new Date(20230328));
+        Product product2 = new Product("Purdy's Chocolate Box", 35.98, new Date(20240615));
+        Product product3 = new Product("Elephant Instant Noodle", 3.82, new Date(20240126));
+        ProductList pl = new ProductList();
         pl.addProduct(product1);
         pl.addProduct(product2);
         pl.addProduct(product3);
+        return pl;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: initializes the list of all products in the grocery store
+    private List<Product> initListProduct() {
+        Product product1 = new Product("Apple", 5.2, new Date(20230328));
+        Product product2 = new Product("Purdy's Chocolate Box", 35.98, new Date(20240615));
+        Product product3 = new Product("Elephant Instant Noodle", 3.82, new Date(20240126));
+        List<Product> pl = new LinkedList<>();
+        pl.add(product1);
+        pl.add(product2);
+        pl.add(product3);
+        return pl;
     }
 
     // MODIFIES: this
@@ -224,6 +236,7 @@ public class SmartGroceryGUI extends JFrame implements ActionListener {
     // MODIFIES: this
     // EFFECTS: displays all products in the grocery store on the screen
     private void displayProductList() {
+        List<Product> pl = initListProduct();
         productLists = new JPanel();
         add(productLists, BorderLayout.CENTER);
         productLists.setBorder(BorderFactory.createBevelBorder(100));
@@ -234,9 +247,9 @@ public class SmartGroceryGUI extends JFrame implements ActionListener {
         mainMenu.setVisible(false);
 
         DefaultListModel<String> myList = new DefaultListModel<>();
-        myList.addElement(product1.toString());
-        myList.addElement(product2.toString());
-        myList.addElement(product3.toString());
+        myList.addElement(pl.get(0).toString());
+        myList.addElement(pl.get(1).toString());
+        myList.addElement(pl.get(2).toString());
         productJList = new JList<>(myList);
         productLists.add(productJList);
 
@@ -247,6 +260,7 @@ public class SmartGroceryGUI extends JFrame implements ActionListener {
     // MODIFIES: this
     // EFFECTS: pops up new window and asks the quantity for selected item
     private void addItem() {
+        ProductList pl = initProductList();
         String selectedProduct = productJList.getSelectedValue();
         String kept = selectedProduct.substring(0, selectedProduct.indexOf(","));
         String answer = JOptionPane.showInputDialog("Enter the quantity: ");
