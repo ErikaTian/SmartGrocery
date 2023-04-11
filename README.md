@@ -64,7 +64,7 @@ Purdy's Chocolate Box was added with a quantity of 1.
 ![](UML_Design_Diagram.png)
 
 ### Refactoring/Design:
-- Pull some fields out from GUI class
+- After inspecting on my code, I found there are too many fields (JPanel, JButton, JLabel, etc.) in SmartGroceryGUI class. In the future, I would like to pull them out from SmartGroceryGUI class, and create several classes to manage different functionalities in ui package, such as MenuPanel, ButtonPanel, AccountPanel. In this way, SmartGroceryGUI class could call any method in these class when needed, and the cohesion of code will be improved with a better structure in ui package. 
 - This is idea2
 - This is idea3
 - This is idea4
