@@ -64,7 +64,7 @@ Purdy's Chocolate Box was added with a quantity of 1.
 ![](UML_Design_Diagram.png)
 
 ### Refactoring/Design:
-- This is idea1
+- Pull some fields out from GUI class
 - This is idea2
 - This is idea3
 - This is idea4
