@@ -58,3 +58,15 @@ Elephant Instant Noodle was removed by user.
 
 Thu Apr 06 22:13:25 PDT 2023
 Purdy's Chocolate Box was added with a quantity of 1.
+
+
+# Phase 4: Task 3 (UML & Refactoring/Design Ideas)
+![](UML_Design_Diagram.png)
+
+### Refactoring/Design:
+- This is idea1
+- This is idea2
+- This is idea3
+- This is idea4
+- This is idea5
+- This is idea6

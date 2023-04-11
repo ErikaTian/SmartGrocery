@@ -1,5 +1,5 @@
 {
-  "Erika": {
+    "Erika": {
         "balance": 10,
         "name": "Erika",
         "cart": {
@@ -24,6 +24,28 @@
                 1,
                 100,
                 3
+            ]
+        }
+    },
+    "Stanley": {
+        "balance": 0,
+        "name": "Stanley",
+        "cart": {
+            "wishlist": [
+                {
+                    "bb": "20230328",
+                    "price": 5.2,
+                    "name": "Apple"
+                },
+                {
+                    "bb": "20240615",
+                    "price": 35.98,
+                    "name": "Purdy's Chocolate Box"
+                }
+            ],
+            "quantityList": [
+                100,
+                1
             ]
         }
     },
