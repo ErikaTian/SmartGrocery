@@ -66,7 +66,7 @@ Purdy's Chocolate Box was added with a quantity of 1.
 ### Refactoring/Design:
 - After inspecting on my code, I found there are too many fields (JPanel, JButton, JLabel, etc.) in SmartGroceryGUI class! In the future, I would like to pull them out from SmartGroceryGUI class, and create several classes to manage different functionalities in ui package, such as Panel, Button, Label, Text. In this way, SmartGroceryGUI class could call any method in these class when needed, and the cohesion of code will be improved with a better structure in ui package. 
 - Composite pattern could be adapted for those new components mentioned above. I observed that Button, Label, Text could be individual components existing on Panel, while Panel is a component containing Button, Label, Text or other Panels. Therefore, an abstract parent class could be created sitting on the top of the hierarchy with shared behaviours for all these components. Panel should be the composite and it would implement more behaviours, such as adding child, removing child, etc. 
-
+- Idea 3 
 
 
 
