@@ -64,9 +64,10 @@ Purdy's Chocolate Box was added with a quantity of 1.
 ![](UML_Design_Diagram.png)
 
 ### Refactoring/Design:
-- After inspecting on my code, I found there are too many fields (JPanel, JButton, JLabel, etc.) in SmartGroceryGUI class! In the future, I would like to pull them out from SmartGroceryGUI class, and create several classes to manage different functionalities in ui package, such as Panel, Button, Label, Text. In this way, SmartGroceryGUI class could call any method in these class when needed, and the cohesion of code will be improved with a better structure in ui package. 
-- Composite pattern could be adapted for those new components mentioned above. I observed that Button, Label, Text could be individual components existing on Panel, while Panel is a component containing Button, Label, Text or other Panels. Therefore, an abstract parent class could be created sitting on the top of the hierarchy with shared behaviours for all these components. Panel should be the composite and it would implement more behaviours, such as adding child, removing child, etc. 
-- Idea 3 
+- **COHESION**: After inspecting on my code, I found there are too many fields (JPanel, JButton, JLabel, etc.) in SmartGroceryGUI class! In the future, I would like to pull them out from SmartGroceryGUI class, and create several classes to represent these components with different functionalities in ui package, such as Panel, Button, Label, Text. In this way, SmartGroceryGUI class will only be responsible for processing user inputs and then call any method in other class when needed. The cohesion of code will be improved with a better structure in ui package.
+- **COMPOSITE PATTERN** could be adapted for those new components mentioned above. I observed that Button, Label, Text could be individual components existing on Panel, while Panel is a component containing Button, Label, Text or other Panels. Therefore, an abstract parent class could be created sitting on the top of the hierarchy with shared behaviours for all these components. Panel should be the composite, and it would implement more behaviours, such as adding child, removing child, etc. 
+- **SINGLETON PATTERN** could be applied to ProductList class as there is only one instance of ProductList in this grocery store, and so it will be more convenient to change it, such as adding more products to this store or selling out any product.
+
 
 
 
