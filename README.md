@@ -68,6 +68,8 @@ Purdy's Chocolate Box was added with a quantity of 1.
 - **COMPOSITE PATTERN** could be adapted for those new components mentioned above. I observed that Button, Label, Text could be individual components existing on Panel, while Panel is a component containing Button, Label, Text or other Panels. Therefore, an abstract parent class could be created sitting on the top of the hierarchy with shared behaviours for all these components. Panel should be the composite, and it would implement more behaviours, such as adding child, removing child, etc. 
 - **SINGLETON PATTERN** could be applied to ProductList class as there is only one instance of ProductList in this grocery store, and so it will be more convenient to change it, such as adding more products to this store or selling out any product.
 
+Note: Clone my project to personal GitHub account.
+
 
 
 
